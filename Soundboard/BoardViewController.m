@@ -22,25 +22,82 @@
 
 
 -(void)playSound:(NSString *)buttonName {
-    NSString* fileName = [NSString stringWithFormat:@"%@_%@", currentTheme, buttonName];
-    CFBundleRef mainBundle = CFBundleGetMainBundle();
-    CFURLRef soundFileURLRef;
-    
-    // Special casing for these debug files
-    if ([buttonName isEqualToString:@"1"])
-        soundFileURLRef = CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("m4a"), NULL);
-    else if ([buttonName isEqualToString:@"2"])
-        soundFileURLRef = CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("caf"), NULL);
-        
-    UInt32 soundID;
-    AudioServicesCreateSystemSoundID(soundFileURLRef, &soundID);
-    AudioServicesPlaySystemSound(soundID);
+    int i = [buttonName integerValue];
+    AudioServicesPlaySystemSound(soundIds[i-1]);
     
 }
 
 
 -(void)loadTheme:(NSString *)themeName {
+    
+    //Initializes basic theme elements, including name, background, audio, etc...
     currentTheme = themeName;
+    
+    // READ IN FROM FILE SYSTEM
+    for (int i = 0; i < 9; i++)
+    {
+        NSString* fileName = [NSString stringWithFormat:@"%@_%i", currentTheme, i];
+        NSString* imageFileName = [NSString stringWithFormat:@"%@_%i.png", currentTheme, i];
+        CFBundleRef mainBundle = CFBundleGetMainBundle();
+        CFURLRef soundFileURLRef;
+        
+        // Special casing for these debug files
+        if      (i == 0)
+        {
+            soundFileURLRef = CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("m4a"), NULL);
+            [button0 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
+        }
+        else if (i == 1)
+        {
+            soundFileURLRef = CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("m4a"), NULL);
+            [button1 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
+        }
+        else if (i == 2)
+        {
+            soundFileURLRef = CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("caf"), NULL);
+            [button2 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];            
+        }
+        else if (i == 3)
+        {
+            soundFileURLRef = CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("wav"), NULL);
+            [button3 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
+        }
+        else if (i == 4)
+        {
+            soundFileURLRef = CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("wav"), NULL);
+            [button4 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
+        }
+        else if (i == 5)
+        {
+            soundFileURLRef = CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("wav"), NULL);
+            [button5 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
+        }
+        else if (i == 6)
+        {
+            soundFileURLRef = CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("wav"), NULL);
+            [button6 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
+        }
+        else if (i == 7)
+        {
+            soundFileURLRef = CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("wav"), NULL);
+            [button7 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
+        }
+        else if (i == 8)
+        {
+            soundFileURLRef = CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("wav"), NULL);
+            [button8 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
+        }
+        else if (i == 9)
+        {
+            soundFileURLRef = CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("wav"), NULL);
+            [button9 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
+        }
+        AudioServicesCreateSystemSoundID(soundFileURLRef, &soundIds[i]);
+        NSLog(@"Initialized soundId %i.", i);
+        
+    }
+    NSLog(@"Finished loading \"%@\" theme", themeName);
+
 }
 
 
@@ -97,6 +154,7 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-//@synthesize currentTheme;
+@synthesize button1, button2, button3, button4, button5,
+            button6, button7, button8, button9, button0;
 
 @end
