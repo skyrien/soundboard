@@ -3,7 +3,6 @@
 //  Soundboard
 //
 //  Created by Alexander Joo on 10/9/11.
-//@author: ibsharee
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
