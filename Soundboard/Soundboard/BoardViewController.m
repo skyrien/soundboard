@@ -10,11 +10,72 @@
 
 @implementation BoardViewController
 
+// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    NSLog(@"Board view loaded.");
+
+    // Sets current parameters
+    boardMode = MODE_EMPTY;
+    self.navigationController.navigationBar.backItem.leftBarButtonItem.title = @"Home";
+
+    // The following should only be set if in debug mode
+    [self loadTheme:@"debug"];
+
+}
+
 // BOARD LOGIC GOES HERE
+-(IBAction)actionButtonPressed:(UIButton *)sender {
+    NSLog(@"Action button was pressed");
+    
+    // This is the view if the current user is the board's owner
+    if (userIsBoardOwner) {
+        
+        boardActionSheet = [[UIActionSheet alloc]  initWithTitle:nil
+                                                   delegate:self
+                                          cancelButtonTitle:LOC_CANCEL
+                                     destructiveButtonTitle:nil
+                                          otherButtonTitles:LOC_EDITBOARD,
+                                                            LOC_SHARE_EMAIL,
+                                                            LOC_SHARE_FACEBOOK,
+                                                            LOC_DELETEBOARD,
+                                                            nil, nil];
+    }
+    
+    // This is for non-owners
+    else {
+        boardActionSheet = [[UIActionSheet alloc]  initWithTitle:nil
+                                                   delegate:self
+                                          cancelButtonTitle:LOC_CANCEL
+                                     destructiveButtonTitle:nil
+                                          otherButtonTitles:LOC_SHARE_EMAIL,
+                                                            LOC_SHARE_FACEBOOK,
+                                                            LOC_DELETEBOARD,
+                                                            nil, nil];
+    }
+    [boardActionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
+    [boardActionSheet showInView:self.navigationController.view];
+                   
+}
+
+// This message is sent internally when a action sheet button is pressed
+- (void)actionSheet:boardActionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSLog(@"Clicked action sheet button index: %i", buttonIndex);
+    
+    if (buttonIndex == 0)
+    [self enterEditMode];
+}
+
+-(void)enterEditMode {
+    
+}
+
+
 -(IBAction)buttonPressed:(UIButton *)sender {
 
     NSString* buttonName = [[sender titleLabel] text];
-    NSLog(@"Button \"%@\" was pressed.", buttonName);
+    NSLog(@"Button %@ was pressed.", buttonName);
 
     // Sound gets played here
     [self playSound:buttonName];
@@ -28,74 +89,86 @@
 }
 
 
+-(void)longPress:(NSString *)buttonName {
+    NSLog(@"Button %@ was LONG pressed.", buttonName);
+}
+
+
 -(void)loadTheme:(NSString *)themeName {
     
     //Initializes basic theme elements, including name, background, audio, etc...
     currentTheme = themeName;
     
-    // READ IN FROM FILE SYSTEM
+    
+    // VALIDATE THAT THE CURRENT USER IS THE BOARD'S OWNER
+    
+    userIsBoardOwner = true; // currently hardcoded to true
+    
+    // READ IN MEDIA FROM FILE SYSTEM
     for (int i = 0; i < 9; i++)
     {
-        NSString* fileName = [NSString stringWithFormat:@"%@_%i", currentTheme, i];
-        NSString* imageFileName = [NSString stringWithFormat:@"%@_%i.png", currentTheme, i];
+        int j = i + 1;
+        NSString* fileName = [NSString stringWithFormat:@"%@_%i", currentTheme, j];
+        NSString* imageFileName = [NSString stringWithFormat:@"%@_%i.png", currentTheme, j];
         CFBundleRef mainBundle = CFBundleGetMainBundle();
         CFURLRef soundFileURLRef;
         
         // Special casing for these debug files
-        if      (i == 0)
-        {
-            soundFileURLRef = CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("m4a"), NULL);
-            [button0 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
-        }
-        else if (i == 1)
+        // if      (i == 0)
+        //{
+        //    soundFileURLRef = CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("m4a"), NULL);
+        //   [button0 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
+        //} 
+        if (j == 1) // else if (i == 1)
         {
             soundFileURLRef = CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("m4a"), NULL);
             [button1 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
         }
-        else if (i == 2)
+        else if (j == 2)
         {
             soundFileURLRef = CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("caf"), NULL);
             [button2 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];            
         }
-        else if (i == 3)
+        else if (j == 3)
         {
             soundFileURLRef = CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("wav"), NULL);
             [button3 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
         }
-        else if (i == 4)
+        else if (j == 4)
         {
             soundFileURLRef = CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("wav"), NULL);
             [button4 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
         }
-        else if (i == 5)
+        else if (j == 5)
         {
             soundFileURLRef = CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("wav"), NULL);
             [button5 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
         }
-        else if (i == 6)
+        else if (j == 6)
         {
             soundFileURLRef = CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("wav"), NULL);
             [button6 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
         }
-        else if (i == 7)
+        else if (j == 7)
         {
             soundFileURLRef = CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("wav"), NULL);
             [button7 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
         }
-        else if (i == 8)
+        else if (j == 8)
         {
             soundFileURLRef = CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("wav"), NULL);
             [button8 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
         }
-        else if (i == 9)
+        else if (j == 9)
         {
             soundFileURLRef = CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("wav"), NULL);
             [button9 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
         }
         AudioServicesCreateSystemSoundID(soundFileURLRef, &soundIds[i]);
-        NSLog(@"Initialized soundId %i.", i);
+        NSLog(@"Initialized soundId %i.", j);
         
     }
+    boardMode = MODE_READY;
     NSLog(@"Finished loading \"%@\" theme", themeName);
 
 }
@@ -132,13 +205,7 @@
 */
 
 
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    NSLog(@"Board view loaded.");
-    [self loadTheme:@"debug"];
-}
+
 
 
 - (void)viewDidUnload
@@ -155,6 +222,6 @@
 }
 
 @synthesize button1, button2, button3, button4, button5,
-            button6, button7, button8, button9, button0;
+            button6, button7, button8, button9;
 
 @end
