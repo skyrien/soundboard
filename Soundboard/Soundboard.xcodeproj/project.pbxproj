@@ -33,6 +33,7 @@
 		70834A411442B3F6005EA445 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70834A401442B3F6005EA445 /* iAd.framework */; };
 		70834A431442B3FA005EA445 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70834A421442B3FA005EA445 /* CoreAudio.framework */; };
 		709AF4CC1448416500888719 /* debug_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 709AF4CB1448416500888719 /* debug_2.png */; };
+		70E97394144968B3002B3C57 /* Soundboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 70E97393144968B3002B3C57 /* Soundboard.m */; };
 		70F519551444346B001CA6C7 /* debug_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 70F519541444346B001CA6C7 /* debug_1.png */; };
 		70F5195A14443EC6001CA6C7 /* debug_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 70F5195914443EC6001CA6C7 /* debug_3.png */; };
 		70F5195E14444056001CA6C7 /* debug_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 70F5195B14444056001CA6C7 /* debug_4.png */; };
@@ -86,6 +87,8 @@
 		70834A401442B3F6005EA445 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		70834A421442B3FA005EA445 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		709AF4CB1448416500888719 /* debug_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = debug_2.png; sourceTree = "<group>"; };
+		70E97392144968B3002B3C57 /* Soundboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Soundboard.h; sourceTree = "<group>"; };
+		70E97393144968B3002B3C57 /* Soundboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Soundboard.m; sourceTree = "<group>"; };
 		70F519541444346B001CA6C7 /* debug_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = debug_1.png; sourceTree = "<group>"; };
 		70F5195914443EC6001CA6C7 /* debug_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = debug_3.png; sourceTree = "<group>"; };
 		70F5195B14444056001CA6C7 /* debug_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = debug_4.png; sourceTree = "<group>"; };
@@ -183,6 +186,8 @@
 		70834A151442B374005EA445 /* Soundboard */ = {
 			isa = PBXGroup;
 			children = (
+				70E97392144968B3002B3C57 /* Soundboard.h */,
+				70E97393144968B3002B3C57 /* Soundboard.m */,
 				70834A3E1442B3BB005EA445 /* Storyboard.storyboard */,
 				70520DE21442B73F00B0426E /* BoardViewController.h */,
 				70520DE31442B73F00B0426E /* BoardViewController.m */,
@@ -350,6 +355,7 @@
 				70834A201442B374005EA445 /* AppDelegate.m in Sources */,
 				70520DE11442B5BB00B0426E /* HomeViewController.m in Sources */,
 				70520DE41442B73F00B0426E /* BoardViewController.m in Sources */,
+				70E97394144968B3002B3C57 /* Soundboard.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
