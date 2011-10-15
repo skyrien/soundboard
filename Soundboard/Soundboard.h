@@ -8,31 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-// UI STRING DEFINITIONS
-#define LOC_TITLE @"Soundboard!"
-#define LOC_CANCEL @"Cancel"
-#define LOC_EDITBOARD @"Edit this board"
-#define LOC_SHARE_EMAIL @"Share by email"
-#define LOC_SHARE_FACEBOOK @"Share on Facebook"
-#define LOC_DELETEBOARD @"Delete this board..."
+
 
 #define MODE_EMPTY          0
-#define MODE_BOARDLOADED    1
-#define MODE_READY          2
-#define MODE_EDITMODE       3
+#define MODE_READY          1
+#define MODE_EDITMODE       2
 
 
 @interface Soundboard : NSObject {
-    
-    UIButton* button1;
-    UIButton* button2;    
-    UIButton* button3;
-    UIButton* button4;
-    UIButton* button5;
-    UIButton* button6;
-    UIButton* button7;
-    UIButton* button8;
-    UIButton* button9;
     
     // Current Game Mode is represnted by this integer
     NSInteger boardMode;
@@ -62,18 +45,8 @@
 // This function attempts to play the audio file corresponding to the button
 -(void)playSound:(NSString *)buttonName;
 
-//@property(nonatomic) NSString* currentTheme;
-//@property(nonatomic, retain) UIButton* button0;
-@property(nonatomic, retain) UIButton* button1;
-@property(nonatomic, retain) UIButton* button2;
-@property(nonatomic, retain) UIButton* button3;
-@property(nonatomic, retain) UIButton* button4;
-@property(nonatomic, retain) UIButton* button5;
-@property(nonatomic, retain) UIButton* button6;
-@property(nonatomic, retain) UIButton* button7;
-@property(nonatomic, retain) UIButton* button8;
-@property(nonatomic, retain) UIButton* button9;
 @property(nonatomic, retain) NSString* boardOwnerId;
 @property(nonatomic, retain) NSString* currentTheme;
+@property(nonatomic) NSInteger boardMode;
 
 @end
