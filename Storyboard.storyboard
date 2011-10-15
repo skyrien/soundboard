@@ -203,7 +203,11 @@
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" title="Test Board" id="M64-Ph-Fbu">
-                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="e7K-q7-u45"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="e7K-q7-u45">
+                            <connections>
+                                <action selector="actionButtonPressed:" destination="DZ6-hW-b9a" id="OmF-kI-P6P"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="background" destination="qFJ-TP-gv9" id="52H-Ze-E8U"/>
@@ -256,7 +260,7 @@
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Soundboard" id="CxR-OF-96L">
+                    <navigationItem key="navigationItem" id="CxR-OF-96L">
                         <barButtonItem key="leftBarButtonItem" title="Test" id="Pjf-pt-eyc">
                             <connections>
                                 <segue destination="DZ6-hW-b9a" kind="push" id="gMo-XQ-zgR"/>
@@ -290,9 +294,9 @@
         <class className="BoardViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/BoardViewController.h"/>
             <relationships>
+                <relationship kind="action" name="actionButtonPressed:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="action" name="buttonPressed:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="background" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="button0" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="button1" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="button2" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="button3" candidateClass="UIButton"/>
