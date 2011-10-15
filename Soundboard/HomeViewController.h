@@ -7,7 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DropboxSDK.h"
+
 
 @interface HomeViewController : UIViewController
+{
+    IBOutlet UIButton* linkButton;
+    
+    DBRestClient* restClient;
+}
+
+-(IBAction)buttonPressed:(UIButton* )sender;
 
 @end

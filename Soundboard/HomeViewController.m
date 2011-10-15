@@ -8,7 +8,39 @@
 
 #import "HomeViewController.h"
 
+@interface HomeViewController () <DBLoginControllerDelegate>
+
+-(void) updateButtons;
+
+@end
+
 @implementation HomeViewController
+
+- (IBAction)buttonPressed:(UIButton *)sender
+{
+    if (![[DBSession sharedSession] isLinked]) {
+        DBLoginController* controller =[DBLoginController new];
+        controller.delegate = self;
+        [controller presentFromController:self];
+    } else {
+        [[DBSession sharedSession] unlink];
+        [[[UIAlertView alloc] 
+           initWithTitle:@"Account Unlinked!" message:@"Your dropbox account has been unlinked" 
+           delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil]
+         show];
+        [self updateButtons];
+    }
+}
+
+- (void)loginControllerDidLogin:(DBLoginController*)controller {
+    [self updateButtons];
+}
+
+- (void)updateButtons
+{
+    NSString* title = [[DBSession sharedSession] isLinked] ? @"Unlink Dropbox" : @"Link Dropbox";
+    [linkButton setTitle:title forState:UIControlStateNormal];
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
