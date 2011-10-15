@@ -9,7 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "Soundboard.h"
 
-
+// UI STRING DEFINITIONS
+#define LOC_TITLE @"Soundboard!"
+#define LOC_CANCEL @"Cancel"
+#define LOC_EDITBOARD @"Edit this board"
+#define LOC_SHARE_EMAIL @"Share by email"
+#define LOC_SHARE_FACEBOOK @"Share on Facebook"
+#define LOC_DELETEBOARD @"Delete this board"
 
 @interface BoardViewController : UIViewController
 {
@@ -37,7 +43,6 @@
 
 // Pressing the action button (the one in the upper right corner calls this function
 -(IBAction)actionButtonPressed:(UIBarButtonItem *)sender;
-
 
 // This function is called on the button when the Long Press Gesture Recognizer
 // determines that an event has occured on this button.

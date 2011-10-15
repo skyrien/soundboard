@@ -19,10 +19,16 @@
 
     // Setting up the board...
     theBoard = [[Soundboard alloc] init];
-
+    theBoard.boardMode = MODE_EMPTY;
+    
     // The following should only be set if in debug mode
     [self loadTheme:@"debug"];
     userIsBoardOwner = YES;
+}
+
+-(void)didPresentActionSheet {
+    NSLog(@"Action sheet was presented");
+    
 }
 
 // BOARD LOGIC GOES HERE
@@ -41,6 +47,7 @@
                                                             LOC_SHARE_FACEBOOK,
                                                             LOC_DELETEBOARD,
                                                             nil, nil];
+        [boardActionSheet
     }
     
     // This is for non-owners
@@ -92,81 +99,66 @@
     
     // VALIDATE THAT THE CURRENT USER IS THE BOARD'S OWNER
     
-    
+
+    CFBundleRef mainBundle = CFBundleGetMainBundle();
+
     // READ IN MEDIA FROM FILE SYSTEM
     for (int i = 0; i < 9; i++)
     {
         int j = i + 1;
         NSString* fileName = [NSString stringWithFormat:@"%@_%i", themeName, j];
         NSString* imageFileName = [NSString stringWithFormat:@"%@_%i.png", themeName, j];
-        CFBundleRef mainBundle = CFBundleGetMainBundle();
-        CFURLRef soundFileURLRef;
         
-        // Special casing for these debug files
-        // if      (i == 0)
-        //{
-        //    soundFileURLRef = CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("m4a"), NULL);
-        //   [button0 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
-        //} 
         if (j == 1) // else if (i == 1)
         {
-            soundFileURLRef = CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("m4a"), NULL);
-            [theBoard setSoundNumber:j withCFURL:soundFileURLRef]; 
+            [theBoard setSoundNumber:j withCFURL:CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("m4a"), NULL)]; 
             [button1 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
         }
         else if (j == 2)
         {
-            soundFileURLRef = CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("caf"), NULL);
-            [theBoard setSoundNumber:j withCFURL:soundFileURLRef]; 
+            [theBoard setSoundNumber:j withCFURL:CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("caf"), NULL)];
             [button2 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];            
         }
         else if (j == 3)
         {
-            soundFileURLRef = CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("wav"), NULL);
-            [theBoard setSoundNumber:j withCFURL:soundFileURLRef]; 
+            [theBoard setSoundNumber:j withCFURL:CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("wav"), NULL)]; 
             [button3 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
         }
         else if (j == 4)
         {
-            soundFileURLRef = CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("wav"), NULL);
-            [theBoard setSoundNumber:j withCFURL:soundFileURLRef]; 
+            [theBoard setSoundNumber:j withCFURL:CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("wav"), NULL)];
             [button4 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
         }
         else if (j == 5)
         {
-            soundFileURLRef = CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("wav"), NULL);
-            [theBoard setSoundNumber:j withCFURL:soundFileURLRef]; 
+            [theBoard setSoundNumber:j withCFURL:CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("wav"), NULL)]; 
             [button5 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
         }
         else if (j == 6)
         {
-            soundFileURLRef = CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("wav"), NULL);
-            [theBoard setSoundNumber:j withCFURL:soundFileURLRef]; 
+            [theBoard setSoundNumber:j withCFURL:CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("wav"), NULL)]; 
             [button6 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
         }
         else if (j == 7)
         {
-            soundFileURLRef = CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("wav"), NULL);
-            [theBoard setSoundNumber:j withCFURL:soundFileURLRef]; 
+            [theBoard setSoundNumber:j withCFURL:CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("wav"), NULL)]; 
             [button7 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
         }
         else if (j == 8)
         {
-            soundFileURLRef = CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("wav"), NULL);
-            [theBoard setSoundNumber:j withCFURL:soundFileURLRef]; 
+            [theBoard setSoundNumber:j withCFURL:CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("wav"), NULL)]; 
             [button8 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
         }
         else if (j == 9)
         {
-            soundFileURLRef = CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("wav"), NULL);
-            [theBoard setSoundNumber:j withCFURL:soundFileURLRef]; 
+            [theBoard setSoundNumber:j withCFURL:CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("wav"), NULL)]; 
             [button9 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
         }
 
         NSLog(@"Initialized soundId %i.", j);
         
     }
-//    theBoard.boardMode = MODE_READY;
+    theBoard.boardMode = MODE_READY;
     NSLog(@"Finished loading \"%@\" theme", themeName);
 }
 
