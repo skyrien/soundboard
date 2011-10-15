@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-
-
 // UI STRING DEFINITIONS
 #define LOC_TITLE @"Soundboard!"
 #define LOC_CANCEL @"Cancel"
@@ -48,11 +46,7 @@
     // SoundIds are pointers to audio files. -loadTheme reads the file system to assign audio files. 
     UInt32 soundIds[9];
     
-    
 }
-
-//Constructor
--(id)initWithTheme:(NSString *)themeName;
 
 // BOARD MODE TRANSITION FUNCTIONS
 
@@ -63,12 +57,10 @@
 
 
 // ACTIONS ON BOARD
+-(void)setSoundNumber:(int)buttonNumber withCFURL:(CFURLRef)theURL;
 
 // This function attempts to play the audio file corresponding to the button
 -(void)playSound:(NSString *)buttonName;
-
-// This function loads the theme defined by "themename"
--(void)loadTheme:(NSString *)themeName;
 
 //@property(nonatomic) NSString* currentTheme;
 //@property(nonatomic, retain) UIButton* button0;
@@ -82,5 +74,6 @@
 @property(nonatomic, retain) UIButton* button8;
 @property(nonatomic, retain) UIButton* button9;
 @property(nonatomic, retain) NSString* boardOwnerId;
+@property(nonatomic, retain) NSString* currentTheme;
 
 @end

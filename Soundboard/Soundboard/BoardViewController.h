@@ -43,9 +43,7 @@
 // determines that an event has occured on this button.
 -(void)longPress:(NSString *)buttonName;
 
-// This function loads the theme defined by "themename"
+// This function loads the theme from disk
 -(void)loadTheme:(NSString *)themeName;
-
-
 
 @end
