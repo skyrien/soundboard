@@ -47,19 +47,18 @@
                                                             LOC_SHARE_FACEBOOK,
                                                             LOC_DELETEBOARD,
                                                             nil, nil];
-        [boardActionSheet
+//        [boardActionSheet
     }
     
     // This is for non-owners
     else {
-        boardActionSheet = [[UIActionSheet alloc]  initWithTitle:nil
-                                                   delegate:self
-                                          cancelButtonTitle:LOC_CANCEL
-                                     destructiveButtonTitle:nil
-                                          otherButtonTitles:LOC_SHARE_EMAIL,
+        boardActionSheet = [[UIActionSheet alloc]  initWithTitle:nil delegate:self
+                                         cancelButtonTitle:LOC_CANCEL
+                                    destructiveButtonTitle:nil
+                                         otherButtonTitles:LOC_SHARE_EMAIL,
                                                             LOC_SHARE_FACEBOOK,
                                                             LOC_DELETEBOARD,
-                                                            nil, nil];
+                                                            nil ];
     }
     [boardActionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
     [boardActionSheet showInView:self.navigationController.view];
