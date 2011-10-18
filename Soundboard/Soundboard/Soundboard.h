@@ -7,12 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import <AVFoundation/AVFoundation.h>
 
 
 #define MODE_EMPTY          0
 #define MODE_READY          1
-#define MODE_EDITMODE       2
+#define MODE_EDIT       2
 
 
 @interface Soundboard : NSObject {
@@ -34,7 +34,7 @@
 // BOARD MODE TRANSITION FUNCTIONS
 
 // actionButtonPressed calls this function when the user chooses to enter edit mode
--(void)enterEditMode;
+//-(void)enterEditMode;
 
 
 
