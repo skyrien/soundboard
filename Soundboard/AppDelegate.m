@@ -69,7 +69,7 @@
 
 - (void)sessionDidReceiveAuthorizationFailure:(DBSession*)session {
 	DBLoginController* loginController = [DBLoginController new];
-	[loginController presentFromController:navigationController];
+	//[loginController presentFromController:navigationController];
 }
 
 @end
