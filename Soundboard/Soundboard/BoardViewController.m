@@ -52,7 +52,8 @@
     
     // This is for non-owners
     else {
-        boardActionSheet = [[UIActionSheet alloc]  initWithTitle:nil delegate:self
+        boardActionSheet = [[UIActionSheet alloc]  initWithTitle:nil
+                                                        delegate:self
                                          cancelButtonTitle:LOC_CANCEL
                                     destructiveButtonTitle:nil
                                          otherButtonTitles:LOC_SHARE_EMAIL,
