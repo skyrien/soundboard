@@ -52,7 +52,7 @@
                                 </state>
                                 <connections>
                                     <action selector="buttonPressed:" destination="DZ6-hW-b9a" eventType="touchUpInside" id="cM3-GS-THV"/>
-                                    <outletCollection property="gestureRecognizers" destination="NZ1-xU-nCy" appends="YES" id="wYU-ty-P3X"/>
+                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="Blj-fE-EV1"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="awL-DV-SHO">
@@ -69,7 +69,7 @@
                                 </state>
                                 <connections>
                                     <action selector="buttonPressed:" destination="DZ6-hW-b9a" eventType="touchUpInside" id="qbd-oJ-aXm"/>
-                                    <outletCollection property="gestureRecognizers" destination="NZ1-xU-nCy" appends="YES" id="Ddz-Zb-ePZ"/>
+                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="q42-I1-JxT"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="tVY-8F-uLg">
@@ -86,7 +86,7 @@
                                 </state>
                                 <connections>
                                     <action selector="buttonPressed:" destination="DZ6-hW-b9a" eventType="touchUpInside" id="Mt6-aX-Xk4"/>
-                                    <outletCollection property="gestureRecognizers" destination="NZ1-xU-nCy" appends="YES" id="qPR-tP-Lzh"/>
+                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="du6-xW-jMy"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Yal-p9-6Fu">
@@ -103,7 +103,7 @@
                                 </state>
                                 <connections>
                                     <action selector="buttonPressed:" destination="DZ6-hW-b9a" eventType="touchUpInside" id="bMa-js-K1b"/>
-                                    <outletCollection property="gestureRecognizers" destination="NZ1-xU-nCy" appends="YES" id="e4e-LG-G3j"/>
+                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="Acj-n7-d4c"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="h35-I7-Edl">
@@ -120,7 +120,7 @@
                                 </state>
                                 <connections>
                                     <action selector="buttonPressed:" destination="DZ6-hW-b9a" eventType="touchUpInside" id="qHS-PB-20m"/>
-                                    <outletCollection property="gestureRecognizers" destination="NZ1-xU-nCy" appends="YES" id="yiw-Tl-O7I"/>
+                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="x38-f0-k4W"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="OQ6-gN-O84">
@@ -137,7 +137,7 @@
                                 </state>
                                 <connections>
                                     <action selector="buttonPressed:" destination="DZ6-hW-b9a" eventType="touchUpInside" id="a1X-gs-0bB"/>
-                                    <outletCollection property="gestureRecognizers" destination="NZ1-xU-nCy" appends="YES" id="dIX-Z2-B4g"/>
+                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="5xa-GH-CMW"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="UgK-EM-JoZ">
@@ -154,7 +154,7 @@
                                 </state>
                                 <connections>
                                     <action selector="buttonPressed:" destination="DZ6-hW-b9a" eventType="touchUpInside" id="pM7-Ch-Opm"/>
-                                    <outletCollection property="gestureRecognizers" destination="NZ1-xU-nCy" appends="YES" id="kBW-ZL-hff"/>
+                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="b9s-ZM-kue"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ORI-Je-d0l">
@@ -171,7 +171,7 @@
                                 </state>
                                 <connections>
                                     <action selector="buttonPressed:" destination="DZ6-hW-b9a" eventType="touchUpInside" id="A9Z-PI-VUg"/>
-                                    <outletCollection property="gestureRecognizers" destination="NZ1-xU-nCy" appends="YES" id="4TT-yt-QCH"/>
+                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="JvH-7X-JwT"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="OQv-uw-hXL">
@@ -188,7 +188,23 @@
                                 </state>
                                 <connections>
                                     <action selector="buttonPressed:" destination="DZ6-hW-b9a" eventType="touchUpInside" id="QPe-BT-VbT"/>
-                                    <outletCollection property="gestureRecognizers" destination="NZ1-xU-nCy" appends="YES" id="38x-EM-Ji0"/>
+                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="1Kc-Rr-ZgY"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="W56-n8-S7V">
+                                <rect key="frame" x="0.0" y="321" width="320" height="43"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <gestureRecognizers/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="0">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="qaE-b9-1v5"/>
                                 </connections>
                             </button>
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" id="XFH-cu-g8f">
@@ -198,9 +214,6 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="NZ1-xU-nCy" appends="YES" id="tt1-Vg-Mr9"/>
-                        </connections>
                     </view>
                     <navigationItem key="navigationItem" title="Test Board" id="M64-Ph-Fbu">
                         <barButtonItem key="rightBarButtonItem" systemItem="action" id="e7K-q7-u45">
@@ -220,9 +233,14 @@
                         <outlet property="button7" destination="UgK-EM-JoZ" id="YnM-J2-1WG"/>
                         <outlet property="button8" destination="ORI-Je-d0l" id="1PI-Xq-1X5"/>
                         <outlet property="button9" destination="OQv-uw-hXL" id="2Td-fG-Drc"/>
+                        <segue destination="qdR-lJ-lVo" kind="modal" modalTransitionStyle="partialCurl" id="QLi-5B-XXF"/>
                     </connections>
                 </viewController>
-                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="NZ1-xU-nCy"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="zxG-jt-sN4">
+                    <connections>
+                        <action selector="longPress:" destination="DZ6-hW-b9a" id="uj0-rV-8Gx"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="340" y="-421"/>
         </scene>
@@ -296,7 +314,9 @@
             <relationships>
                 <relationship kind="action" name="actionButtonPressed:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="action" name="buttonPressed:" candidateClass="UIButton"/>
+                <relationship kind="action" name="longPress:" candidateClass="UILongPressGestureRecognizer"/>
                 <relationship kind="outlet" name="background" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="button0" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="button1" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="button2" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="button3" candidateClass="UIButton"/>
@@ -306,6 +326,7 @@
                 <relationship kind="outlet" name="button7" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="button8" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="button9" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="longPressGR" candidateClass="UILongPressGestureRecognizer"/>
             </relationships>
         </class>
         <class className="HomeViewController" superclassName="UIViewController">

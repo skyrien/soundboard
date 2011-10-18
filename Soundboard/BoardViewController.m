@@ -3,12 +3,18 @@
 //  Soundboard
 //
 //  Created by Alexander Joo on 10/9/11.
-//  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2011 BadHydra Productions. All rights reserved.
+//
+//  This is the BoardViewController class. It implements functioanltiy described in the
+//  project specification OneNote document slide titled "Board View".
+//
+//  skyrien@gmail.com/2011 > SoundBoard > User Experience Slides > Board View
 //
 
 #import "BoardViewController.h"
 
 @implementation BoardViewController
+@synthesize longPressGR;
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
@@ -20,82 +26,167 @@
     // Setting up the board...
     theBoard = [[Soundboard alloc] init];
     theBoard.boardMode = MODE_EMPTY;
+    buttonIndexFacebook = buttonIndexEmail = buttonIndexEdit = buttonIndexDelete = -1;
+    longPressGR.delegate = self;
     
     // The following should only be set if in debug mode
     [self loadTheme:@"debug"];
     userIsBoardOwner = YES;
+
 }
+
+// ACTION SHEET LOGIC
 
 -(void)didPresentActionSheet {
     NSLog(@"Action sheet was presented");
     
 }
 
-// BOARD LOGIC GOES HERE
 -(IBAction)actionButtonPressed:(UIButton *)sender {
     NSLog(@"Action button was pressed");
     
-    // This is the view if the current user is the board's owner
-    if (userIsBoardOwner) {
+    if (theBoard.boardMode == MODE_READY)
+    {
+        // This is the view if the current user is the board's owner
+        if (userIsBoardOwner) {
+            NSLog(@"Current user is the board's owner. Loading owner action sheet.");
+            boardActionSheet = [[UIActionSheet alloc]  initWithTitle:nil
+                                                            delegate:self
+                                                   cancelButtonTitle:LOC_CANCEL
+                                              destructiveButtonTitle:nil
+                                                   otherButtonTitles:LOC_SHARE_EMAIL,
+                                LOC_SHARE_FACEBOOK,
+                                LOC_EDITBOARD,
+                                LOC_DELETEBOARD,
+                                nil, nil];
+            // Setting owner action sheet parameters
+            boardActionSheet.destructiveButtonIndex = 3;
+            buttonIndexEmail = 0;
+            buttonIndexFacebook = 1;
+            buttonIndexEdit = 2;
+            buttonIndexDelete = 3;
+            
+        }
         
-        boardActionSheet = [[UIActionSheet alloc]  initWithTitle:nil
-                                                   delegate:self
-                                          cancelButtonTitle:LOC_CANCEL
-                                     destructiveButtonTitle:nil
-                                          otherButtonTitles:LOC_EDITBOARD,
-                                                            LOC_SHARE_EMAIL,
-                                                            LOC_SHARE_FACEBOOK,
-                                                            LOC_DELETEBOARD,
-                                                            nil, nil];
-//        [boardActionSheet
+        // This is for non-owners
+        else {
+            NSLog(@"Current user is the board's owner. Loading viewer action sheet.");
+            boardActionSheet = [[UIActionSheet alloc]  initWithTitle:nil
+                                                            delegate:self
+                                                   cancelButtonTitle:LOC_CANCEL
+                                              destructiveButtonTitle:nil
+                                                   otherButtonTitles:LOC_SHARE_EMAIL,
+                                LOC_SHARE_FACEBOOK,
+                                LOC_DELETEBOARD,
+                                nil ];
+            // Setting viewer action sheet parameters
+            boardActionSheet.destructiveButtonIndex = 2;
+            buttonIndexEmail = 0;
+            buttonIndexFacebook = 1;
+            buttonIndexDelete = 2;
+            
+        }
+        [boardActionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
+        [boardActionSheet showInView:self.navigationController.view];
+        
     }
     
-    // This is for non-owners
-    else {
-        boardActionSheet = [[UIActionSheet alloc]  initWithTitle:nil
-                                                        delegate:self
-                                         cancelButtonTitle:LOC_CANCEL
-                                    destructiveButtonTitle:nil
-                                         otherButtonTitles:LOC_SHARE_EMAIL,
-                                                            LOC_SHARE_FACEBOOK,
-                                                            LOC_DELETEBOARD,
-                                                            nil ];
+    else if (theBoard.boardMode == MODE_EDIT)
+    {
+        
     }
-    [boardActionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
-    [boardActionSheet showInView:self.navigationController.view];
                    
 }
 
 // This message is sent internally when a action sheet button is pressed
-- (void)actionSheet:boardActionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    NSLog(@"Clicked action sheet button index: %i", buttonIndex);
-    
-    if (buttonIndex == 0)
-    [theBoard enterEditMode];
-}
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+//    NSLog(@"Pressed button at index: %i", buttonIndex);
 
+    // This is the first action sheet
+    if (actionSheet == boardActionSheet)
+    {        
+        // Entering edit mode actually doesn't do anything:
+        // Instead, this pops over a dialog showing the user how to edit the button
+        if (buttonIndex == buttonIndexEdit) {
+            NSLog(@"Entering board edit mode...");
+            
+        }
+        else if (buttonIndex == buttonIndexEmail) {
+            NSLog(@"Entering sharing email mode...");
+        }
+        
+        else if (buttonIndex == buttonIndexFacebook) {
+            NSLog(@"Entering Facebook sharing mode...");
+        }
+        else if (buttonIndex == buttonIndexDelete) {
+            NSLog(@"Showing board delete confirmation...");
+            confirmDeleteActionSheet = [[UIActionSheet alloc] initWithTitle:LOC_CONFIRMDELETE
+                                                                   delegate:self
+                                                          cancelButtonTitle:LOC_CANCEL
+                                                     destructiveButtonTitle:LOC_FINALCONFIRMATION
+                                                          otherButtonTitles:nil, nil];
+            [confirmDeleteActionSheet setActionSheetStyle:UIActionSheetStyleBlackOpaque];
+            [confirmDeleteActionSheet showInView:self.navigationController.view];
+        }    
+        else {
+            NSLog(@"User canceled board action.");
+        }
+
+    }
+    
+    // This is the delete confirmation action sheet
+    else if (actionSheet == confirmDeleteActionSheet)
+    {
+        if (buttonIndex == 0) {
+            NSLog(@"Entering board delete mode...");
+
+        }
+        else if (buttonIndex == 1)
+        {
+            NSLog(@"User canceled delete operation.");
+        }
+
+    }
+
+    
+}
+/*
+// This message is sent internally when a action sheet button is pressed
+- (void)actionSheet:confirmDeleteActionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+}
+*/
+
+// PLAYBACK FUNCTIONS GO HERE
 
 -(IBAction)buttonPressed:(UIButton *)sender {
-
     NSString* buttonName = [[sender titleLabel] text];
     NSLog(@"Button %@ was pressed.", buttonName);
 
-    // Sound gets played here
-    [theBoard playSound:buttonName];
+    // If in ready (play) mode, play the sound
+    if (theBoard.boardMode == MODE_READY)
+    {
+
+        // Sound gets played here
+        [theBoard playSound:buttonName];
+    }
+    
+    // if in edit mode, bring up the edit dialog
+    else if (theBoard.boardMode == MODE_EDIT)
+    {
+        
+    }
 }
 
-
-
-
-
--(void)longPress:(NSString *)buttonName {
-    NSLog(@"Button %@ was LONG pressed.", buttonName);
+-(IBAction)longPress:(UILongPressGestureRecognizer *)sender {
+    NSLog(@"Button %@ was LONG pressed.",  sender);
 }
 
 -(void)loadTheme:(NSString *)themeName {
     
     //Initializes basic theme elements, including name, background, audio, etc...
     theBoard.currentTheme = themeName;
+    self.title = themeName;
     
     // VALIDATE THAT THE CURRENT USER IS THE BOARD'S OWNER
     
@@ -206,6 +297,5 @@
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
-
 
 @end
