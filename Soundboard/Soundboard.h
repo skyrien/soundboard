@@ -8,17 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
-
-
-#define MODE_EMPTY          0
-#define MODE_READY          1
-#define MODE_EDIT       2
-
+#import <AudioToolbox/AudioToolbox.h>
 
 @interface Soundboard : NSObject {
     
     // Current Game Mode is represnted by this integer
-    NSInteger boardMode;
+//    NSInteger boardMode;
     
     // This is a string representing the theme name
     NSString* currentTheme;
@@ -33,8 +28,7 @@
 
 // BOARD MODE TRANSITION FUNCTIONS
 
-// actionButtonPressed calls this function when the user chooses to enter edit mode
-//-(void)enterEditMode;
+
 
 
 
@@ -47,6 +41,6 @@
 
 @property(nonatomic, retain) NSString* boardOwnerId;
 @property(nonatomic, retain) NSString* currentTheme;
-@property(nonatomic) NSInteger boardMode;
+//@property(nonatomic) NSInteger boardMode;
 
 @end
