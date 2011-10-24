@@ -16,12 +16,6 @@
     return self;
 }
 
-/*
--(void)enterEditMode {
-    self.boardMode = MODE_EDIT;
-}
-*/
-
 -(void)setSoundNumber:(int)buttonNumber withCFURL:(CFURLRef)theURL {
     
     AudioServicesCreateSystemSoundID(theURL, &soundIds[buttonNumber - 1]);
@@ -36,6 +30,6 @@
 }
 
 
-@synthesize boardOwnerId, currentTheme, boardMode;
+@synthesize boardOwnerId, currentTheme;
 
 @end

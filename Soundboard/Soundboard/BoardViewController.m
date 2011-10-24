@@ -14,20 +14,28 @@
 #import "BoardViewController.h"
 
 @implementation BoardViewController
-@synthesize longPressGR;
+@synthesize longPressGR, actionButton, EditSoundVC;
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     NSLog(@"Board view loaded.");
-    self.navigationController.navigationBar.backItem.leftBarButtonItem.title = @"Home";
 
     // Setting up the board...
+    session = [AVAudioSession sharedInstance];
+    
+    [session setActive:YES error:nil];
+    [session setCategory:AVAudioSessionCategorySoloAmbient error:nil];
+    
     theBoard = [[Soundboard alloc] init];
-    theBoard.boardMode = MODE_EMPTY;
+    mode = MODE_EMPTY;
     buttonIndexFacebook = buttonIndexEmail = buttonIndexEdit = buttonIndexDelete = -1;
+//    self.navigationItem.backBarButtonItem.title = @"Home"; 
     longPressGR.delegate = self;
+    
+    // Accessor pointers
+    navController = self.navigationController;
     
     // The following should only be set if in debug mode
     [self loadTheme:@"debug"];
@@ -45,7 +53,7 @@
 -(IBAction)actionButtonPressed:(UIButton *)sender {
     NSLog(@"Action button was pressed");
     
-    if (theBoard.boardMode == MODE_READY)
+    if (mode == MODE_READY)
     {
         // This is the view if the current user is the board's owner
         if (userIsBoardOwner) {
@@ -91,7 +99,7 @@
         
     }
     
-    else if (theBoard.boardMode == MODE_EDIT)
+    else if (mode == MODE_EDIT)
     {
         
     }
@@ -102,24 +110,31 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
 //    NSLog(@"Pressed button at index: %i", buttonIndex);
 
+
     // This is the first action sheet
     if (actionSheet == boardActionSheet)
     {        
         // Entering edit mode actually doesn't do anything:
         // Instead, this pops over a dialog showing the user how to edit the button
         if (buttonIndex == buttonIndexEdit) {
-            NSLog(@"Entering board edit mode...");
+            NSLog(@"User pressed \"Edit this board\".");
             
-        }
-        else if (buttonIndex == buttonIndexEmail) {
-            NSLog(@"Entering sharing email mode...");
+            
+            [self enterEditMode];
         }
         
-        else if (buttonIndex == buttonIndexFacebook) {
-            NSLog(@"Entering Facebook sharing mode...");
+        // The user clicked the share to email button.
+        else if (buttonIndex == buttonIndexEmail) {
+            NSLog(@"User pressed \"Share by Email\".");
         }
+
+        // The user clicked the share to Facebook button.        
+        else if (buttonIndex == buttonIndexFacebook) {
+            NSLog(@"User pressed \"Share by Facebook\".");
+        }
+        
         else if (buttonIndex == buttonIndexDelete) {
-            NSLog(@"Showing board delete confirmation...");
+            NSLog(@"User pressed \"Delete this board\".");
             confirmDeleteActionSheet = [[UIActionSheet alloc] initWithTitle:LOC_CONFIRMDELETE
                                                                    delegate:self
                                                           cancelButtonTitle:LOC_CANCEL
@@ -129,7 +144,7 @@
             [confirmDeleteActionSheet showInView:self.navigationController.view];
         }    
         else {
-            NSLog(@"User canceled board action.");
+            NSLog(@"User pressed \"Cancel\".");
         }
 
     }
@@ -138,16 +153,17 @@
     else if (actionSheet == confirmDeleteActionSheet)
     {
         if (buttonIndex == 0) {
-            NSLog(@"Entering board delete mode...");
+            NSLog(@"User pressed \"Yes, delete this board\".");
 
         }
         else if (buttonIndex == 1)
         {
-            NSLog(@"User canceled delete operation.");
+            NSLog(@"User pressed \"Cancel\".");
         }
 
     }
 
+    buttonIndexFacebook = buttonIndexEmail = buttonIndexEdit = buttonIndexDelete = -1;
     
 }
 /*
@@ -157,14 +173,52 @@
 }
 */
 
+
+// MODE TRANSITIONS GO HERE
+-(void)enterEditMode {
+    
+    // Allocation needed elements
+    UIBarButtonItem* doneButton = [[UIBarButtonItem alloc]
+            initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                 target:self
+                                 action:@selector(exitEditMode)];
+                                   
+                                   //initWithTitle:LOC_DONE style:UIBarButtonItemStyleDone target:self action:self.exitEditMode];
+    
+    // Change UI elements as appropriate to indicate mode change.
+    navController.navigationBar.tintColor = [UIColor lightGrayColor];
+    [self.navigationItem setHidesBackButton:YES animated:YES];
+    self.title = [NSString stringWithFormat:@"Editing %@",theBoard.currentTheme];
+    [self.navigationItem setRightBarButtonItem:doneButton animated:YES];
+
+    // Preparing the edit view controller so the user can use it
+    EditSoundVC = [[EditSoundViewController alloc] initWithNibName:@"EditView" bundle:nil];
+    
+    // Finally, set the mode
+    mode = MODE_EDIT;
+    NSLog(@"Entered edit mode. New mode: %i", mode);
+}
+
+-(void)exitEditMode {
+    // Return UI elements to normal (gray)
+    navController.navigationBar.tintColor = [UIColor darkGrayColor];
+    self.title = theBoard.currentTheme;
+    [self.navigationItem setHidesBackButton:NO animated:YES];
+    [self.navigationItem setRightBarButtonItem:actionButton animated:YES];
+
+    mode = MODE_READY;
+    NSLog(@"Exited edit mode. New mode: %i", mode);
+}
+
+
 // PLAYBACK FUNCTIONS GO HERE
 
 -(IBAction)buttonPressed:(UIButton *)sender {
     NSString* buttonName = [[sender titleLabel] text];
-    NSLog(@"Button %@ was pressed.", buttonName);
+    NSLog(@"Button %@ was pressed, while in Mode: %i", buttonName, mode);
 
     // If in ready (play) mode, play the sound
-    if (theBoard.boardMode == MODE_READY)
+    if (mode == MODE_READY)
     {
 
         // Sound gets played here
@@ -172,15 +226,32 @@
     }
     
     // if in edit mode, bring up the edit dialog
-    else if (theBoard.boardMode == MODE_EDIT)
+    else if (mode == MODE_EDIT)
     {
-        
+        // This shows the edit sound view
+        [self presentModalViewController:EditSoundVC animated:YES];
+        [EditSoundVC loadSound:sender];
+//        [self dismissModalViewControllerAnimated:YES];
     }
 }
 
+
 -(IBAction)longPress:(UILongPressGestureRecognizer *)sender {
-    NSLog(@"Button %@ was LONG pressed.",  sender);
+    UIButton* longPressedButton;
+    
+    // Since we only care when the gesture began
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        longPressedButton = sender.view;
+        NSLog(@"Button %@ was LONG pressed.", [[longPressedButton titleLabel] text]);
+    }
+    
+
 }
+
+
+
+
+
 
 -(void)loadTheme:(NSString *)themeName {
     
@@ -197,8 +268,8 @@
     for (int i = 0; i < 9; i++)
     {
         int j = i + 1;
-        NSString* fileName = [NSString stringWithFormat:@"%@_%i", themeName, j];
-        NSString* imageFileName = [NSString stringWithFormat:@"%@_%i.png", themeName, j];
+        NSString* fileName = [NSString stringWithFormat:@"%@_%i", @"sound", j];
+        NSString* imageFileName = [NSString stringWithFormat:@"%@_%i.png", @"image", j];
         
         if (j == 1) // else if (i == 1)
         {
@@ -245,11 +316,11 @@
             [theBoard setSoundNumber:j withCFURL:CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("wav"), NULL)]; 
             [button9 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
         }
-
+        
         NSLog(@"Initialized soundId %i.", j);
         
     }
-    theBoard.boardMode = MODE_READY;
+    mode = MODE_READY;
     NSLog(@"Finished loading \"%@\" theme", themeName);
 }
 
