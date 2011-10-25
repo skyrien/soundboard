@@ -72,6 +72,9 @@
 		7005E481144D496100E5D6DC /* appIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7005E480144D496100E5D6DC /* appIcon.png */; };
 		7005E483144D497600E5D6DC /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 7005E482144D497600E5D6DC /* Default.png */; };
 		7005E485144D4D7C00E5D6DC /* appIcon_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 7005E484144D4D7C00E5D6DC /* appIcon_small.png */; };
+		7024E6E114564A0E00D6C70B /* DropBoxModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 7024E6DC14564A0E00D6C70B /* DropBoxModule.m */; };
+		7024E6E214564A0E00D6C70B /* SoundBoardError.m in Sources */ = {isa = PBXBuildFile; fileRef = 7024E6DE14564A0E00D6C70B /* SoundBoardError.m */; };
+		7024E6E314564A0E00D6C70B /* ThemeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7024E6E014564A0E00D6C70B /* ThemeManager.m */; };
 		70520DE11442B5BB00B0426E /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70520DE01442B5BB00B0426E /* HomeViewController.m */; };
 		70520DE41442B73F00B0426E /* BoardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70520DE31442B73F00B0426E /* BoardViewController.m */; };
 		70520DF01442DEAD00B0426E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70520DEF1442DEAD00B0426E /* AudioToolbox.framework */; };
@@ -211,6 +214,12 @@
 		7005E480144D496100E5D6DC /* appIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon.png; sourceTree = "<group>"; };
 		7005E482144D497600E5D6DC /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		7005E484144D4D7C00E5D6DC /* appIcon_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon_small.png; sourceTree = "<group>"; };
+		7024E6DB14564A0E00D6C70B /* DropBoxModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropBoxModule.h; sourceTree = "<group>"; };
+		7024E6DC14564A0E00D6C70B /* DropBoxModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropBoxModule.m; sourceTree = "<group>"; };
+		7024E6DD14564A0E00D6C70B /* SoundBoardError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundBoardError.h; sourceTree = "<group>"; };
+		7024E6DE14564A0E00D6C70B /* SoundBoardError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundBoardError.m; sourceTree = "<group>"; };
+		7024E6DF14564A0E00D6C70B /* ThemeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemeManager.h; sourceTree = "<group>"; };
+		7024E6E014564A0E00D6C70B /* ThemeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemeManager.m; sourceTree = "<group>"; };
 		70520DDF1442B5BB00B0426E /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		70520DE01442B5BB00B0426E /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		70520DE21442B73F00B0426E /* BoardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoardViewController.h; sourceTree = "<group>"; };
@@ -468,6 +477,12 @@
 				66A15425144D40D800A9031B /* Soundboard.m */,
 				70834A1E1442B374005EA445 /* AppDelegate.h */,
 				70834A1F1442B374005EA445 /* AppDelegate.m */,
+				7024E6DB14564A0E00D6C70B /* DropBoxModule.h */,
+				7024E6DC14564A0E00D6C70B /* DropBoxModule.m */,
+				7024E6DD14564A0E00D6C70B /* SoundBoardError.h */,
+				7024E6DE14564A0E00D6C70B /* SoundBoardError.m */,
+				7024E6DF14564A0E00D6C70B /* ThemeManager.h */,
+				7024E6E014564A0E00D6C70B /* ThemeManager.m */,
 				70834A161442B374005EA445 /* Supporting Files */,
 			);
 			path = Soundboard;
@@ -696,6 +711,9 @@
 				66A15426144D40D800A9031B /* Soundboard.m in Sources */,
 				706EBAFC144E966100E0DF91 /* EditViewController.m in Sources */,
 				70D62AE21454D1B9007C27A0 /* EditSoundViewController.m in Sources */,
+				7024E6E114564A0E00D6C70B /* DropBoxModule.m in Sources */,
+				7024E6E214564A0E00D6C70B /* SoundBoardError.m in Sources */,
+				7024E6E314564A0E00D6C70B /* ThemeManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
