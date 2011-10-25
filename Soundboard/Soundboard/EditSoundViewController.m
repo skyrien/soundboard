@@ -133,7 +133,7 @@
 
 
 - (IBAction)pressedPlayButton:(UIButton *) sender {
-    NSLog(@"User pressed Play.");
+//    NSLog(@"User pressed Play.");
     
     if (mode == MODE_READY) {
         NSLog(@"Playing existing sound.");
@@ -179,7 +179,8 @@
         [theRecorder pause];
         mode = MODE_RECORDINGPAUSED;
         [session setCategory:AVAudioSessionCategorySoloAmbient error:nil];
-        NSLog(@"Pausing the recording...");
+        [[recordButton titleLabel] setText:@"Resume"];
+        NSLog(@"Pausing recording...");
     }
 
     // Otherwise, begin a new recording!
@@ -190,7 +191,7 @@
         [session setCategory:AVAudioSessionCategoryRecord error:nil];
         
         // Starts recording
-        NSLog(@"Beginning the recording...");
+        NSLog(@"Beginning/Continuing recording...");
         [theRecorder record];
         [[recordButton titleLabel] setText:@"Pause"];
         [[playButton titleLabel] setText:@"Stop"];
