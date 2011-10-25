@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.0" toolsVersion="1938" systemVersion="11B26" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="Ris-SM-jc2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.0" toolsVersion="1938" systemVersion="11C74" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="Ris-SM-jc2">
     <dependencies>
         <development defaultVersion="4200" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="933"/>
@@ -8,15 +8,51 @@
         <scene sceneID="hU6-DX-VlU">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nDo-IF-PMI" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="qdR-lJ-lVo" sceneMemberID="viewController">
+                <viewController id="qdR-lJ-lVo" customClass="EditViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="A8y-4W-5gQ">
-                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="appIcon.png" id="YzJ-VB-Mli">
+                                <rect key="frame" x="194" y="20" width="106" height="106"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Soundboard name" minimumFontSize="17" id="h29-eW-q94">
+                                <rect key="frame" x="20" y="50" width="140" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Board Name:" lineBreakMode="tailTruncation" minimumFontSize="10" id="jXa-5q-11o">
+                                <rect key="frame" x="20" y="20" width="107" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                                <color key="shadowColor" cocoaTouchSystemColor="darkTextColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Status: " lineBreakMode="tailTruncation" minimumFontSize="10" id="0wz-2F-RFv">
+                                <rect key="frame" x="241" y="412" width="59" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" text="Add a description..." id="dqa-oC-Pcq">
+                                <rect key="frame" x="20" y="134" width="280" height="200"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Board info" id="d36-TH-27K"/>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="815" y="-421"/>
+            <point key="canvasLocation" x="881" y="-1039"/>
         </scene>
         <scene sceneID="ih2-hv-D6N">
             <objects>
@@ -52,7 +88,7 @@
                                 </state>
                                 <connections>
                                     <action selector="buttonPressed:" destination="DZ6-hW-b9a" eventType="touchUpInside" id="cM3-GS-THV"/>
-                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="Blj-fE-EV1"/>
+                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="QAc-eO-pWn"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="awL-DV-SHO">
@@ -69,7 +105,7 @@
                                 </state>
                                 <connections>
                                     <action selector="buttonPressed:" destination="DZ6-hW-b9a" eventType="touchUpInside" id="qbd-oJ-aXm"/>
-                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="q42-I1-JxT"/>
+                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="QxC-be-ckj"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="tVY-8F-uLg">
@@ -86,7 +122,7 @@
                                 </state>
                                 <connections>
                                     <action selector="buttonPressed:" destination="DZ6-hW-b9a" eventType="touchUpInside" id="Mt6-aX-Xk4"/>
-                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="du6-xW-jMy"/>
+                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="5ak-L2-6Wf"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Yal-p9-6Fu">
@@ -103,7 +139,7 @@
                                 </state>
                                 <connections>
                                     <action selector="buttonPressed:" destination="DZ6-hW-b9a" eventType="touchUpInside" id="bMa-js-K1b"/>
-                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="Acj-n7-d4c"/>
+                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="x3g-9p-FpB"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="h35-I7-Edl">
@@ -120,7 +156,7 @@
                                 </state>
                                 <connections>
                                     <action selector="buttonPressed:" destination="DZ6-hW-b9a" eventType="touchUpInside" id="qHS-PB-20m"/>
-                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="x38-f0-k4W"/>
+                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="pC6-3R-1KN"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="OQ6-gN-O84">
@@ -137,7 +173,7 @@
                                 </state>
                                 <connections>
                                     <action selector="buttonPressed:" destination="DZ6-hW-b9a" eventType="touchUpInside" id="a1X-gs-0bB"/>
-                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="5xa-GH-CMW"/>
+                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="edA-va-m0u"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="UgK-EM-JoZ">
@@ -154,7 +190,7 @@
                                 </state>
                                 <connections>
                                     <action selector="buttonPressed:" destination="DZ6-hW-b9a" eventType="touchUpInside" id="pM7-Ch-Opm"/>
-                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="b9s-ZM-kue"/>
+                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="PEh-pT-IRh"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ORI-Je-d0l">
@@ -171,7 +207,7 @@
                                 </state>
                                 <connections>
                                     <action selector="buttonPressed:" destination="DZ6-hW-b9a" eventType="touchUpInside" id="A9Z-PI-VUg"/>
-                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="JvH-7X-JwT"/>
+                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="lAS-ct-3DE"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="OQv-uw-hXL">
@@ -188,15 +224,18 @@
                                 </state>
                                 <connections>
                                     <action selector="buttonPressed:" destination="DZ6-hW-b9a" eventType="touchUpInside" id="QPe-BT-VbT"/>
-                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="1Kc-Rr-ZgY"/>
+                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="wb2-Xq-jAH"/>
                                 </connections>
                             </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="W56-n8-S7V">
-                                <rect key="frame" x="0.0" y="321" width="320" height="43"/>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" id="XFH-cu-g8f">
+                                <rect key="frame" x="20" y="328" width="280" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <gestureRecognizers/>
+                            </pageControl>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="3bu-0t-Qwr">
+                                <rect key="frame" x="282" y="336" width="18" height="19"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="0">
+                                <state key="normal">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -204,13 +243,9 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="qaE-b9-1v5"/>
+                                    <segue destination="qdR-lJ-lVo" kind="push" id="0bn-dm-Jdd"/>
                                 </connections>
                             </button>
-                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" id="XFH-cu-g8f">
-                                <rect key="frame" x="20" y="328" width="280" height="36"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </pageControl>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -223,6 +258,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="actionButton" destination="e7K-q7-u45" id="MUD-uW-pSY"/>
                         <outlet property="background" destination="qFJ-TP-gv9" id="52H-Ze-E8U"/>
                         <outlet property="button1" destination="XEl-lb-6fb" id="bPO-zH-fYf"/>
                         <outlet property="button2" destination="awL-DV-SHO" id="CHE-11-L2I"/>
@@ -233,7 +269,6 @@
                         <outlet property="button7" destination="UgK-EM-JoZ" id="YnM-J2-1WG"/>
                         <outlet property="button8" destination="ORI-Je-d0l" id="1PI-Xq-1X5"/>
                         <outlet property="button9" destination="OQv-uw-hXL" id="2Td-fG-Drc"/>
-                        <segue destination="qdR-lJ-lVo" kind="modal" modalTransitionStyle="partialCurl" id="QLi-5B-XXF"/>
                     </connections>
                 </viewController>
                 <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="zxG-jt-sN4">
@@ -298,7 +333,7 @@
                 <navigationController definesPresentationContext="YES" id="Ris-SM-jc2" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="qIU-09-5KP">
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     </navigationBar>
                     <connections>
                         <segue destination="QCv-OY-je4" kind="relationship" relationship="rootViewController" id="3sD-Tl-w3q"/>
@@ -308,6 +343,9 @@
             <point key="canvasLocation" x="-577" y="138"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="appIcon.png" width="114" height="114"/>
+    </resources>
     <classes>
         <class className="BoardViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/BoardViewController.h"/>
@@ -315,6 +353,8 @@
                 <relationship kind="action" name="actionButtonPressed:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="action" name="buttonPressed:" candidateClass="UIButton"/>
                 <relationship kind="action" name="longPress:" candidateClass="UILongPressGestureRecognizer"/>
+                <relationship kind="outlet" name="EditSoundVC" candidateClass="EditSoundViewController"/>
+                <relationship kind="outlet" name="actionButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="background" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="button0" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="button1" candidateClass="UIButton"/>
@@ -326,7 +366,17 @@
                 <relationship kind="outlet" name="button7" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="button8" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="button9" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="editSegue" candidateClass="UIStoryboardSegue"/>
                 <relationship kind="outlet" name="longPressGR" candidateClass="UILongPressGestureRecognizer"/>
+            </relationships>
+        </class>
+        <class className="EditSoundViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EditSoundViewController.h"/>
+        </class>
+        <class className="EditViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EditViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="doneButtonPressed:"/>
             </relationships>
         </class>
         <class className="HomeViewController" superclassName="UIViewController">
@@ -335,6 +385,9 @@
                 <relationship kind="action" name="buttonPressed:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="linkButton" candidateClass="UIButton"/>
             </relationships>
+        </class>
+        <class className="UIStoryboardSegue" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UIStoryboardSegue.h"/>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
