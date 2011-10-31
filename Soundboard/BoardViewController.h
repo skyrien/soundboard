@@ -11,18 +11,17 @@
 #import "EditSoundViewController.h"
 #import "EditViewController.h"
 #import "LocStrings.h"
+#import "ThemeManager.h"
+#import "DropBoxModule.h"
 
 // BOARD MODES
 #define MODE_EMPTY              0
 #define MODE_READY              1
 #define MODE_EDIT               2
-#define MODE_RECORDING          3
 
 @interface BoardViewController : UIViewController
 {
      // Collection of buttons in IB - These are all sound buttons.
-    //IBOutlet UIButton* button0; -- REMOVED FROM UI
-//    IBOutlet UIButton *button0;
     IBOutlet UIButton *button1;
     IBOutlet UIButton *button2;    
     IBOutlet UIButton *button3;
@@ -35,11 +34,8 @@
     IBOutlet UIBarButtonItem *actionButton;
     IBOutlet UIStoryboardSegue *editSegue;
     
-    // This file represents the background photo (is this needed??)
-    IBOutlet UIImageView *background;
-    
     IBOutlet EditSoundViewController *EditSoundVC;
-    IBOutlet UILongPressGestureRecognizer *longPressGR;
+//    IBOutlet UILongPressGestureRecognizer *longPressGR;
 
     // Access variables
     Soundboard *theBoard;
@@ -47,8 +43,9 @@
     UINavigationController* navController;
     NSInteger mode;
     AVAudioSession *session;
+    ThemeManager* themeManager;
     
-    // Variables
+    // Board variables
     bool        userIsBoardOwner;
     int         buttonIndexFacebook,
                 buttonIndexEmail,
@@ -56,32 +53,32 @@
                 buttonIndexDelete;
 }
 
+// MODE TRANSITIONS GO HERE
+// THE FOLLOWING METHODS COVER ENTER AND EXIT MODE FUNCTIONS
+
+// actionButtonPressed calls the Enter to edit function when the user chooses to
+// enter edit mode. The user presses "done" to exit edit mode.
+-(void)enterEditMode;
+-(void)exitEditMode;
+
 // This function is called whenever an audio button is pressed
+// In edit mode, this triggers loading the edit dialog for the button.
 -(IBAction)buttonPressed:(UIButton *)sender;
 
-// Pressing the action button (the one in the upper right corner calls this function.
-// Note that if the board is in edit mode, then this could be a "Save" button.
+// Pressing the action button (right UIBarButtonItem) calls this function.
+// Note that if the board is in edit mode, then this could be a "Done" button.
 -(IBAction)actionButtonPressed:(UIBarButtonItem *)sender;
 
 // This function is called on the button when the Long Press Gesture Recognizer
 // determines that an event has occured on this button.
--(IBAction)longPress:(UILongPressGestureRecognizer *)sender;
+//-(IBAction)longPress:(UILongPressGestureRecognizer *)sender;
 
-
-//-(IBAction)doneEditing:(UIBarButtonItem *) sender;
-//-(IBAction)cancelEditing:(UIBarButtonItem *) sender;
-
-//MODE TRANSITIONS
-
-// actionButtonPressed calls the Enter to edit function when the user chooses to enter edit mode
--(void)enterEditMode;
--(void)exitEditMode;
 
 
 // This function loads the theme from disk
 -(void)loadTheme:(NSString *)themeName;
 
-@property (nonatomic, retain) UILongPressGestureRecognizer *longPressGR;
+//@property (nonatomic, retain) UILongPressGestureRecognizer *longPressGR;
 @property (nonatomic, retain) UIBarButtonItem *actionButton;
 @property (nonatomic, retain) IBOutlet EditSoundViewController *EditSoundVC;
 

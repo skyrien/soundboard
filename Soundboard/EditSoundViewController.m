@@ -45,29 +45,46 @@
     [super viewDidLoad];
     mode = MODE_EMPTY;
     soundId = 0;
+    themeManager = [[ThemeManager alloc] init];
+    
+    // Setting up directory parameters
+    NSArray *dirPaths;
+    NSString *docsDir;
+    dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                   NSUserDomainMask, YES);
+    docsDir = [dirPaths objectAtIndex:0];
+    
+    NSString *soundFilePath = [docsDir
+                               stringByAppendingPathComponent:@"tempsound.caf"];
+    tempSound = [NSURL fileURLWithPath:soundFilePath];    
+    
+    // Configuring the audio session
     session = [AVAudioSession sharedInstance];
     NSError *err = nil;
     [session setActive:YES error:&err];
     if (err)
-        NSLog(@"Audio session: %@ %d %@", [err domain], [err code], [[err userInfo] description]);
+        NSLog(@"Audio session: %@ %d %@", [err domain], [err code],
+                                        [[err userInfo] description]);
     
-    // Prepares a temp object to store new recordings
-    tempSound = [NSURL fileURLWithPath:@"tempsound.caf"]; 
-
     // The following configures the audio format to what we need for SoundBoard
-    NSMutableDictionary* recordSetting = [[NSMutableDictionary alloc] init];
-    
-    [recordSetting setValue :[NSNumber numberWithInt:kAudioFormatLinearPCM] forKey:AVFormatIDKey];
-    [recordSetting setValue:[NSNumber numberWithFloat:44100.0] forKey:AVSampleRateKey]; 
-    [recordSetting setValue:[NSNumber numberWithInt: 1] forKey:AVNumberOfChannelsKey];
-    [recordSetting setValue :[NSNumber numberWithInt:16] forKey:AVLinearPCMBitDepthKey];
-    [recordSetting setValue :[NSNumber numberWithBool:NO] forKey:AVLinearPCMIsBigEndianKey];
-    [recordSetting setValue :[NSNumber numberWithBool:NO] forKey:AVLinearPCMIsFloatKey];
-
+    NSDictionary *recordSetting = [NSDictionary 
+                                    dictionaryWithObjectsAndKeys:
+                                    [NSNumber numberWithInt:AVAudioQualityMin],
+                                    AVEncoderAudioQualityKey,
+                                    [NSNumber numberWithInt:16], 
+                                    AVEncoderBitRateKey,
+                                    [NSNumber numberWithInt: 2], 
+                                    AVNumberOfChannelsKey,
+                                    [NSNumber numberWithFloat:44100.0], 
+                                    AVSampleRateKey,
+                                    nil];
     err = nil;
-    theRecorder = [[AVAudioRecorder alloc] initWithURL:tempSound settings:recordSetting error:&err];
+    theRecorder = [[AVAudioRecorder alloc] initWithURL:tempSound 
+                                              settings:recordSetting 
+                                                 error:&err];
     if (err)
-        NSLog(@"Audio Recorder: %@ %d %@", [err domain], [err code], [[err userInfo] description]);
+        NSLog(@"Audio Recorder: %@ %d %@", [err domain], [err code],
+                                        [[err userInfo] description]);
     
     [theRecorder setDelegate:(id)self];
     [theRecorder prepareToRecord];
@@ -102,6 +119,7 @@
 }
 
 - (void)loadSound:(UIButton *)sender {
+        
     CFURLRef theURL;
     currentSoundNumber = [[sender titleLabel] text];
     self.title = [NSString stringWithFormat:@"Editing Tile %@", currentSoundNumber];
@@ -112,6 +130,7 @@
     NSString* fileName = [NSString stringWithFormat:@"sound_%@", currentSoundNumber];
     NSString* imageFileName = [NSString stringWithFormat:@"image_%@.png", currentSoundNumber];    
     
+    // REPLACE THIS WITH THE THEME MANAGER CODE LATER
     theURL = CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("caf"), NULL); 
     [soundTileButton setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
     
@@ -121,9 +140,104 @@
     
 }
 
+- (void)loadSound:(NSString*) soundNumber FromTheme:(NSString*)themeName {
+    // Declare/init vars
+    NSURL *soundUrl, *imageUrl;
+    currentSoundNumber = soundNumber;
+    currentThemeName = themeName;
+    NSError *themeManagerError = nil;
+    [themeManager CreateDirectory:themeName error:&themeManagerError];
+    if (themeManagerError)
+        NSLog(@"Theme Manager: %@ %d %@", [themeManagerError domain], [themeManagerError code],
+              [[themeManagerError userInfo] description]);
+    
+    self.title = [NSString stringWithFormat:@"Editing Tile %@", soundNumber];
+    NSLog(@"Loading Sound %@ properties for editing.", soundNumber);
+    
+    NSString* fileName = [NSString stringWithFormat:@"sound_%@", currentSoundNumber];
+    NSString* imageFileName = [NSString stringWithFormat:@"image_%@.png", currentSoundNumber];
+    
+    // LOAD THE SOUND
+    themeManagerError = nil;
+    soundUrl = [themeManager GetFile:fileName error:&themeManagerError];
+    if (themeManagerError)
+        NSLog(@"Theme Manager: %@ %d %@", [themeManagerError domain], [themeManagerError code],
+              [[themeManagerError userInfo] description]);
+    else
+    {
+        AudioServicesCreateSystemSoundID((__bridge CFURLRef)soundUrl, &soundId);   
+        NSLog(@"Sound %@ loaded successfully.", soundNumber);
+    }    
+    
+    // LOAD THE IMAGE
+    themeManagerError = nil;
+    imageUrl = [themeManager GetFile:imageFileName error:&themeManagerError];
+    if (themeManagerError)
+        NSLog(@"Theme Manager: %@ %d %@", [themeManagerError domain], [themeManagerError code],
+              [[themeManagerError userInfo] description]);
+    else
+    {
+        NSString *imagePath = [imageUrl path];
+        NSLog(@"Image %@ loaded successfully.", soundNumber);
+        [soundTileButton setImage:[UIImage imageWithContentsOfFile:imagePath]
+                         forState:UIControlStateNormal];
+    }
+}
 
 -(IBAction)doneEditing:(UIBarButtonItem *) sender {
     NSLog(@"User pressed done.");
+    
+    if (mode == MODE_READYWITHNEWSOUND)
+    {
+        // BS for generating new path
+        NSArray *dirPaths;
+        NSString *docsDir;
+        dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                       NSUserDomainMask, YES);
+        docsDir = [dirPaths objectAtIndex:0];
+        NSString *newFileName = [NSString stringWithFormat:@"sound_%@.caf", currentSoundNumber];
+        NSString *newFilePath = [docsDir
+                                 stringByAppendingPathComponent:newFileName];
+        NSURL* finalUrl = [NSURL fileURLWithPath:newFilePath];
+        NSFileManager* fileManager = [[NSFileManager alloc] init];
+        NSError *themeManagerError = nil;
+        
+        // Deletes target then renames temp file to target file name
+        [fileManager removeItemAtURL:finalUrl error:&themeManagerError];
+        if (themeManagerError)
+            NSLog(@"Theme Manager: %@ %d %@", [themeManagerError domain], [themeManagerError code],
+                  [[themeManagerError userInfo] description]);
+        else
+            NSLog(@"Target file \"%@\" was taken, so it was deleted.", newFileName);
+        
+        // Rename...
+        themeManagerError = nil;
+        [fileManager moveItemAtURL:tempSound toURL:finalUrl error:&themeManagerError];
+        if (themeManagerError)
+            NSLog(@"Theme Manager: %@ %d %@", [themeManagerError domain], [themeManagerError code],
+                  [[themeManagerError userInfo] description]);
+        else
+        {
+            NSLog(@"File rename successful.");
+            
+            // Adds file using the theme manager
+            themeManagerError = nil;
+            CFURLRef newCFURL = (__bridge CFURLRef)finalUrl;
+            [themeManager CreateDirectory:currentThemeName error:nil];
+            [themeManager AddFile: &newCFURL error:&themeManagerError];
+            if (themeManagerError)
+            {
+                NSLog(@"Theme Manager: %@ %d %@", [themeManagerError domain], [themeManagerError code],
+                      [[themeManagerError userInfo] description]);            
+                NSLog(@"Theme Manager failed to add file %@.", newFileName);
+            }
+            else
+                NSLog(@"Theme Manager added file %@ successfully.", newFileName);
+        }
+
+        
+    }
+    
     [self dismissModalViewControllerAnimated:YES];
 }
 -(IBAction)cancelEditing:(UIBarButtonItem *) sender {
@@ -140,9 +254,15 @@
         AudioServicesPlaySystemSound(soundId); 
     }
 
+    // This plays the new sound if there is one
+    else if (mode == MODE_READYWITHNEWSOUND) {
+        NSLog(@"Playing new sound.");
+        AudioServicesPlaySystemSound(soundId);
+    }    
+    
     // Pressing this ends the recording and sets the new sound to play when
     // Play is pressed
-    else if ((mode == MODE_RECORDING) || (mode == MODE_RECORDINGPAUSED)) {
+    else if (theRecorder.recording) {
         [theRecorder stop];
         [session setCategory:AVAudioSessionCategorySoloAmbient error:nil];
         NSLog(@"Recording stopped. New sound saved to temp file.");
@@ -156,16 +276,11 @@
         
         // This is supposed to set the new sound to the soundId
         CFURLRef tempSoundUrl = (__bridge CFURLRef)tempSound;
-        AudioServicesCreateSystemSoundID(tempSoundUrl, &newSoundId);
+        AudioServicesDisposeSystemSoundID(soundId);
+        AudioServicesCreateSystemSoundID(tempSoundUrl, &soundId);
         
         [playButton titleLabel].text = @"Play";
         mode = MODE_READYWITHNEWSOUND;
-    }
-
-    // This plays the new sound if there is one
-    else if (mode == MODE_READYWITHNEWSOUND) {
-        NSLog(@"Playing new sound.");
-        AudioServicesPlaySystemSound(newSoundId);
     }
 }
 
@@ -173,7 +288,7 @@
     NSLog(@"User pressed Record.");
 
     // If recording is already happening, then pause it
-    if (mode == MODE_RECORDING) {
+    if (theRecorder.recording) {
         
         // Pauses the recording
         [theRecorder pause];
@@ -205,7 +320,7 @@
     NSLog(@"User pressed Delete.");
 
     confirmDeleteActionSheet = [[UIActionSheet alloc] initWithTitle:LOC_CONFIRMDELSOUND
-                                                           delegate:self
+                                                           delegate:(id)self
                                                   cancelButtonTitle:LOC_CANCEL
                                              destructiveButtonTitle:LOC_FINALCONFIRMDELSOUND
                                                   otherButtonTitles:nil, nil];
