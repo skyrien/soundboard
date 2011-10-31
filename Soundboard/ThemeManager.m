@@ -103,6 +103,7 @@
         
     }
     NSURL* pathToCopy = [[NSURL alloc] initFileURLWithPath:(__bridge NSString*)CFURLCopyPath(*file)];
+    NSLog(@"Copying file from path: %@",[pathToCopy path]);
     NSString* filename = [pathToCopy lastPathComponent];
     NSString* destPath = [[themeDirURL path] stringByAppendingPathComponent:filename];
     NSError* internalerr = nil;
