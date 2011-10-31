@@ -14,7 +14,7 @@
 #import "BoardViewController.h"
 
 @implementation BoardViewController
-@synthesize longPressGR, actionButton, EditSoundVC;
+@synthesize actionButton, EditSoundVC;
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
@@ -29,10 +29,11 @@
     [session setCategory:AVAudioSessionCategorySoloAmbient error:nil];
     
     theBoard = [[Soundboard alloc] init];
+    themeManager = [[ThemeManager alloc] init];
     mode = MODE_EMPTY;
     buttonIndexFacebook = buttonIndexEmail = buttonIndexEdit = buttonIndexDelete = -1;
 //    self.navigationItem.backBarButtonItem.title = @"Home"; 
-    longPressGR.delegate = self;
+//    longPressGR.delegate = self;
     
     // Accessor pointers
     navController = self.navigationController;
@@ -57,16 +58,17 @@
     {
         // This is the view if the current user is the board's owner
         if (userIsBoardOwner) {
-            NSLog(@"Current user is the board's owner. Loading owner action sheet.");
-            boardActionSheet = [[UIActionSheet alloc]  initWithTitle:nil
-                                                            delegate:self
-                                                   cancelButtonTitle:LOC_CANCEL
-                                              destructiveButtonTitle:nil
-                                                   otherButtonTitles:LOC_SHARE_EMAIL,
-                                LOC_SHARE_FACEBOOK,
-                                LOC_EDITBOARD,
-                                LOC_DELETEBOARD,
-                                nil, nil];
+            NSLog(@"Current user is the board's owner. Loading OWNER action sheet.");
+            boardActionSheet =
+            [[UIActionSheet alloc] initWithTitle:nil
+                                        delegate:(id)self
+                               cancelButtonTitle:LOC_CANCEL
+                          destructiveButtonTitle:nil
+                               otherButtonTitles:LOC_SHARE_EMAIL,
+                                                 LOC_SHARE_FACEBOOK,
+                                                 LOC_EDITBOARD,
+                                                 LOC_DELETEBOARD,
+                                                 nil, nil];
             // Setting owner action sheet parameters
             boardActionSheet.destructiveButtonIndex = 3;
             buttonIndexEmail = 0;
@@ -78,15 +80,16 @@
         
         // This is for non-owners
         else {
-            NSLog(@"Current user is the board's owner. Loading viewer action sheet.");
-            boardActionSheet = [[UIActionSheet alloc]  initWithTitle:nil
-                                                            delegate:self
-                                                   cancelButtonTitle:LOC_CANCEL
-                                              destructiveButtonTitle:nil
-                                                   otherButtonTitles:LOC_SHARE_EMAIL,
-                                LOC_SHARE_FACEBOOK,
-                                LOC_DELETEBOARD,
-                                nil ];
+            NSLog(@"Current user is the board's owner. Loading VIEWER action sheet.");
+            boardActionSheet =
+            [[UIActionSheet alloc] initWithTitle:nil
+                                        delegate:(id)self
+                               cancelButtonTitle:LOC_CANCEL
+                          destructiveButtonTitle:nil
+                               otherButtonTitles:LOC_SHARE_EMAIL,
+                                                 LOC_SHARE_FACEBOOK,
+                                                 LOC_DELETEBOARD,
+                                                 nil ];
             // Setting viewer action sheet parameters
             boardActionSheet.destructiveButtonIndex = 2;
             buttonIndexEmail = 0;
@@ -118,28 +121,46 @@
         // Instead, this pops over a dialog showing the user how to edit the button
         if (buttonIndex == buttonIndexEdit) {
             NSLog(@"User pressed \"Edit this board\".");
-            
-            
             [self enterEditMode];
         }
         
         // The user clicked the share to email button.
         else if (buttonIndex == buttonIndexEmail) {
             NSLog(@"User pressed \"Share by Email\".");
+
+            // NEED CODE HERE FOR EMAIL BASED SHARING
+            // THE FOLLOWING LOGIC IS REQUIRED
+            // 
+            // 1. CHECK TO SEE IF BOARD IS UPLOADED TO DROPBOX
+            // 2. IF NOT, BEGIN "DROPBOX UPLOAD FLOW"
+            // 3. IF UPLOADED, GET PUBLIC-BOARD URL
+            // 4. INIT EMAIL INTERFACE, PRELOAD TEMPLATE TEXT
         }
 
         // The user clicked the share to Facebook button.        
         else if (buttonIndex == buttonIndexFacebook) {
             NSLog(@"User pressed \"Share by Facebook\".");
+            
+            // NEED CODE HERE FOR FACEBOOK BASED SHARING
+            // THE FOLLOWING LOGIC IS REQUIRED
+            // 
+            // 1. CHECK TO SEE IF BOARD IS UPLOADED TO DROPBOX
+            // 2. IF NOT, BEGIN "DROPBOX UPLOAD FLOW"
+            // 3. IF UPLOADED, GET PUBLIC-BOARD URL
+            // 4. IS USER CONNECTED TO FACEBOOK? IF NOT, BEGIN FB FLOW
+            // 5. AFTER CONSENT IS RECEIVED, POST TO FACEBOOK WITH PUBLIC LINK
         }
         
         else if (buttonIndex == buttonIndexDelete) {
             NSLog(@"User pressed \"Delete this board\".");
-            confirmDeleteActionSheet = [[UIActionSheet alloc] initWithTitle:LOC_CONFIRMDELETE
-                                                                   delegate:self
-                                                          cancelButtonTitle:LOC_CANCEL
-                                                     destructiveButtonTitle:LOC_FINALCONFIRMATION
-                                                          otherButtonTitles:nil, nil];
+            
+            // Show the delete confirmation (y/n) actionsheet
+            confirmDeleteActionSheet =
+            [[UIActionSheet alloc] initWithTitle:LOC_CONFIRMDELETE
+                                        delegate:(id)self
+                               cancelButtonTitle:LOC_CANCEL
+                          destructiveButtonTitle:LOC_FINALCONFIRMATION
+                               otherButtonTitles:nil, nil];
             [confirmDeleteActionSheet setActionSheetStyle:UIActionSheetStyleBlackOpaque];
             [confirmDeleteActionSheet showInView:self.navigationController.view];
         }    
@@ -166,15 +187,10 @@
     buttonIndexFacebook = buttonIndexEmail = buttonIndexEdit = buttonIndexDelete = -1;
     
 }
-/*
-// This message is sent internally when a action sheet button is pressed
-- (void)actionSheet:confirmDeleteActionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    
-}
-*/
-
 
 // MODE TRANSITIONS GO HERE
+// THE FOLLOWING METHODS COVER ENTER AND EXIT MODE FUNCTIONS
+
 -(void)enterEditMode {
     
     // Allocation needed elements
@@ -183,7 +199,6 @@
                                  target:self
                                  action:@selector(exitEditMode)];
                                    
-                                   //initWithTitle:LOC_DONE style:UIBarButtonItemStyleDone target:self action:self.exitEditMode];
     
     // Change UI elements as appropriate to indicate mode change.
     navController.navigationBar.tintColor = [UIColor lightGrayColor];
@@ -206,12 +221,15 @@
     [self.navigationItem setHidesBackButton:NO animated:YES];
     [self.navigationItem setRightBarButtonItem:actionButton animated:YES];
 
+    // Reload the theme in case there were changes
+    [self loadTheme:theBoard.currentTheme];
+    
     mode = MODE_READY;
     NSLog(@"Exited edit mode. New mode: %i", mode);
 }
 
 
-// PLAYBACK FUNCTIONS GO HERE
+// DIRECT USER INTERACTION METHODS ARE COVERED IN THIS SECTION
 
 -(IBAction)buttonPressed:(UIButton *)sender {
     NSString* buttonName = [[sender titleLabel] text];
@@ -220,22 +238,20 @@
     // If in ready (play) mode, play the sound
     if (mode == MODE_READY)
     {
-
-        // Sound gets played here
         [theBoard playSound:buttonName];
     }
     
     // if in edit mode, bring up the edit dialog
     else if (mode == MODE_EDIT)
     {
-        // This shows the edit sound view
         [self presentModalViewController:EditSoundVC animated:YES];
-        [EditSoundVC loadSound:sender];
+        [EditSoundVC loadSound:[sender.titleLabel text] FromTheme:theBoard.currentTheme];
+//        [EditSoundVC loadSound:sender];
 //        [self dismissModalViewControllerAnimated:YES];
     }
 }
 
-
+/*
 -(IBAction)longPress:(UILongPressGestureRecognizer *)sender {
     UIButton* longPressedButton;
     
@@ -247,10 +263,7 @@
     
 
 }
-
-
-
-
+*/
 
 
 -(void)loadTheme:(NSString *)themeName {
@@ -259,12 +272,49 @@
     theBoard.currentTheme = themeName;
     self.title = themeName;
     
-    // VALIDATE THAT THE CURRENT USER IS THE BOARD'S OWNER
+    // SET THE THEME DIR USING THEME MANAGER
+    // WARNING, IF THE DIRECTORY DOESN'T EXIST, THIS WILL SILENTLY CREATE IT
+    // WE SHOULD PROBABLY RETURN SOMETHING ELSE HERE
+    NSError* err = nil;
+    [themeManager CreateDirectory:themeName error:&err];
     
+    // LOAD THEME METADATA FILE
+    err = nil;
+    //[themeManager GetFile:@"themeproperties.plist" error:&err];
+    
+    // VALIDATE THAT THE CURRENT USER IS THE BOARD'S OWNER    
+    // IS THIS NECESSARY? WE DON'T REALLY HAVE A CONCEPT OF "CURRENT OWNER"
 
-    CFBundleRef mainBundle = CFBundleGetMainBundle();
-
+    // Create an array of the buttons for the for loop
+    NSArray *soundButtons = [NSArray arrayWithObjects:
+                             button1,
+                             button2,
+                             button3, 
+                             button4,
+                             button5,
+                             button6,
+                             button7,
+                             button8,
+                             button9, nil];
+    
+    // NOW, LOAD THE MEDIA FILES
+    for (int i = 0; i < 9; i++)
+    {
+        int j = i + 1;
+        NSString* soundFileName = [NSString stringWithFormat:@"sound_%i", j];
+        NSString* imageFileName = [NSString stringWithFormat:@"image_%i.png", j];
+        NSURL *newSound = [themeManager GetFile:soundFileName error:&err];
+        NSURL *newImage = [themeManager GetFile:imageFileName error:&err];
+        NSString* imageRelativePath = [newImage relativePath];
+        [theBoard setSoundNumber:j withCFURL:(__bridge CFURLRef)newSound];
+        [[soundButtons objectAtIndex:i] setImage:[UIImage imageNamed:imageRelativePath] forState:UIControlStateNormal];
+        NSLog(@"Initialized soundId %i.", j);
+    }
+    
+    /*
+    
     // READ IN MEDIA FROM FILE SYSTEM
+    CFBundleRef mainBundle = CFBundleGetMainBundle();
     for (int i = 0; i < 9; i++)
     {
         int j = i + 1;
@@ -320,6 +370,8 @@
         NSLog(@"Initialized soundId %i.", j);
         
     }
+     */
+    
     mode = MODE_READY;
     NSLog(@"Finished loading \"%@\" theme", themeName);
 }

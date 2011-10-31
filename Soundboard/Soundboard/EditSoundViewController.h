@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import "LocStrings.h"
+#import "ThemeManager.h"
 
 #define MODE_EMPTY              0
 #define MODE_READY              1
@@ -20,28 +22,34 @@
 
 @class EditSoundViewController;
 
-
-
 @interface EditSoundViewController : UIViewController
 {
-    NSInteger mode;
     IBOutlet UIButton* recordButton;
     IBOutlet UIButton* playButton;
     IBOutlet UIButton* deleteButton;
     IBOutlet UIButton* soundTileButton; 
     IBOutlet UILabel* currentTime;
     IBOutlet UILabel* maxTime;
+    IBOutlet UIProgressView* progressBar;
     
+    // Variables and stuff
+    NSInteger mode;
+    ThemeManager* themeManager;
     NSString *currentSoundNumber;
+    NSString *currentThemeName;
     UInt32 soundId, newSoundId;
     UIActionSheet *confirmDeleteActionSheet;   
     NSURL* tempSound;
     AVAudioRecorder* theRecorder;
     AVAudioSession* session;
+    
 }
 
 // This function loads a unique instance of the sound/image
 - (void)loadSound:(UIButton *)sender;
+
+// This function loads a sound from a specific theme
+- (void)loadSound:(NSString*) soundNumber FromTheme:(NSString*)themeName;
 
 // NAVIGATION BUTTONS
 
