@@ -91,7 +91,7 @@
     return YES;
 }
 
--(BOOL)AddFile:(CFURLRef *)file error:(NSError *__autoreleasing *)err
+-(BOOL)AddFile:(NSURL *)file error:(NSError *__autoreleasing *)err
 {
     if (!isInitialized)
     {
@@ -102,12 +102,10 @@
         return  NO;
         
     }
-    NSURL* pathToCopy = [[NSURL alloc] initFileURLWithPath:(__bridge NSString*)CFURLCopyPath(*file)];
-    NSLog(@"Copying file from path: %@",[pathToCopy path]);
-    NSString* filename = [pathToCopy lastPathComponent];
-    NSString* destPath = [[themeDirURL path] stringByAppendingPathComponent:filename];
+    
+    NSString* destPath = [[themeDirURL path] stringByAppendingPathComponent:[file lastPathComponent]];
     NSError* internalerr = nil;
-    BOOL ret = [self.appFileManager copyItemAtPath:[pathToCopy path] toPath:destPath error:&internalerr];
+    BOOL ret = [self.appFileManager copyItemAtPath:[file path] toPath:destPath error:&internalerr];
     if (!ret)
     {
         NSLog(@"copyItemAtPath failed with the following error:\n Error Domain: %@\n Error Code: %d\n, Error description: %@\n Failure Reason: %@", [internalerr domain], [internalerr code], [internalerr localizedDescription], [internalerr localizedFailureReason] );

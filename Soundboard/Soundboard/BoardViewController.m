@@ -301,13 +301,36 @@
     for (int i = 0; i < 9; i++)
     {
         int j = i + 1;
-        NSString* soundFileName = [NSString stringWithFormat:@"sound_%i", j];
+        NSString* soundFileName = [NSString stringWithFormat:@"sound_%i.caf", j];
         NSString* imageFileName = [NSString stringWithFormat:@"image_%i.png", j];
+        
+        NSError* err = nil;
         NSURL *newSound = [themeManager GetFile:soundFileName error:&err];
+        if (err)
+        {
+            NSLog(@"Theme Manager: %@ %d %@", [err domain], [err code],
+                  [[err userInfo] description]);            
+            NSLog(@"Theme Manager failed to get file %@.", soundFileName);
+        }
+        else
+            [theBoard setSoundNumber:j withCFURL:(__bridge CFURLRef)newSound];
+            NSLog(@"Theme Manager got file %@ successfully.", soundFileName);
+        
+        err = nil;
         NSURL *newImage = [themeManager GetFile:imageFileName error:&err];
-        NSString* imageRelativePath = [newImage relativePath];
-        [theBoard setSoundNumber:j withCFURL:(__bridge CFURLRef)newSound];
-        [[soundButtons objectAtIndex:i] setImage:[UIImage imageNamed:imageRelativePath] forState:UIControlStateNormal];
+        if (err)
+        {
+            NSLog(@"Theme Manager: %@ %d %@", [err domain], [err code],
+                  [[err userInfo] description]);            
+            NSLog(@"Theme Manager failed to get file %@.", imageFileName);
+        }
+        else
+        {
+            NSLog(@"Theme Manager got  file %@ successfully.", imageFileName);
+            NSString* imageRelativePath = [newImage relativePath];
+            [[soundButtons objectAtIndex:i] setImage:[UIImage imageNamed:imageRelativePath] forState:UIControlStateNormal];
+        
+        }
         NSLog(@"Initialized soundId %i.", j);
     }
     

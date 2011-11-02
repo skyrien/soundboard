@@ -20,6 +20,8 @@
 #define MODE_RECORDING          4
 #define MODE_RECORDINGPAUSED    5
 
+#define PLAY_TIMER_UPDATE_RATE 20 //FRAMES PER SECOND FOR THE PLAY TIMER
+
 @class EditSoundViewController;
 
 @interface EditSoundViewController : UIViewController
@@ -33,12 +35,14 @@
     IBOutlet UIProgressView* progressBar;
     
     // Variables and stuff
+    NSFileManager* fileManager;
     NSInteger mode;
     ThemeManager* themeManager;
-    NSString *currentSoundNumber;
-    NSString *currentThemeName;
+    NSTimer* playTimer;
+    NSString* currentSoundNumber;
+    NSString* currentThemeName;
     UInt32 soundId, newSoundId;
-    UIActionSheet *confirmDeleteActionSheet;   
+    UIActionSheet* confirmDeleteActionSheet;   
     NSURL* tempSound;
     AVAudioRecorder* theRecorder;
     AVAudioSession* session;
@@ -50,6 +54,8 @@
 
 // This function loads a sound from a specific theme
 - (void)loadSound:(NSString*) soundNumber FromTheme:(NSString*)themeName;
+
+- (void)updatePlayTimer;
 
 // NAVIGATION BUTTONS
 
