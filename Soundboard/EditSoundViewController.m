@@ -45,7 +45,11 @@
     [super viewDidLoad];
     mode = MODE_EMPTY;
     soundId = 0;
+    
+    // INITIALIZING SHARED PROPERTIES
     themeManager = [[ThemeManager alloc] init];
+    fileManager = [[NSFileManager alloc] init];
+    playTimer = [[NSTimer alloc] init];
     
     // Setting up directory parameters
     NSArray *dirPaths;
@@ -59,6 +63,11 @@
     tempSound = [NSURL fileURLWithPath:soundFilePath];    
     
     // Configuring the audio session
+    
+    
+    
+    
+    
     session = [AVAudioSession sharedInstance];
     NSError *err = nil;
     [session setActive:YES error:&err];
@@ -187,8 +196,14 @@
 -(IBAction)doneEditing:(UIBarButtonItem *) sender {
     NSLog(@"User pressed done.");
     
-    if (mode == MODE_READYWITHNEWSOUND)
+    if ((mode == MODE_READYWITHNEWSOUND) ||
+        (mode == MODE_RECORDING) ||
+        (mode == MODE_RECORDINGPAUSED))
     {
+        // Stop recording if it's going on
+        if (theRecorder.isRecording)
+            [theRecorder stop];
+        
         // BS for generating new path
         NSArray *dirPaths;
         NSString *docsDir;
@@ -199,7 +214,7 @@
         NSString *newFilePath = [docsDir
                                  stringByAppendingPathComponent:newFileName];
         NSURL* finalUrl = [NSURL fileURLWithPath:newFilePath];
-        NSFileManager* fileManager = [[NSFileManager alloc] init];
+        //NSFileManager* fileManager = [[NSFileManager alloc] init];
         NSError *themeManagerError = nil;
         
         // Deletes target then renames temp file to target file name
@@ -218,13 +233,13 @@
                   [[themeManagerError userInfo] description]);
         else
         {
-            NSLog(@"File rename successful.");
+            NSLog(@"File rename successful. Now %@", newFileName);
             
             // Adds file using the theme manager
             themeManagerError = nil;
-            CFURLRef newCFURL = (__bridge CFURLRef)finalUrl;
+            //CFURLRef newCFURL = (__bridge CFURLRef)finalUrl;
             [themeManager CreateDirectory:currentThemeName error:nil];
-            [themeManager AddFile: &newCFURL error:&themeManagerError];
+            [themeManager AddFile: finalUrl error:&themeManagerError];
             if (themeManagerError)
             {
                 NSLog(@"Theme Manager: %@ %d %@", [themeManagerError domain], [themeManagerError code],
@@ -242,6 +257,19 @@
 }
 -(IBAction)cancelEditing:(UIBarButtonItem *) sender {
     NSLog(@"User pressed cancel.");
+
+    // IF THERE WAS A TEMP FILE, DELETE IT
+    if (mode == MODE_READYWITHNEWSOUND)
+    {
+        NSError *err = nil;
+        [fileManager removeItemAtURL:tempSound error:&err];
+        if (err)
+            NSLog(@"Theme Manager: %@ %d %@", [err domain], [err code],
+                  [[err userInfo] description]);
+        else
+            NSLog(@"Recording left a temp file. Cleaning up...");
+   
+    }    
     [self dismissModalViewControllerAnimated:YES];
 }
 

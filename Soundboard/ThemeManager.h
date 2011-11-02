@@ -18,7 +18,7 @@
 }
 
 -(BOOL)CreateDirectory:(NSString*) directoryName error:(NSError**)err;
--(BOOL)AddFile:(CFURLRef*) file error:(NSError**)err;
+-(BOOL)AddFile:(NSURL*) file error:(NSError**)err;
 -(NSURL*)GetFile:(NSString*) filename error:(NSError**)err;
 
 @end
