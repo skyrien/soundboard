@@ -20,7 +20,7 @@
 #define MODE_RECORDING          4
 #define MODE_RECORDINGPAUSED    5
 
-#define PLAY_TIMER_UPDATE_RATE 20 //FRAMES PER SECOND FOR THE PLAY TIMER
+#define PLAY_TIMER_UPDATE_RATE 50 //FRAMES PER SECOND FOR THE PLAY TIMER
 
 @class EditSoundViewController;
 
@@ -46,7 +46,7 @@
     NSURL* tempSound;
     AVAudioRecorder* theRecorder;
     AVAudioSession* session;
-    
+    int tickNumber;
 }
 
 // This function loads a unique instance of the sound/image
@@ -55,7 +55,7 @@
 // This function loads a sound from a specific theme
 - (void)loadSound:(NSString*) soundNumber FromTheme:(NSString*)themeName;
 
-- (void)updatePlayTimer;
+- (int)updatePlayTimer;
 
 // NAVIGATION BUTTONS
 

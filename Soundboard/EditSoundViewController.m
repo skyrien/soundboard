@@ -49,7 +49,12 @@
     // INITIALIZING SHARED PROPERTIES
     themeManager = [[ThemeManager alloc] init];
     fileManager = [[NSFileManager alloc] init];
-    playTimer = [[NSTimer alloc] init];
+    playTimer = [NSTimer scheduledTimerWithTimeInterval:(1.0/PLAY_TIMER_UPDATE_RATE)
+                                                 target:self
+                                               selector:@selector(updatePlayTimer)
+                                               userInfo:nil
+                                                repeats:YES];
+    tickNumber = 0;
     
     // Setting up directory parameters
     NSArray *dirPaths;
@@ -57,17 +62,11 @@
     dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
                                                    NSUserDomainMask, YES);
     docsDir = [dirPaths objectAtIndex:0];
-    
     NSString *soundFilePath = [docsDir
                                stringByAppendingPathComponent:@"tempsound.caf"];
     tempSound = [NSURL fileURLWithPath:soundFilePath];    
     
     // Configuring the audio session
-    
-    
-    
-    
-    
     session = [AVAudioSession sharedInstance];
     NSError *err = nil;
     [session setActive:YES error:&err];
@@ -193,9 +192,12 @@
     }
 }
 
-- (void)updatePlayTimer {
+- (int)updatePlayTimer {
     
-    
+    if (theRecorder.isRecording)
+        tickNumber++;
+    currentTime.text = [NSString stringWithFormat:@"%f", ((float)tickNumber/PLAY_TIMER_UPDATE_RATE)];
+    return tickNumber;
 }
 
 -(IBAction)doneEditing:(UIBarButtonItem *) sender {
@@ -298,6 +300,9 @@
     else if (theRecorder.recording) {
         [theRecorder stop];
         [session setCategory:AVAudioSessionCategorySoloAmbient error:nil];
+        maxTime.text = [NSString stringWithFormat:@"%f", (float)tickNumber/PLAY_TIMER_UPDATE_RATE];
+        tickNumber = 0;
+        currentTime.text = @"0.0";
         NSLog(@"Recording stopped. New sound saved to temp file.");
         
         /* THE FOLLOWING WAS RECOMMENDED, BUT SEEMS TO NOT WORK
