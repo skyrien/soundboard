@@ -23,18 +23,6 @@
 
 - (IBAction)buttonPressed:(UIButton *)sender
 {
-    if (![[DBSession sharedSession] isLinked]) {
-        DBLoginController* controller =[DBLoginController new];
-        controller.delegate = self;
-        [controller presentFromController:self];
-    } else {
-        [[DBSession sharedSession] unlink];
-        [[[UIAlertView alloc] 
-           initWithTitle:@"Account Unlinked!" message:@"Your dropbox account has been unlinked" 
-           delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil]
-         show];
-        [self updateButtons];
-    }
 }
 
 - (void)restClient:(DBRestClient*)client loadFileFailedWithError:(NSError*)error
@@ -155,14 +143,6 @@
 {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-- (DBRestClient*)restClient {
-    if (restClient == nil) {
-    	restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
-    	restClient.delegate = self;
-    }
-    return restClient;
 }
 
 @end
