@@ -70,10 +70,6 @@
                                     <string>ADBannerContentSizePortrait</string>
                                 </requiredContentSizeIdentifiers>
                             </adBannerView>
-                            <imageView hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" id="qFJ-TP-gv9">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="370"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="XEl-lb-6fb">
                                 <rect key="frame" x="0.0" y="0.0" width="106" height="106"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -88,7 +84,6 @@
                                 </state>
                                 <connections>
                                     <action selector="buttonPressed:" destination="DZ6-hW-b9a" eventType="touchUpInside" id="cM3-GS-THV"/>
-                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="QAc-eO-pWn"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="awL-DV-SHO">
@@ -105,7 +100,6 @@
                                 </state>
                                 <connections>
                                     <action selector="buttonPressed:" destination="DZ6-hW-b9a" eventType="touchUpInside" id="qbd-oJ-aXm"/>
-                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="QxC-be-ckj"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="tVY-8F-uLg">
@@ -122,7 +116,6 @@
                                 </state>
                                 <connections>
                                     <action selector="buttonPressed:" destination="DZ6-hW-b9a" eventType="touchUpInside" id="Mt6-aX-Xk4"/>
-                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="5ak-L2-6Wf"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Yal-p9-6Fu">
@@ -139,7 +132,6 @@
                                 </state>
                                 <connections>
                                     <action selector="buttonPressed:" destination="DZ6-hW-b9a" eventType="touchUpInside" id="bMa-js-K1b"/>
-                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="x3g-9p-FpB"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="h35-I7-Edl">
@@ -156,7 +148,6 @@
                                 </state>
                                 <connections>
                                     <action selector="buttonPressed:" destination="DZ6-hW-b9a" eventType="touchUpInside" id="qHS-PB-20m"/>
-                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="pC6-3R-1KN"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="OQ6-gN-O84">
@@ -173,7 +164,6 @@
                                 </state>
                                 <connections>
                                     <action selector="buttonPressed:" destination="DZ6-hW-b9a" eventType="touchUpInside" id="a1X-gs-0bB"/>
-                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="edA-va-m0u"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="UgK-EM-JoZ">
@@ -190,7 +180,6 @@
                                 </state>
                                 <connections>
                                     <action selector="buttonPressed:" destination="DZ6-hW-b9a" eventType="touchUpInside" id="pM7-Ch-Opm"/>
-                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="PEh-pT-IRh"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ORI-Je-d0l">
@@ -207,7 +196,6 @@
                                 </state>
                                 <connections>
                                     <action selector="buttonPressed:" destination="DZ6-hW-b9a" eventType="touchUpInside" id="A9Z-PI-VUg"/>
-                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="lAS-ct-3DE"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="OQv-uw-hXL">
@@ -224,14 +212,13 @@
                                 </state>
                                 <connections>
                                     <action selector="buttonPressed:" destination="DZ6-hW-b9a" eventType="touchUpInside" id="QPe-BT-VbT"/>
-                                    <outletCollection property="gestureRecognizers" destination="zxG-jt-sN4" appends="YES" id="wb2-Xq-jAH"/>
                                 </connections>
                             </button>
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" id="XFH-cu-g8f">
                                 <rect key="frame" x="20" y="328" width="280" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </pageControl>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="3bu-0t-Qwr">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="3bu-0t-Qwr">
                                 <rect key="frame" x="282" y="336" width="18" height="19"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -259,7 +246,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="actionButton" destination="e7K-q7-u45" id="MUD-uW-pSY"/>
-                        <outlet property="background" destination="qFJ-TP-gv9" id="52H-Ze-E8U"/>
                         <outlet property="button1" destination="XEl-lb-6fb" id="bPO-zH-fYf"/>
                         <outlet property="button2" destination="awL-DV-SHO" id="CHE-11-L2I"/>
                         <outlet property="button3" destination="tVY-8F-uLg" id="Nib-ga-zvL"/>
@@ -269,13 +255,9 @@
                         <outlet property="button7" destination="UgK-EM-JoZ" id="YnM-J2-1WG"/>
                         <outlet property="button8" destination="ORI-Je-d0l" id="1PI-Xq-1X5"/>
                         <outlet property="button9" destination="OQv-uw-hXL" id="2Td-fG-Drc"/>
+                        <outlet property="infoButton" destination="3bu-0t-Qwr" id="GL4-7Q-rot"/>
                     </connections>
                 </viewController>
-                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="zxG-jt-sN4">
-                    <connections>
-                        <action selector="longPress:" destination="DZ6-hW-b9a" id="uj0-rV-8Gx"/>
-                    </connections>
-                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="340" y="-421"/>
         </scene>
@@ -364,6 +346,7 @@
                 <relationship kind="outlet" name="button8" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="button9" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="editSegue" candidateClass="UIStoryboardSegue"/>
+                <relationship kind="outlet" name="infoButton" candidateClass="UIButton"/>
             </relationships>
         </class>
         <class className="EditSoundViewController" superclassName="UIViewController">

@@ -205,6 +205,7 @@
     [self.navigationItem setHidesBackButton:YES animated:YES];
     self.title = [NSString stringWithFormat:@"Editing %@",theBoard.currentTheme];
     [self.navigationItem setRightBarButtonItem:doneButton animated:YES];
+    [infoButton setHidden:NO];
 
     // Preparing the edit view controller so the user can use it
     EditSoundVC = [[EditSoundViewController alloc] initWithNibName:@"EditView" bundle:nil];
@@ -220,7 +221,8 @@
     self.title = theBoard.currentTheme;
     [self.navigationItem setHidesBackButton:NO animated:YES];
     [self.navigationItem setRightBarButtonItem:actionButton animated:YES];
-
+    [infoButton setHidden:YES];
+    
     // Reload the theme in case there were changes
     [self loadTheme:theBoard.currentTheme];
     
@@ -323,6 +325,7 @@
             NSLog(@"Theme Manager: %@ %d %@", [err domain], [err code],
                   [[err userInfo] description]);            
             NSLog(@"Theme Manager failed to get file %@.", imageFileName);
+            // Set a default image instead
         }
         else
         {
@@ -333,67 +336,6 @@
         }
         NSLog(@"Initialized soundId %i.", j);
     }
-    
-    /*
-    
-    // READ IN MEDIA FROM FILE SYSTEM
-    CFBundleRef mainBundle = CFBundleGetMainBundle();
-    for (int i = 0; i < 9; i++)
-    {
-        int j = i + 1;
-        NSString* fileName = [NSString stringWithFormat:@"%@_%i", @"sound", j];
-        NSString* imageFileName = [NSString stringWithFormat:@"%@_%i.png", @"image", j];
-        
-        if (j == 1) // else if (i == 1)
-        {
-            [theBoard setSoundNumber:j withCFURL:CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("m4a"), NULL)]; 
-            [button1 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
-        }
-        else if (j == 2)
-        {
-            [theBoard setSoundNumber:j withCFURL:CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("caf"), NULL)];
-            [button2 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];            
-        }
-        else if (j == 3)
-        {
-            [theBoard setSoundNumber:j withCFURL:CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("wav"), NULL)]; 
-            [button3 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
-        }
-        else if (j == 4)
-        {
-            [theBoard setSoundNumber:j withCFURL:CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("wav"), NULL)];
-            [button4 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
-        }
-        else if (j == 5)
-        {
-            [theBoard setSoundNumber:j withCFURL:CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("wav"), NULL)]; 
-            [button5 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
-        }
-        else if (j == 6)
-        {
-            [theBoard setSoundNumber:j withCFURL:CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("wav"), NULL)]; 
-            [button6 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
-        }
-        else if (j == 7)
-        {
-            [theBoard setSoundNumber:j withCFURL:CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("wav"), NULL)]; 
-            [button7 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
-        }
-        else if (j == 8)
-        {
-            [theBoard setSoundNumber:j withCFURL:CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("wav"), NULL)]; 
-            [button8 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
-        }
-        else if (j == 9)
-        {
-            [theBoard setSoundNumber:j withCFURL:CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("wav"), NULL)]; 
-            [button9 setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
-        }
-        
-        NSLog(@"Initialized soundId %i.", j);
-        
-    }
-     */
     
     mode = MODE_READY;
     NSLog(@"Finished loading \"%@\" theme", themeName);

@@ -31,6 +31,7 @@
     IBOutlet UIButton *button7;
     IBOutlet UIButton *button8;
     IBOutlet UIButton *button9;
+    IBOutlet UIButton *infoButton;
     IBOutlet UIBarButtonItem *actionButton;
     IBOutlet UIStoryboardSegue *editSegue;
     
