@@ -69,6 +69,9 @@
                                     <string>ADBannerContentSizeLandscape</string>
                                     <string>ADBannerContentSizePortrait</string>
                                 </requiredContentSizeIdentifiers>
+                                <connections>
+                                    <outlet property="delegate" destination="DZ6-hW-b9a" id="aaQ-jk-qCS"/>
+                                </connections>
                             </adBannerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="XEl-lb-6fb">
                                 <rect key="frame" x="0.0" y="0.0" width="106" height="106"/>
@@ -291,6 +294,9 @@
                                     <string>ADBannerContentSizeLandscape</string>
                                     <string>ADBannerContentSizePortrait</string>
                                 </requiredContentSizeIdentifiers>
+                                <connections>
+                                    <outlet property="delegate" destination="QCv-OY-je4" id="hz4-jg-UYv"/>
+                                </connections>
                             </adBannerView>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>

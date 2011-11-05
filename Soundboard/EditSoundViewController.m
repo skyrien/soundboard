@@ -150,19 +150,21 @@
 
 - (void)loadSound:(NSString*) soundNumber FromTheme:(NSString*)themeName {
     // Declare/init vars
+    if (!soundId)
+        AudioServicesDisposeSystemSoundID(soundId);
     NSURL *soundUrl, *imageUrl;
     currentSoundNumber = soundNumber;
     currentThemeName = themeName;
+    self.title = [NSString stringWithFormat:@"Editing Tile %@", soundNumber];
     NSError *themeManagerError = nil;
     [themeManager CreateDirectory:themeName error:&themeManagerError];
     if (themeManagerError)
         NSLog(@"Theme Manager: %@ %d %@", [themeManagerError domain], [themeManagerError code],
               [[themeManagerError userInfo] description]);
     
-    self.title = [NSString stringWithFormat:@"Editing Tile %@", soundNumber];
     NSLog(@"Loading Sound %@ properties for editing.", soundNumber);
     
-    NSString* fileName = [NSString stringWithFormat:@"sound_%@", currentSoundNumber];
+    NSString* fileName = [NSString stringWithFormat:@"sound_%@.caf", currentSoundNumber];
     NSString* imageFileName = [NSString stringWithFormat:@"image_%@.png", currentSoundNumber];
     
     // LOAD THE SOUND
@@ -256,8 +258,9 @@
             else
                 NSLog(@"Theme Manager added file %@ successfully.", newFileName);
         }
-
         
+        // De-allocating anything that was created
+        AudioServicesDisposeSystemSoundID(soundId);
     }
     
     [self dismissModalViewControllerAnimated:YES];

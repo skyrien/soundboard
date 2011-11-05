@@ -22,6 +22,11 @@
     
 }
 
+-(void)clearSoundNumber:(int)buttonNumber {
+    AudioServicesDisposeSystemSoundID(soundIds[buttonNumber - 1]);
+    
+}
+
 
 -(void)playSound:(NSString *)buttonName {
     int i = [buttonName integerValue];

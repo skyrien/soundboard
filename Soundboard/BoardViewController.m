@@ -27,7 +27,7 @@
     
     [session setActive:YES error:nil];
     [session setCategory:AVAudioSessionCategorySoloAmbient error:nil];
-    
+    EditSoundVC = [[EditSoundViewController alloc] initWithNibName:@"EditView" bundle:nil];
     theBoard = [[Soundboard alloc] init];
     themeManager = [[ThemeManager alloc] init];
     mode = MODE_EMPTY;
@@ -206,9 +206,6 @@
     self.title = [NSString stringWithFormat:@"Editing %@",theBoard.currentTheme];
     [self.navigationItem setRightBarButtonItem:doneButton animated:YES];
     [infoButton setHidden:NO];
-
-    // Preparing the edit view controller so the user can use it
-    EditSoundVC = [[EditSoundViewController alloc] initWithNibName:@"EditView" bundle:nil];
     
     // Finally, set the mode
     mode = MODE_EDIT;
@@ -303,6 +300,7 @@
     for (int i = 0; i < 9; i++)
     {
         int j = i + 1;
+        [theBoard clearSoundNumber:j];
         NSString* soundFileName = [NSString stringWithFormat:@"sound_%i.caf", j];
         NSString* imageFileName = [NSString stringWithFormat:@"image_%i.png", j];
         
