@@ -19,6 +19,13 @@
 
 -(BOOL)CreateDirectory:(NSString*) directoryName error:(NSError**)err;
 -(BOOL)AddFile:(NSURL*) file error:(NSError**)err;
+-(BOOL)DeleteFile:(NSString*) filename error:(NSError**)err;
 -(NSURL*)GetFile:(NSString*) filename error:(NSError**)err;
+-(id)initWithDirectoryName:(NSString*)dirname;
+-(NSURL*)GetThemeDirURL;
+
++(NSArray*)GetThemes:(NSError*)error;
+
+@property (nonatomic,readonly) NSString* themeURL;
 
 @end

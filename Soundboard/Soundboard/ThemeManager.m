@@ -20,14 +20,25 @@
 
 @implementation ThemeManager
 
--(id)init
++(NSArray*)GetThemes:(NSError *)error
+{
+    
+}
+
+-(id)initWithDirectoryName:(NSString *)dirname
 {
     self = [super init];
     if (self)
     {
         self->isInitialized = NO;
+        self->themeDirName = dirname;
     }
-    return  self;
+    return self;
+}
+
+-(id)init
+{
+    return [self initWithDirectoryName:nil];
 }
 
 -(NSFileManager*) appFileManager
@@ -89,6 +100,33 @@
     self->isInitialized = YES;
     
     return YES;
+}
+
+-(BOOL)DeleteFile:(NSString*)filename error:(NSError *__autoreleasing *)err
+{
+    if (!isInitialized)
+    {
+        NSArray* objArray = [NSArray arrayWithObjects:@"Theme object not initialized. Call CreateDirectory First", nil];
+        NSArray* keyArray = [NSArray arrayWithObjects:NSLocalizedDescriptionKey, nil];
+        NSDictionary* eDict = [NSDictionary dictionaryWithObjects:objArray forKeys:keyArray];
+        *err = [[NSError alloc] initWithDomain:SoundBoardErrorDomain code:ThemeObjectNotInitialized userInfo:eDict];
+        return  NO;   
+    }
+    NSString* fileToDelete = [[themeDirURL path] stringByAppendingPathComponent:filename];
+    NSError* internalerr = nil;
+    BOOL ret = [self.appFileManager removeItemAtPath:fileToDelete error:&internalerr];
+    if (!ret)
+    {
+        NSLog(@"removeItemAtPath failed with the following error:\n Error Domain: %@\n Error Code: %d\n, Error description: %@\n Failure Reason: %@", [internalerr domain], [internalerr code], [internalerr localizedDescription], [internalerr localizedFailureReason] );
+        
+        //@TODO: Should check if the file does not exist error is returned, and reset error before returning to caller
+        if (nil != err)
+        {
+            *err = internalerr;
+        }
+        return  NO;
+    }
+    return  YES;
 }
 
 -(BOOL)AddFile:(NSURL *)file error:(NSError *__autoreleasing *)err
