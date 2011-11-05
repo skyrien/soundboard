@@ -143,6 +143,22 @@
     
     NSString* destPath = [[themeDirURL path] stringByAppendingPathComponent:[file lastPathComponent]];
     NSError* internalerr = nil;
+    if ([self.appFileManager fileExistsAtPath:destPath])
+    {
+        BOOL ret = [self.appFileManager removeItemAtPath:destPath error:&internalerr];
+        if (!ret)
+        {
+            NSLog(@"removeItemAtPath failed with the following error:\n Error Domain: %@\n Error Code: %d\n, Error description: %@\n Failure Reason: %@", [internalerr domain], [internalerr code], [internalerr localizedDescription], [internalerr localizedFailureReason] );
+            
+            if (nil != err)
+            {
+                *err = internalerr;
+            }
+            return  NO;
+        }
+        
+    }
+    internalerr = nil;
     BOOL ret = [self.appFileManager copyItemAtPath:[file path] toPath:destPath error:&internalerr];
     if (!ret)
     {
