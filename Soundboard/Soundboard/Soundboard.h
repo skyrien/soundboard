@@ -35,6 +35,8 @@
 
 // ACTIONS ON BOARD
 -(void)setSoundNumber:(int)buttonNumber withCFURL:(CFURLRef)theURL;
+-(void)clearSoundNumber:(int)buttonNumber;
+
 
 // This function attempts to play the audio file corresponding to the button
 -(void)playSound:(NSString *)buttonName;
