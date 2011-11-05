@@ -9,9 +9,6 @@
 #import "AppDelegate.h"
 #import "DropboxSDK.h"
 
-@interface AppDelegate () <DBSessionDelegate>
-
-@end
 
 @implementation AppDelegate
 
@@ -20,10 +17,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // OVERRIDE POINT FOR LOADING APPLICATION
-    DBSession* session = 
-    [[DBSession alloc] initWithConsumerKey:@"ych32k07fi427wq" consumerSecret:@"8yq4k5icqoqguic"];
-	session.delegate = self; // DBSessionDelegate methods allow you to handle re-authenticating
-	[DBSession setSharedSession:session];
     
     return YES;
 }
@@ -65,11 +58,6 @@
      Save data if appropriate.
      See also applicationDidEnterBackground:.
      */
-}
-
-- (void)sessionDidReceiveAuthorizationFailure:(DBSession*)session {
-	DBLoginController* loginController = [DBLoginController new];
-	//[loginController presentFromController:navigationController];
 }
 
 @end
