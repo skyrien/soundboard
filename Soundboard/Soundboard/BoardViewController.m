@@ -199,7 +199,7 @@
                                    
     
     // Change UI elements as appropriate to indicate mode change.
-    navController.navigationBar.tintColor = [UIColor lightGrayColor];
+    navController.navigationBar.tintColor = [UIColor orangeColor];
     [self.navigationItem setHidesBackButton:YES animated:YES];
     self.title = [NSString stringWithFormat:@"Editing %@",theBoard.currentTheme];
     [self.navigationItem setRightBarButtonItem:doneButton animated:YES];
@@ -242,10 +242,7 @@
     else if (mode == MODE_EDIT)
     {
         [self.navigationController pushViewController:EditSoundVC animated:YES];
-        //[self presentModalViewController:EditSoundVC animated:YES];
         [EditSoundVC loadSound:[sender.titleLabel text] FromTheme:theBoard.currentTheme];
-//        [EditSoundVC loadSound:sender];
-//        [self dismissModalViewControllerAnimated:YES];
     }
 }
 
@@ -334,9 +331,9 @@
         }
         else
         {
-            NSLog(@"Theme Manager got  file %@ successfully.", imageFileName);
-            NSString* imageRelativePath = [newImage relativePath];
-            [[soundButtons objectAtIndex:i] setImage:[UIImage imageNamed:imageRelativePath] forState:UIControlStateNormal];
+            NSLog(@"Theme Manager got file %@ successfully.", imageFileName);
+            NSString* imagePath = [newImage path];
+            [[soundButtons objectAtIndex:i] setImage:[UIImage imageWithContentsOfFile:imagePath] forState:UIControlStateNormal];
         
         }
         NSLog(@"Initialized soundId %i.", j);

@@ -19,6 +19,8 @@
 #define MODE_READY              1
 #define MODE_EDIT               2
 
+@class BoardViewController;
+
 @interface BoardViewController : UIViewController
 {
      // Collection of buttons in IB - These are all sound buttons.
@@ -34,7 +36,6 @@
     IBOutlet UIButton *infoButton;
     IBOutlet UIBarButtonItem *actionButton;
     IBOutlet UIStoryboardSegue *editSegue;
-    
     IBOutlet EditSoundViewController *EditSoundVC;
 //    IBOutlet UILongPressGestureRecognizer *longPressGR;
 

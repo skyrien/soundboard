@@ -13,6 +13,7 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "LocStrings.h"
 #import "ThemeManager.h"
+#import "BoardViewController.h"
 
 #define MODE_EMPTY              0
 #define MODE_READY              1
@@ -36,7 +37,10 @@
     IBOutlet UIProgressView* progressBar;
     IBOutlet UINavigationItem* navigationItem;
     IBOutlet UINavigationBar* navigationBar;
-    
+    IBOutlet UIBarButtonItem* cancelButton;
+    IBOutlet UIBarButtonItem* saveButton;
+
+    //    IBOutlet BoardViewController* theBoardView;
     // Variables and stuff
     NSFileManager* fileManager;
     NSInteger mode;

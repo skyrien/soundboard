@@ -37,7 +37,7 @@
 				<string key="IBProxiedObjectIdentifier">IBFirstResponder</string>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
-			<object class="IBUIViewController" id="129420052">
+			<object class="IBUIViewController" id="6351702">
 				<object class="IBUIView" key="IBUIView" id="191373211">
 					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">274</int>
@@ -48,7 +48,7 @@
 							<string key="NSFrame">{{139, 20}, {150, 21}}</string>
 							<reference key="NSSuperview" ref="191373211"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="907847898"/>
+							<reference key="NSNextKeyView" ref="301125661"/>
 							<string key="NSReuseIdentifierKey">_NS:328</string>
 							<bool key="IBUIOpaque">NO</bool>
 							<bool key="IBUIClipsSubviews">YES</bool>
@@ -268,7 +268,7 @@
 							<string key="NSFrame">{{20, 20}, {106, 106}}</string>
 							<reference key="NSSuperview" ref="191373211"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="301125661"/>
+							<reference key="NSNextKeyView" ref="992376576"/>
 							<string key="NSReuseIdentifierKey">_NS:225</string>
 							<bool key="IBUIOpaque">NO</bool>
 							<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -315,7 +315,7 @@
 					<string key="NSFrame">{{0, 64}, {320, 416}}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
-					<reference key="NSNextKeyView" ref="992376576"/>
+					<reference key="NSNextKeyView" ref="907847898"/>
 					<object class="NSColor" key="IBUIBackgroundColor">
 						<int key="NSColorSpace">10</int>
 						<object class="NSImage" key="NSImage">
@@ -4713,19 +4713,19 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 					<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics"/>
 					<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				</object>
-				<object class="IBUINavigationItem" key="IBUINavigationItem" id="691396897">
+				<object class="IBUINavigationItem" key="IBUINavigationItem" id="604148835">
 					<reference key="IBUINavigationBar"/>
 					<string key="IBUITitle">Title</string>
 					<object class="IBUIBarButtonItem" key="IBUILeftBarButtonItem" id="40562986">
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIStyle">1</int>
-						<reference key="IBUINavigationItem" ref="691396897"/>
+						<reference key="IBUINavigationItem" ref="604148835"/>
 						<int key="IBUISystemItemIdentifier">1</int>
 					</object>
 					<object class="IBUIBarButtonItem" key="IBUIRightBarButtonItem" id="770453502">
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIStyle">1</int>
-						<reference key="IBUINavigationItem" ref="691396897"/>
+						<reference key="IBUINavigationItem" ref="604148835"/>
 						<int key="IBUISystemItemIdentifier">3</int>
 					</object>
 					<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -4809,20 +4809,44 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 					<int key="connectionID">62</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">navigationItem</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="604148835"/>
+					</object>
+					<int key="connectionID">85</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">cancelButton</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="40562986"/>
+					</object>
+					<int key="connectionID">86</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">saveButton</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="770453502"/>
+					</object>
+					<int key="connectionID">87</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">cancelEditing:</string>
 						<reference key="source" ref="40562986"/>
-						<reference key="destination" ref="129420052"/>
+						<reference key="destination" ref="372490531"/>
 					</object>
-					<int key="connectionID">81</int>
+					<int key="connectionID">88</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">doneEditing:</string>
 						<reference key="source" ref="770453502"/>
-						<reference key="destination" ref="129420052"/>
+						<reference key="destination" ref="372490531"/>
 					</object>
-					<int key="connectionID">80</int>
+					<int key="connectionID">89</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -4871,10 +4895,26 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">navigationItem</string>
-						<reference key="source" ref="129420052"/>
-						<reference key="destination" ref="691396897"/>
+						<reference key="source" ref="6351702"/>
+						<reference key="destination" ref="604148835"/>
 					</object>
 					<int key="connectionID">82</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">cancelButton</string>
+						<reference key="source" ref="6351702"/>
+						<reference key="destination" ref="40562986"/>
+					</object>
+					<int key="connectionID">83</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">saveButton</string>
+						<reference key="source" ref="6351702"/>
+						<reference key="destination" ref="770453502"/>
+					</object>
+					<int key="connectionID">84</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -4898,10 +4938,10 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">71</int>
-						<reference key="object" ref="129420052"/>
+						<reference key="object" ref="6351702"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="191373211"/>
-							<reference ref="691396897"/>
+							<reference ref="604148835"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -4920,7 +4960,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 							<reference ref="136503152"/>
 							<reference ref="907847898"/>
 						</array>
-						<reference key="parent" ref="129420052"/>
+						<reference key="parent" ref="6351702"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">46</int>
@@ -4974,22 +5014,22 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">77</int>
-						<reference key="object" ref="691396897"/>
+						<reference key="object" ref="604148835"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="40562986"/>
 							<reference ref="770453502"/>
 						</array>
-						<reference key="parent" ref="129420052"/>
+						<reference key="parent" ref="6351702"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">5</int>
 						<reference key="object" ref="40562986"/>
-						<reference key="parent" ref="691396897"/>
+						<reference key="parent" ref="604148835"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">6</int>
 						<reference key="object" ref="770453502"/>
-						<reference key="parent" ref="691396897"/>
+						<reference key="parent" ref="604148835"/>
 					</object>
 				</array>
 			</object>
@@ -5020,7 +5060,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">82</int>
+			<int key="maxID">91</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -5062,6 +5102,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="cancelButton">UIBarButtonItem</string>
 						<string key="currentTime">UILabel</string>
 						<string key="deleteButton">UIButton</string>
 						<string key="maxTime">UILabel</string>
@@ -5070,9 +5111,14 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 						<string key="playButton">UIButton</string>
 						<string key="progressBar">UIProgressView</string>
 						<string key="recordButton">UIButton</string>
+						<string key="saveButton">UIBarButtonItem</string>
 						<string key="soundTileButton">UIButton</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="cancelButton">
+							<string key="name">cancelButton</string>
+							<string key="candidateClassName">UIBarButtonItem</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="currentTime">
 							<string key="name">currentTime</string>
 							<string key="candidateClassName">UILabel</string>
@@ -5104,6 +5150,10 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 						<object class="IBToOneOutletInfo" key="recordButton">
 							<string key="name">recordButton</string>
 							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="saveButton">
+							<string key="name">saveButton</string>
+							<string key="candidateClassName">UIBarButtonItem</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="soundTileButton">
 							<string key="name">soundTileButton</string>
