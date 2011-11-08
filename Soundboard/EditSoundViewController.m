@@ -93,6 +93,7 @@
     tickNumber = 0;
     isPlaying = NO;
     hasNewImage = NO;
+    navigationItem = self.navigationItem;
     
     // Setting up directory parameters
     NSArray *dirPaths;
@@ -172,6 +173,10 @@
     NSURL *soundUrl, *imageUrl;
     currentSoundNumber = soundNumber;
     currentThemeName = themeName;
+
+    // SETUP BUTTONS
+    navigationItem.leftBarButtonItem = cancelButton;
+    navigationItem.rightBarButtonItem = saveButton;
     navigationItem.title = [NSString stringWithFormat:@"Editing Tile %@", soundNumber];
     NSError *themeManagerError = nil;
     [themeManager CreateDirectory:themeName error:&themeManagerError];
@@ -318,8 +323,7 @@
             NSLog(@"Theme Manager added file %@ successfully.", newImageFileName);
         hasNewImage = NO;
     }
-    
-    
+
     [self.navigationController popViewControllerAnimated:YES];
     //[self dismissModalViewControllerAnimated:YES];
 }
@@ -485,24 +489,23 @@
     }
     else if (actionSheet == photoSourceActionSheet) {
 
+        theCamera = [[UIImagePickerController alloc] init];
+        [theCamera setDelegate:(id)self];
+        NSArray *supportedMediaTypes = [[NSArray alloc]
+                                        initWithObjects:(NSString*) kUTTypeImage,
+                                        nil];
+        [theCamera setMediaTypes:supportedMediaTypes];
+        [theCamera setAllowsEditing:YES]; // lets the user edit       
+        
         // USER CLICKED TAKE PHOTO
         if (buttonIndex == 0) {
             // CHECK IF THIS DEVICE HAS A CAMERA, IF NOT, THROW SOMETHING
             
             if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
             {
-                theCamera = [[UIImagePickerController alloc] init];
-                [theCamera setDelegate:(id)self];
                 
                 // CHECK TO SEE IF THE CAMERA IS THERE
-                NSArray *supportedMediaTypes = [[NSArray alloc]
-                                                initWithObjects:(NSString*) kUTTypeImage,
-                                                nil];
-                theCamera.mediaTypes = supportedMediaTypes;
-
                 [theCamera setSourceType:UIImagePickerControllerSourceTypeCamera];
-                [theCamera setAllowsEditing:YES]; // lets the user edit       
-                
                 
                 [self presentModalViewController:theCamera animated:YES];
                 NSLog(@"Done setting up the camera.");
@@ -516,8 +519,9 @@
         }
         // USER CLICKED CHOOSE PHOTO
         else if (buttonIndex == 1) {
+            NSLog(@"User wants to browse photos...");
             [theCamera setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
-            [self presentModalViewController:theCamera animated:YES];            
+            [self presentModalViewController:theCamera animated:YES];
         }
         
     }
