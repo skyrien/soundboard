@@ -74,7 +74,9 @@
 // determines that an event has occured on this button.
 //-(IBAction)longPress:(UILongPressGestureRecognizer *)sender;
 
-
+// This function is called when creating a new theme, to trigger the new theme
+// create flow.
+-(void)newTheme;
 
 // This function loads the theme from disk
 -(void)loadTheme:(NSString *)themeName;

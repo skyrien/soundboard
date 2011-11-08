@@ -35,6 +35,6 @@
 }
 
 
-@synthesize boardOwnerId, currentTheme;
+@synthesize boardOwnerId, currentTheme, currentThemePhoto, themeDescription;
 
 @end

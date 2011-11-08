@@ -20,7 +20,7 @@
 #define MODE_RECORDING          4
 #define MODE_RECORDINGPAUSED    5
 
-#define PLAY_TIMER_UPDATE_RATE 50 //FRAMES PER SECOND FOR THE PLAY TIMER
+#define PLAY_TIMER_UPDATE_RATE 40 //FRAMES PER SECOND FOR THE PLAY TIMER
 
 @class EditSoundViewController;
 
@@ -33,6 +33,7 @@
     IBOutlet UILabel* currentTime;
     IBOutlet UILabel* maxTime;
     IBOutlet UIProgressView* progressBar;
+    IBOutlet UINavigationItem* navigationItem;
     
     // Variables and stuff
     NSFileManager* fileManager;
@@ -47,10 +48,8 @@
     AVAudioRecorder* theRecorder;
     AVAudioSession* session;
     int tickNumber;
+    bool isPlaying;
 }
-
-// This function loads a unique instance of the sound/image
-- (void)loadSound:(UIButton *)sender;
 
 // This function loads a sound from a specific theme
 - (void)loadSound:(NSString*) soundNumber FromTheme:(NSString*)themeName;

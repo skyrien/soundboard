@@ -60,6 +60,9 @@
 		7024E6E114564A0E00D6C70B /* DropBoxModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 7024E6DC14564A0E00D6C70B /* DropBoxModule.m */; };
 		7024E6E214564A0E00D6C70B /* SoundBoardError.m in Sources */ = {isa = PBXBuildFile; fileRef = 7024E6DE14564A0E00D6C70B /* SoundBoardError.m */; };
 		7024E6E314564A0E00D6C70B /* ThemeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7024E6E014564A0E00D6C70B /* ThemeManager.m */; };
+		704DA06E1468C486001DE188 /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 704DA06D1468C486001DE188 /* libGoogleAdMobAds.a */; };
+		704DA0721468C4DC001DE188 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 704DA0711468C4DC001DE188 /* MessageUI.framework */; };
+		704DA0741468C4EF001DE188 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 704DA0731468C4EF001DE188 /* SystemConfiguration.framework */; };
 		70520DE11442B5BB00B0426E /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70520DE01442B5BB00B0426E /* HomeViewController.m */; };
 		70520DE41442B73F00B0426E /* BoardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70520DE31442B73F00B0426E /* BoardViewController.m */; };
 		70520DF01442DEAD00B0426E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70520DEF1442DEAD00B0426E /* AudioToolbox.framework */; };
@@ -190,6 +193,15 @@
 		7024E6DE14564A0E00D6C70B /* SoundBoardError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundBoardError.m; sourceTree = "<group>"; };
 		7024E6DF14564A0E00D6C70B /* ThemeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemeManager.h; sourceTree = "<group>"; };
 		7024E6E014564A0E00D6C70B /* ThemeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemeManager.m; sourceTree = "<group>"; };
+		704DA0671468C484001DE188 /* GADBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADBannerView.h; sourceTree = "<group>"; };
+		704DA0681468C484001DE188 /* GADBannerViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADBannerViewDelegate.h; sourceTree = "<group>"; };
+		704DA0691468C484001DE188 /* GADInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADInterstitial.h; sourceTree = "<group>"; };
+		704DA06A1468C485001DE188 /* GADInterstitialDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADInterstitialDelegate.h; sourceTree = "<group>"; };
+		704DA06B1468C486001DE188 /* GADRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADRequest.h; sourceTree = "<group>"; };
+		704DA06C1468C486001DE188 /* GADRequestError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADRequestError.h; sourceTree = "<group>"; };
+		704DA06D1468C486001DE188 /* libGoogleAdMobAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAdMobAds.a; sourceTree = "<group>"; };
+		704DA0711468C4DC001DE188 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		704DA0731468C4EF001DE188 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		70520DDF1442B5BB00B0426E /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		70520DE01442B5BB00B0426E /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		70520DE21442B73F00B0426E /* BoardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoardViewController.h; sourceTree = "<group>"; };
@@ -228,6 +240,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				704DA0741468C4EF001DE188 /* SystemConfiguration.framework in Frameworks */,
+				704DA0721468C4DC001DE188 /* MessageUI.framework in Frameworks */,
 				668AB3E11447A0EA008E90F3 /* Security.framework in Frameworks */,
 				70520DF91442E6DC00B0426E /* AVFoundation.framework in Frameworks */,
 				70520DF01442DEAD00B0426E /* AudioToolbox.framework in Frameworks */,
@@ -236,6 +250,7 @@
 				70834A101442B374005EA445 /* UIKit.framework in Frameworks */,
 				70834A121442B374005EA445 /* Foundation.framework in Frameworks */,
 				70834A141442B374005EA445 /* CoreGraphics.framework in Frameworks */,
+				704DA06E1468C486001DE188 /* libGoogleAdMobAds.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -375,6 +390,21 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		704DA0701468C492001DE188 /* AdMobSDK */ = {
+			isa = PBXGroup;
+			children = (
+				704DA0671468C484001DE188 /* GADBannerView.h */,
+				704DA0681468C484001DE188 /* GADBannerViewDelegate.h */,
+				704DA0691468C484001DE188 /* GADInterstitial.h */,
+				704DA06A1468C485001DE188 /* GADInterstitialDelegate.h */,
+				704DA06B1468C486001DE188 /* GADRequest.h */,
+				704DA06C1468C486001DE188 /* GADRequestError.h */,
+				704DA06D1468C486001DE188 /* libGoogleAdMobAds.a */,
+			);
+			name = AdMobSDK;
+			path = Soundboard;
+			sourceTree = "<group>";
+		};
 		70520DF51442E17A00B0426E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -388,7 +418,10 @@
 		70834A001442B373005EA445 = {
 			isa = PBXGroup;
 			children = (
+				704DA0731468C4EF001DE188 /* SystemConfiguration.framework */,
+				704DA0711468C4DC001DE188 /* MessageUI.framework */,
 				668AB4691447CE11008E90F3 /* DropboxSDK */,
+				704DA0701468C492001DE188 /* AdMobSDK */,
 				70834A151442B374005EA445 /* Soundboard */,
 				70834A2D1442B374005EA445 /* SoundboardTests */,
 				70834A0E1442B374005EA445 /* Frameworks */,
@@ -747,6 +780,10 @@
 				GCC_PREFIX_HEADER = "Soundboard/Soundboard-Prefix.pch";
 				INFOPLIST_FILE = "Soundboard/Soundboard-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Soundboard\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -760,6 +797,10 @@
 				GCC_PREFIX_HEADER = "Soundboard/Soundboard-Prefix.pch";
 				INFOPLIST_FILE = "Soundboard/Soundboard-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Soundboard\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;

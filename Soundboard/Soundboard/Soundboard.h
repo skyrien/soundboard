@@ -17,6 +17,9 @@
     
     // This is a string representing the theme name
     NSString* currentTheme;
+    NSString* themeDescription;
+    
+    UIImage* currentThemePhoto;
     
     // This string represents the owner of the board
     NSString* boardOwnerId;
@@ -43,6 +46,8 @@
 
 @property(nonatomic, retain) NSString* boardOwnerId;
 @property(nonatomic, retain) NSString* currentTheme;
+@property(nonatomic, retain) NSString* themeDescription;
+@property(nonatomic, retain) UIImage* currentThemePhoto;
 //@property(nonatomic) NSInteger boardMode;
 
 @end
