@@ -19,6 +19,8 @@
 #define LOC_CONFIRMDELETE       @"Are you sure you want to delete this board?"
 #define LOC_FINALCONFIRMATION   @"Yes, delete this board"
 #define LOC_DONE                @"Done"
+#define LOC_TAKEPHOTO           @"Take photo"
+#define LOC_CHOOSEPHOTO         @"Choose photo"
 
 // Confirm deletion of sound
 #define LOC_CONFIRMDELSOUND       @"Are you sure you want to delete this sound?"

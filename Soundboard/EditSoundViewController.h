@@ -10,6 +10,7 @@
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
+#import <MobileCoreServices/MobileCoreServices.h>
 #import "LocStrings.h"
 #import "ThemeManager.h"
 
@@ -24,7 +25,7 @@
 
 @class EditSoundViewController;
 
-@interface EditSoundViewController : UIViewController
+@interface EditSoundViewController : UIViewController <UIImagePickerControllerDelegate>
 {
     IBOutlet UIButton* recordButton;
     IBOutlet UIButton* playButton;
@@ -34,6 +35,7 @@
     IBOutlet UILabel* maxTime;
     IBOutlet UIProgressView* progressBar;
     IBOutlet UINavigationItem* navigationItem;
+    IBOutlet UINavigationBar* navigationBar;
     
     // Variables and stuff
     NSFileManager* fileManager;
@@ -43,12 +45,14 @@
     NSString* currentSoundNumber;
     NSString* currentThemeName;
     UInt32 soundId, newSoundId;
-    UIActionSheet* confirmDeleteActionSheet;   
+    UIActionSheet* confirmDeleteActionSheet;
+    UIActionSheet* photoSourceActionSheet;
     NSURL* tempSound;
     AVAudioRecorder* theRecorder;
     AVAudioSession* session;
+    UIImagePickerController* theCamera;
     int tickNumber;
-    bool isPlaying;
+    bool isPlaying, hasNewImage;
 }
 
 // This function loads a sound from a specific theme
