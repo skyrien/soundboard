@@ -13,7 +13,6 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "LocStrings.h"
 #import "ThemeManager.h"
-#import "BoardViewController.h"
 
 #define MODE_EMPTY              0
 #define MODE_READY              1
