@@ -55,6 +55,7 @@
                                                userInfo:nil
                                                 repeats:YES];
     tickNumber = 0;
+    isPlaying = NO;
     
     // Setting up directory parameters
     NSArray *dirPaths;
@@ -126,28 +127,6 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)loadSound:(UIButton *)sender {
-        
-    CFURLRef theURL;
-    currentSoundNumber = [[sender titleLabel] text];
-    self.title = [NSString stringWithFormat:@"Editing Tile %@", currentSoundNumber];
-    NSLog(@"Loading Sound %@ properties for editing.", currentSoundNumber);
-    
-    // Generate a CFURL for the soundbutton
-    CFBundleRef mainBundle = CFBundleGetMainBundle();
-    NSString* fileName = [NSString stringWithFormat:@"sound_%@", currentSoundNumber];
-    NSString* imageFileName = [NSString stringWithFormat:@"image_%@.png", currentSoundNumber];    
-    
-    // REPLACE THIS WITH THE THEME MANAGER CODE LATER
-    theURL = CFBundleCopyResourceURL(mainBundle, (__bridge CFStringRef)fileName, CFSTR ("caf"), NULL); 
-    [soundTileButton setImage:[UIImage imageNamed:imageFileName] forState:UIControlStateNormal];
-    
-    // This finally sets the current sound to the soundId pointer
-    AudioServicesCreateSystemSoundID(theURL, &soundId);
-    mode = MODE_READY;
-    
-}
-
 - (void)loadSound:(NSString*) soundNumber FromTheme:(NSString*)themeName {
     // Declare/init vars
     if (!soundId)
@@ -155,7 +134,7 @@
     NSURL *soundUrl, *imageUrl;
     currentSoundNumber = soundNumber;
     currentThemeName = themeName;
-    self.title = [NSString stringWithFormat:@"Editing Tile %@", soundNumber];
+    navigationItem.title = [NSString stringWithFormat:@"Editing Tile %@", soundNumber];
     NSError *themeManagerError = nil;
     [themeManager CreateDirectory:themeName error:&themeManagerError];
     if (themeManagerError)
@@ -192,13 +171,25 @@
         [soundTileButton setImage:[UIImage imageWithContentsOfFile:imagePath]
                          forState:UIControlStateNormal];
     }
+    mode = MODE_READY;
 }
 
 - (int)updatePlayTimer {
     
+    // COUNTING UP WHILE RECORDING
     if (theRecorder.isRecording)
         tickNumber++;
-    currentTime.text = [NSString stringWithFormat:@"%f", ((float)tickNumber/PLAY_TIMER_UPDATE_RATE)];
+    // COUNTING UP WHILE PLAYING
+    else if (isPlaying && ([maxTime.text floatValue] > [currentTime.text floatValue])) {
+        tickNumber++;
+        currentTime.text = [NSString stringWithFormat:@"%f", ((float)tickNumber/PLAY_TIMER_UPDATE_RATE)];
+        [progressBar setProgress:([currentTime.text floatValue]/[maxTime.text floatValue]) animated:NO];
+    }
+
+    // STOPPED
+    else if (isPlaying) {
+        isPlaying = NO;
+    }
     return tickNumber;
 }
 
@@ -295,6 +286,10 @@
     // This plays the new sound if there is one
     else if (mode == MODE_READYWITHNEWSOUND) {
         NSLog(@"Playing new sound.");
+        tickNumber = 0;
+        currentTime.text = 0;
+        [progressBar setProgress:0 animated:NO];
+        isPlaying = YES;
         AudioServicesPlaySystemSound(soundId);
     }    
     
@@ -305,15 +300,10 @@
         [session setCategory:AVAudioSessionCategorySoloAmbient error:nil];
         maxTime.text = [NSString stringWithFormat:@"%f", (float)tickNumber/PLAY_TIMER_UPDATE_RATE];
         tickNumber = 0;
+        [progressBar setProgress:0 animated:NO];
+        isPlaying = NO;
         currentTime.text = @"0.0";
         NSLog(@"Recording stopped. New sound saved to temp file.");
-        
-        /* THE FOLLOWING WAS RECOMMENDED, BUT SEEMS TO NOT WORK
-        NSError *err = nil;
-        NSData *audioData = [NSData dataWithContentsOfFile:[tempSound path] options:0 error:&err];
-        if (!audioData)
-            NSLog(@"Audio session: %@ %d %@", [err domain], [err code], [[err userInfo] description]);
-        */
         
         // This is supposed to set the new sound to the soundId
         CFURLRef tempSoundUrl = (__bridge CFURLRef)tempSound;
@@ -343,6 +333,8 @@
     else {
 
         // Prepares the scene for recording
+        tickNumber = 0;
+        currentTime.text = 0;
         mode = MODE_RECORDING;
         [session setCategory:AVAudioSessionCategoryRecord error:nil];
         
@@ -382,7 +374,24 @@
         NSLog(@"Begin to delete sound");   
         
         // CODE TO DELETE SOUND
-        // CODE CODE CODE
+        NSString *newFileName = [NSString stringWithFormat:@"sound_%@.caf", currentSoundNumber];
+
+        NSError *err = nil;
+        [themeManager DeleteFile:newFileName error:&err];
+        if (err)
+            NSLog(@"Theme Manager: %@ %d %@", [err domain], [err code],
+                  [[err userInfo] description]);
+        else {
+            NSLog(@"Deleted file \"%@\" from theme.", newFileName);
+        }
+        err = nil;
+        [fileManager removeItemAtURL:tempSound error:&err];
+        if (err)
+            NSLog(@"FileManager: %@ %d %@", [err domain], [err code],
+                  [[err userInfo] description]);
+        else {
+            NSLog(@"Deleted temporary file.");
+        }
         
         // And since the sound is now gone, go back to the board view
         [self dismissModalViewControllerAnimated:YES];

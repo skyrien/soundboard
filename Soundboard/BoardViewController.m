@@ -16,7 +16,6 @@
 @implementation BoardViewController
 @synthesize actionButton, EditSoundVC;
 
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -45,7 +44,6 @@
 }
 
 // ACTION SHEET LOGIC
-
 -(void)didPresentActionSheet {
     NSLog(@"Action sheet was presented");
     
@@ -240,7 +238,7 @@
         [theBoard playSound:buttonName];
     }
     
-    // if in edit mode, bring up the edit dialog
+    // ENTER EDIT VIEW CONTROLLER
     else if (mode == MODE_EDIT)
     {
         [self presentModalViewController:EditSoundVC animated:YES];
@@ -263,6 +261,14 @@
 
 }
 */
+
+-(void)newTheme {
+    
+    
+    
+    
+    
+}
 
 
 -(void)loadTheme:(NSString *)themeName {
