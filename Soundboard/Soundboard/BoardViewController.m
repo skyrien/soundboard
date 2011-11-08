@@ -241,7 +241,8 @@
     // ENTER EDIT VIEW CONTROLLER
     else if (mode == MODE_EDIT)
     {
-        [self presentModalViewController:EditSoundVC animated:YES];
+        [self.navigationController pushViewController:EditSoundVC animated:YES];
+        //[self presentModalViewController:EditSoundVC animated:YES];
         [EditSoundVC loadSound:[sender.titleLabel text] FromTheme:theBoard.currentTheme];
 //        [EditSoundVC loadSound:sender];
 //        [self dismissModalViewControllerAnimated:YES];

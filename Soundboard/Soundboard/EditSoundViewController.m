@@ -10,13 +10,44 @@
 
 @implementation EditSoundViewController
 
+// CAMERA DELEGATE METHODS
+- (void) imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    NSLog(@"User cancelled the camera interface. Dismissing...");
+    [[picker self] dismissModalViewControllerAnimated:YES];    
+}
 
+- (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    UIImage *originalImage, *editedImage, *imageToSave;
+    
+    // WE WILL ALWAYS ASSUME THAT ONLY PHOTOS ARE RETURNED
+    // OTHERWISE, WE SHOULD HAVE CONDITIONAL LOGIC INSERTED HERE
+    
+    editedImage = (UIImage *) [info objectForKey:
+                               UIImagePickerControllerEditedImage];
+    originalImage = (UIImage *) [info objectForKey:
+                                 UIImagePickerControllerOriginalImage];
+    if (editedImage) {
+        imageToSave = editedImage;
+    }
+    else {
+        imageToSave = originalImage;
+    }
+    hasNewImage = YES;
+    [soundTileButton setImage:imageToSave forState:UIControlStateNormal];
+
+    // DISMISS THE CAMERA
+    [[picker self] dismissModalViewControllerAnimated:YES];
+    
+}
+
+
+// REMAINING VIEW CONTROLLER METHODS
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        
+        navigationBar = self.navigationController.navigationBar;
     }
     return self;
 }
@@ -28,6 +59,11 @@
     
     // Release any cached data, images, etc that aren't in use.
 }
+
+/* Not properly implemented
+- (void) didFailToReceiveAdWithError:Error {
+    
+}*/
 
 #pragma mark - View lifecycle
 
@@ -56,6 +92,7 @@
                                                 repeats:YES];
     tickNumber = 0;
     isPlaying = NO;
+    hasNewImage = NO;
     
     // Setting up directory parameters
     NSArray *dirPaths;
@@ -116,6 +153,7 @@
 
 - (void)viewDidUnload
 {
+    NSLog(@"UNLOADED EDIT SOUND VIEW");
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -196,6 +234,14 @@
 -(IBAction)doneEditing:(UIBarButtonItem *) sender {
     NSLog(@"User pressed done.");
     
+    // BS for generating new path
+    NSArray *dirPaths;
+    NSString *docsDir;
+    dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                   NSUserDomainMask, YES);
+    docsDir = [dirPaths objectAtIndex:0];
+
+    
     if ((mode == MODE_READYWITHNEWSOUND) ||
         (mode == MODE_RECORDING) ||
         (mode == MODE_RECORDINGPAUSED))
@@ -204,17 +250,10 @@
         if (theRecorder.isRecording)
             [theRecorder stop];
         
-        // BS for generating new path
-        NSArray *dirPaths;
-        NSString *docsDir;
-        dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
-                                                       NSUserDomainMask, YES);
-        docsDir = [dirPaths objectAtIndex:0];
         NSString *newFileName = [NSString stringWithFormat:@"sound_%@.caf", currentSoundNumber];
         NSString *newFilePath = [docsDir
                                  stringByAppendingPathComponent:newFileName];
         NSURL* finalUrl = [NSURL fileURLWithPath:newFilePath];
-        //NSFileManager* fileManager = [[NSFileManager alloc] init];
         NSError *themeManagerError = nil;
         
         // Deletes target then renames temp file to target file name
@@ -254,7 +293,35 @@
         AudioServicesDisposeSystemSoundID(soundId);
     }
     
-    [self dismissModalViewControllerAnimated:YES];
+    // NOW WE HANDLE THE IMAGE
+    if (hasNewImage)
+    {
+        NSString *newImageFileName = [NSString stringWithFormat:@"image_%@.png", currentSoundNumber];
+        NSString *newImageFilePath = [docsDir
+                                 stringByAppendingPathComponent:newImageFileName];
+        NSURL* finalImageUrl = [NSURL fileURLWithPath:newImageFilePath];
+        
+        // SINCE THERE ALREADY IS A NEW IMAGE, SAVE IT TO A FILE
+        NSData* outputData = UIImagePNGRepresentation(soundTileButton.imageView.image);
+        [outputData writeToURL:finalImageUrl atomically:YES];
+
+        NSError *themeManagerError = nil;        
+        [themeManager AddFile:finalImageUrl error:&themeManagerError];
+     
+        if (themeManagerError)
+        {
+            NSLog(@"Theme Manager: %@ %d %@", [themeManagerError domain], [themeManagerError code],
+                  [[themeManagerError userInfo] description]);            
+            NSLog(@"Theme Manager failed to add file %@.", newImageFileName);
+        }
+        else
+            NSLog(@"Theme Manager added file %@ successfully.", newImageFileName);
+        hasNewImage = NO;
+    }
+    
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    //[self dismissModalViewControllerAnimated:YES];
 }
 -(IBAction)cancelEditing:(UIBarButtonItem *) sender {
     NSLog(@"User pressed cancel.");
@@ -271,7 +338,11 @@
             NSLog(@"Recording left a temp file. Cleaning up...");
    
     }    
-    [self dismissModalViewControllerAnimated:YES];
+    // De-allocating anything that was created
+    AudioServicesDisposeSystemSoundID(soundId);
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    //[self dismissModalViewControllerAnimated:YES];
 }
 
 
@@ -363,39 +434,94 @@
 }
 
 - (IBAction)pressedSoundTileButton:(UIButton *) sender {
-    NSLog(@"User pressed SoundTile.");    
+    NSLog(@"User pressed SoundTile.");
+    
+    // LOAD ACTION SHEET
+    photoSourceActionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                           delegate:(id)self
+                                                  cancelButtonTitle:LOC_CANCEL
+                                             destructiveButtonTitle:nil
+                                                  otherButtonTitles:LOC_TAKEPHOTO,
+                                                                    LOC_CHOOSEPHOTO, nil];
+    [photoSourceActionSheet setActionSheetStyle:UIActionSheetStyleBlackOpaque];
+    [photoSourceActionSheet showInView:self.view];
+
+    // THEN SET THE SOURCE TYPE IN THE ACTION SHEET CHOICES, (below...)
+
+    
 }
 
 // This message is sent internally when
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
 
-    // User clicked yes
-    if (buttonIndex == 0) {
-        NSLog(@"Begin to delete sound");   
-        
-        // CODE TO DELETE SOUND
-        NSString *newFileName = [NSString stringWithFormat:@"sound_%@.caf", currentSoundNumber];
-
-        NSError *err = nil;
-        [themeManager DeleteFile:newFileName error:&err];
-        if (err)
-            NSLog(@"Theme Manager: %@ %d %@", [err domain], [err code],
-                  [[err userInfo] description]);
-        else {
-            NSLog(@"Deleted file \"%@\" from theme.", newFileName);
-        }
-        err = nil;
-        [fileManager removeItemAtURL:tempSound error:&err];
-        if (err)
-            NSLog(@"FileManager: %@ %d %@", [err domain], [err code],
-                  [[err userInfo] description]);
-        else {
-            NSLog(@"Deleted temporary file.");
-        }
-        
-        // And since the sound is now gone, go back to the board view
-        [self dismissModalViewControllerAnimated:YES];
+    if (actionSheet == confirmDeleteActionSheet) {
+        // User clicked yes
+        if (buttonIndex == 0) {
+            NSLog(@"Begin to delete sound");   
+            
+            // CODE TO DELETE SOUND
+            NSString *newFileName = [NSString stringWithFormat:@"sound_%@.caf", currentSoundNumber];
+            
+            NSError *err = nil;
+            [themeManager DeleteFile:newFileName error:&err];
+            if (err)
+                NSLog(@"Theme Manager: %@ %d %@", [err domain], [err code],
+                      [[err userInfo] description]);
+            else {
+                NSLog(@"Deleted file \"%@\" from theme.", newFileName);
+            }
+            err = nil;
+            [fileManager removeItemAtURL:tempSound error:&err];
+            if (err)
+                NSLog(@"FileManager: %@ %d %@", [err domain], [err code],
+                      [[err userInfo] description]);
+            else {
+                NSLog(@"Deleted temporary file.");
+            }
+            
+            // And since the sound is now gone, go back to the board view
+            [self dismissModalViewControllerAnimated:YES];
+        }        
     }
+    else if (actionSheet == photoSourceActionSheet) {
+
+        // USER CLICKED TAKE PHOTO
+        if (buttonIndex == 0) {
+            // CHECK IF THIS DEVICE HAS A CAMERA, IF NOT, THROW SOMETHING
+            
+            if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+            {
+                theCamera = [[UIImagePickerController alloc] init];
+                [theCamera setDelegate:(id)self];
+                
+                // CHECK TO SEE IF THE CAMERA IS THERE
+                NSArray *supportedMediaTypes = [[NSArray alloc]
+                                                initWithObjects:(NSString*) kUTTypeImage,
+                                                nil];
+                theCamera.mediaTypes = supportedMediaTypes;
+
+                [theCamera setSourceType:UIImagePickerControllerSourceTypeCamera];
+                [theCamera setAllowsEditing:YES]; // lets the user edit       
+                
+                
+                [self presentModalViewController:theCamera animated:YES];
+                NSLog(@"Done setting up the camera.");
+            }
+            else {
+                // THROW A UIALERT TO THE USER
+                NSLog(@"This device doesn't have a camera.");
+            }
+                
+            
+        }
+        // USER CLICKED CHOOSE PHOTO
+        else if (buttonIndex == 1) {
+            [theCamera setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+            [self presentModalViewController:theCamera animated:YES];            
+        }
+        
+    }
+
     
 }
     
