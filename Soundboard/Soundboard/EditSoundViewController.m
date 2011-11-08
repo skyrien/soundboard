@@ -204,9 +204,11 @@
     // LOAD THE IMAGE
     themeManagerError = nil;
     imageUrl = [themeManager GetFile:imageFileName error:&themeManagerError];
-    if (themeManagerError)
+    if (themeManagerError) {
         NSLog(@"Theme Manager: %@ %d %@", [themeManagerError domain], [themeManagerError code],
               [[themeManagerError userInfo] description]);
+        [soundTileButton setImage:nil forState:UIControlStateNormal];
+    }
     else
     {
         NSString *imagePath = [imageUrl path];
@@ -321,9 +323,9 @@
         }
         else
             NSLog(@"Theme Manager added file %@ successfully.", newImageFileName);
+        
         hasNewImage = NO;
     }
-
     [self.navigationController popViewControllerAnimated:YES];
     //[self dismissModalViewControllerAnimated:YES];
 }
@@ -344,7 +346,6 @@
     }    
     // De-allocating anything that was created
     AudioServicesDisposeSystemSoundID(soundId);
-    
     [self.navigationController popViewControllerAnimated:YES];
     //[self dismissModalViewControllerAnimated:YES];
 }
