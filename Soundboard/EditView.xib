@@ -275,7 +275,7 @@
 							<int key="IBUIContentHorizontalAlignment">0</int>
 							<int key="IBUIContentVerticalAlignment">0</int>
 							<int key="IBUIButtonType">1</int>
-							<string key="IBUINormalTitle">Click to add...</string>
+							<string key="IBUINormalTitle">Add a photo...</string>
 							<reference key="IBUIHighlightedTitleColor" ref="133953314"/>
 							<reference key="IBUINormalTitleColor" ref="3081726"/>
 							<reference key="IBUINormalTitleShadowColor" ref="652792196"/>
@@ -295,7 +295,6 @@
 							<string key="NSFrame">{{0, 366}, {320, 50}}</string>
 							<reference key="NSSuperview" ref="191373211"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:822</string>
 							<bool key="IBUIOpaque">NO</bool>
 							<bool key="IBUIClipsSubviews">YES</bool>
