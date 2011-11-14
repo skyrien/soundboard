@@ -23,18 +23,24 @@
 
     // Setting up the board...
     session = [AVAudioSession sharedInstance];
-    
     [session setActive:YES error:nil];
     [session setCategory:AVAudioSessionCategorySoloAmbient error:nil];
     EditSoundVC = [[EditSoundViewController alloc] initWithNibName:@"EditView" bundle:nil];
     theBoard = [[Soundboard alloc] init];
     themeManager = [[ThemeManager alloc] init];
-    mode = MODE_EMPTY;
-    buttonIndexFacebook = buttonIndexEmail = buttonIndexEdit = buttonIndexDelete = -1;
-//    self.navigationItem.backBarButtonItem.title = @"Home"; 
-//    longPressGR.delegate = self;
     
-    // Accessor pointers
+    // This segment initializes the backup ad from AdMob
+    adBannerView = [[GADBannerView alloc] initWithFrame:CGRectMake(0.0,
+                                                                   self.view.frame.size.height -
+                                                                   GAD_SIZE_320x50.height,
+                                                                   GAD_SIZE_320x50.width,
+                                                                   GAD_SIZE_320x50.height)];
+    adBannerView.adUnitID = ADMOB_UNIT_ID;
+    adBannerView.rootViewController = self;
+    
+    // Final configurations
+    mode = MODE_EMPTY; // 0
+    buttonIndexFacebook = buttonIndexEmail = buttonIndexEdit = buttonIndexDelete = -1;
     navController = self.navigationController;
 }
 
@@ -53,6 +59,13 @@
     // Reload the theme in case there were changes
     [self loadTheme:theBoard.currentTheme];
         NSLog(@"Reloaded current theme.");
+}
+
+-(void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
+    NSLog(@"iAd fetch failed. Falling back to AdMob...");
+    [self.view addSubview:adBannerView];
+    [adBannerView loadRequest:[GADRequest request]];
+    [banner cancelBannerViewAction];
 }
 
 // ACTION SHEET LOGIC
@@ -115,6 +128,12 @@
     else if (mode == MODE_EDIT)
     {
         
+    }
+    
+    else if (mode == MODE_EMPTY)
+    {
+        [self loadTheme:@"debug"];
+        mode = MODE_READY;
     }
                    
 }

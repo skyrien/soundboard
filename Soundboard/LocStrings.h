@@ -9,6 +9,10 @@
 #ifndef Soundboard_LocStrings_h
 #define Soundboard_LocStrings_h
 
+// CONFIGURATIONS
+#define ADMOB_UNIT_ID           @"a14eb88af9d533d"
+
+
 // UI STRING DEFINITIONS
 #define LOC_TITLE               @"Soundboard!"
 #define LOC_CANCEL              @"Cancel"
@@ -24,7 +28,7 @@
 
 // Confirm deletion of sound
 #define LOC_CONFIRMDELSOUND       @"Are you sure you want to delete this sound?"
-#define LOC_FINALCONFIRMDELSOUND   @"Yes, delete this sound"
+#define LOC_FINALCONFIRMDELSOUND  @"Yes, delete this sound"
 
 
 //Homeviewcontroller Buttons
