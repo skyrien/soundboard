@@ -20,9 +20,46 @@
 
 @implementation ThemeManager
 
-+(NSArray*)GetThemes:(NSError *)error
++(NSArray*)GetLocalThemes:(NSError *__autoreleasing *) error
 {
+    NSFileManager* fm = [[NSFileManager alloc] init];
+    NSError* internalerr = nil;
+    NSURL* suppurl = [fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:&internalerr];
+    if (nil == suppurl)
+    {
+        NSLog(@"URLForDirectory failed with the following error:\n Error Domain: %@\n Error Code: %d\n, Error description: %@\n Failure Reason: %@", [internalerr domain], [internalerr code], [internalerr localizedDescription], [internalerr localizedFailureReason] );
+        
+        if (nil != error)
+        {
+            *error = internalerr;
+        }
+        
+        return nil;
+    }
+    NSMutableArray* arr = [NSMutableArray new];
+    NSArray* dir = [fm contentsOfDirectoryAtPath:[suppurl path] error:&internalerr];
+    if (nil == arr)
+    {
+        NSLog(@"contentsOfDirectoryPath failed with the following error:\n Error Domain: %@\n Error Code: %d\n, Error description: %@\n Failure Reason: %@", [internalerr domain], [internalerr code], [internalerr localizedDescription], [internalerr localizedFailureReason] );
+        
+        if (nil != error)
+        {
+            *error = internalerr;
+        }
+        
+        return nil;
+    }
     
+    for (NSString* file in dir) {
+        BOOL isDir = NO;
+        NSString* fullpath = [[suppurl path] stringByAppendingPathComponent:file];
+        if ([fm fileExistsAtPath:fullpath isDirectory:&isDir] && isDir)
+        {
+            NSLog(@"Found directory %@", fullpath);
+            [arr addObject:fullpath];
+        }
+    }
+    return arr;
 }
 
 -(id)initWithDirectoryName:(NSString *)dirname
