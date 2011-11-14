@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <iAd/iAd.h>
 #import "Soundboard.h"
 #import "EditSoundViewController.h"
 #import "EditViewController.h"
 #import "LocStrings.h"
 #import "ThemeManager.h"
 #import "DropBoxModule.h"
+#import "GADBannerView.h"
 
 // BOARD MODES
 #define MODE_EMPTY              0
@@ -21,7 +23,7 @@
 
 @class BoardViewController;
 
-@interface BoardViewController : UIViewController
+@interface BoardViewController : UIViewController <ADBannerViewDelegate>
 {
      // Collection of buttons in IB - These are all sound buttons.
     IBOutlet UIButton *button1;
@@ -46,6 +48,7 @@
     NSInteger mode;
     AVAudioSession *session;
     ThemeManager* themeManager;
+    GADBannerView *adBannerView;
     
     // Board variables
     bool        userIsBoardOwner;
