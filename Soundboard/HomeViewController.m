@@ -122,9 +122,11 @@
     //[self performSegueWithIdentifier:@"BoardViewController" sender:self];
      // ...
      // Pass the selected object to the new view controller.
-    //[boardViewController loadTheme:@"debug"]; 
+    NSString* themeName = [[self.themes objectAtIndex:indexPath.row] lastPathComponent];
+    NSLog(@"Row was selected at %@", themeName);
     
-     [self.navigationController pushViewController:boardViewController animated:YES];
+    [boardViewController loadTheme:themeName]; 
+    [self.navigationController pushViewController:boardViewController animated:YES];
      
 }
 
