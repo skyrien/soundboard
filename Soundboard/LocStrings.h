@@ -26,4 +26,10 @@
 #define LOC_CONFIRMDELSOUND       @"Are you sure you want to delete this sound?"
 #define LOC_FINALCONFIRMDELSOUND   @"Yes, delete this sound"
 
+
+//Homeviewcontroller Buttons
+
+#define LOC_Create_NEW_BOARD @"Create New Board..."
+#define LOC_BROWSE_BOARDS @"Browse Online..."
+
 #endif
