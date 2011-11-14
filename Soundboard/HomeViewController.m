@@ -116,10 +116,13 @@
 {
     // Navigation logic may go here. Create and push another view controller.
     
-     BoardViewController *boardViewController = [[BoardViewController alloc] initWithNibName:nil bundle:nil];
+     /*BoardViewController *boardViewController = [[BoardViewController alloc] initWithNibName:nil bundle:nil];*/
+    BoardViewController* boardViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"BoardViewController"];
+    
+    //[self performSegueWithIdentifier:@"BoardViewController" sender:self];
      // ...
      // Pass the selected object to the new view controller.
-    [boardViewController loadTheme:@"debug"]; 
+    //[boardViewController loadTheme:@"debug"]; 
     
      [self.navigationController pushViewController:boardViewController animated:YES];
      
