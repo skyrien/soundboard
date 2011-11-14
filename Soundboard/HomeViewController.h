@@ -12,10 +12,12 @@
 
 @interface HomeViewController : UIViewController
 {
-    IBOutlet UIButton* linkButton;
     DBRestClient* restClient;
+    NSArray* themes;
+    UIActionSheet* addActionSheet;
 }
 
+@property (retain) NSArray* themes;
 -(IBAction)buttonPressed:(UIButton* )sender;
 
 @end

@@ -24,7 +24,7 @@
 -(id)initWithDirectoryName:(NSString*)dirname;
 -(NSURL*)GetThemeDirURL;
 
-+(NSArray*)GetThemes:(NSError*)error;
++(NSArray*)GetLocalThemes:(NSError**)error;
 
 @property (nonatomic,readonly) NSString* themeURL;
 
