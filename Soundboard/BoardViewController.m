@@ -317,7 +317,7 @@
     // IS THIS NECESSARY? WE DON'T REALLY HAVE A CONCEPT OF "CURRENT OWNER"
 
     // Create an array of the buttons for the for loop
-    NSArray *soundButtons = [NSArray arrayWithObjects:
+    NSArray *soundButtons = [[NSArray alloc] initWithObjects:
                              button1,
                              button2,
                              button3, 
