@@ -36,11 +36,23 @@
     
     // Accessor pointers
     navController = self.navigationController;
-    
-    // The following should only be set if in debug mode
-    [self loadTheme:@"debug"];
-    userIsBoardOwner = YES;
+}
 
+- (void)viewWillAppear:(BOOL)animated {
+    NSLog(@"BOARDVIEW CONTROLLER ABOUT TO APPEAR...");
+    // The following should only be set if in debug mode
+    
+    /*
+    if (!(theBoard.currentTheme)) {
+        [self loadTheme:@"debug"];
+        mode = MODE_READY;
+        userIsBoardOwner = YES;       
+    }
+     */
+    
+    // Reload the theme in case there were changes
+    [self loadTheme:theBoard.currentTheme];
+        NSLog(@"Reloaded current theme.");
 }
 
 // ACTION SHEET LOGIC
@@ -218,9 +230,6 @@
     [self.navigationItem setRightBarButtonItem:actionButton animated:YES];
     [infoButton setHidden:YES];
     
-    // Reload the theme in case there were changes
-    [self loadTheme:theBoard.currentTheme];
-    
     mode = MODE_READY;
     NSLog(@"Exited edit mode. New mode: %i", mode);
 }
@@ -305,6 +314,7 @@
     {
         int j = i + 1;
         [theBoard clearSoundNumber:j];
+        [[soundButtons objectAtIndex:i] setImage:nil forState:UIControlStateNormal];
         NSString* soundFileName = [NSString stringWithFormat:@"sound_%i.caf", j];
         NSString* imageFileName = [NSString stringWithFormat:@"image_%i.png", j];
         
@@ -334,12 +344,9 @@
             NSLog(@"Theme Manager got file %@ successfully.", imageFileName);
             NSString* imagePath = [newImage path];
             [[soundButtons objectAtIndex:i] setImage:[UIImage imageWithContentsOfFile:imagePath] forState:UIControlStateNormal];
-        
         }
         NSLog(@"Initialized soundId %i.", j);
     }
-    
-    mode = MODE_READY;
     NSLog(@"Finished loading \"%@\" theme", themeName);
 }
 

@@ -151,6 +151,12 @@
     NSLog(@"Edit sound view loaded.");
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    
+    // De-allocating anything that was created
+    AudioServicesDisposeSystemSoundID(soundId);
+}
+
 
 - (void)viewDidUnload
 {
@@ -295,9 +301,6 @@
             else
                 NSLog(@"Theme Manager added file %@ successfully.", newFileName);
         }
-        
-        // De-allocating anything that was created
-        AudioServicesDisposeSystemSoundID(soundId);
     }
     
     // NOW WE HANDLE THE IMAGE
@@ -345,9 +348,9 @@
    
     }    
     // De-allocating anything that was created
-    AudioServicesDisposeSystemSoundID(soundId);
+    //AudioServicesDisposeSystemSoundID(soundId);
     [self.navigationController popViewControllerAnimated:YES];
-    //[self dismissModalViewControllerAnimated:YES];
+
 }
 
 
@@ -466,6 +469,7 @@
             
             // CODE TO DELETE SOUND
             NSString *newFileName = [NSString stringWithFormat:@"sound_%@.caf", currentSoundNumber];
+            NSString *newImageFileName = [NSString stringWithFormat:@"image_%@.png", currentSoundNumber];
             
             NSError *err = nil;
             [themeManager DeleteFile:newFileName error:&err];
@@ -483,9 +487,25 @@
             else {
                 NSLog(@"Deleted temporary file.");
             }
-            
+
+            err = nil;
+            [themeManager DeleteFile:newImageFileName error:&err];
+            if (err)
+                NSLog(@"Theme Manager: %@ %d %@", [err domain], [err code],
+                      [[err userInfo] description]);
+            else {
+                NSLog(@"Deleted file \"%@\" from theme.", newImageFileName);
+            }
+            err = nil;
+            [fileManager removeItemAtURL:tempSound error:&err];
+            if (err)
+                NSLog(@"FileManager: %@ %d %@", [err domain], [err code],
+                      [[err userInfo] description]);
+            else {
+                NSLog(@"Deleted temporary file.");
+            }
             // And since the sound is now gone, go back to the board view
-            [self dismissModalViewControllerAnimated:YES];
+            [self.navigationController popViewControllerAnimated:YES];
         }        
     }
     else if (actionSheet == photoSourceActionSheet) {
