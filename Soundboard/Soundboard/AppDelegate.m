@@ -59,4 +59,13 @@
      */
 }
 
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    
+    // THIS SHOULD POP TO THE ROOT VIEW CONTROLLER, THEN ADD A HOME VIEW
+    // AND A BOARDVIEWCONTROLLER CORRESPONDING TO THE NEW BOARD AT THE URL
+    
+    
+    
+}
+
 @end
