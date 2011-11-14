@@ -57,7 +57,7 @@
         <scene sceneID="ih2-hv-D6N">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gHX-vQ-Cbk" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="DZ6-hW-b9a" customClass="BoardViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BoardViewController" id="DZ6-hW-b9a" customClass="BoardViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bIi-wB-Div">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -377,7 +377,6 @@
                 <relationship kind="outlet" name="currentTime" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="deleteButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="maxTime" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="navigationItem" candidateClass="UINavigationItem"/>
                 <relationship kind="outlet" name="playButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="progressBar" candidateClass="UIProgressView"/>
                 <relationship kind="outlet" name="recordButton" candidateClass="UIButton"/>
