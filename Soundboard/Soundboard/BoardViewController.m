@@ -46,19 +46,12 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     NSLog(@"BOARDVIEW CONTROLLER ABOUT TO APPEAR...");
-    // The following should only be set if in debug mode
-    
-    /*
-    if (!(theBoard.currentTheme)) {
-        [self loadTheme:@"debug"];
-        mode = MODE_READY;
-        userIsBoardOwner = YES;       
-    }
-     */
     
     // Reload the theme in case there were changes
-    [self loadTheme:theBoard.currentTheme];
-        NSLog(@"Reloaded current theme.");
+    if (!theBoard.currentTheme) {
+        [self loadTheme:theBoard.currentTheme];
+        NSLog(@"Reloaded current theme.");        
+    }
 }
 
 -(void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
@@ -133,6 +126,7 @@
     else if (mode == MODE_EMPTY)
     {
         [self loadTheme:@"debug"];
+        userIsBoardOwner = YES;
         mode = MODE_READY;
     }
                    
@@ -332,6 +326,7 @@
     for (int i = 0; i < 9; i++)
     {
         int j = i + 1;
+        mode = MODE_EMPTY;
         [theBoard clearSoundNumber:j];
         [[soundButtons objectAtIndex:i] setImage:nil forState:UIControlStateNormal];
         NSString* soundFileName = [NSString stringWithFormat:@"sound_%i.caf", j];
@@ -366,6 +361,11 @@
         }
         NSLog(@"Initialized soundId %i.", j);
     }
+    if (mode == MODE_EMPTY)
+        
+        // THIS IS NEEDED UNTIL WE HAVE ACTUAL METADATA ON BOARDS
+        userIsBoardOwner = YES;
+        mode = MODE_READY;
     NSLog(@"Finished loading \"%@\" theme", themeName);
 }
 
