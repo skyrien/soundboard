@@ -125,8 +125,8 @@
     NSString* themeName = [[self.themes objectAtIndex:indexPath.row] lastPathComponent];
     NSLog(@"Row was selected at %@", themeName);
     
-    [boardViewController loadTheme:themeName]; 
     [self.navigationController pushViewController:boardViewController animated:YES];
+    [boardViewController loadTheme:themeName]; 
      
 }
 
