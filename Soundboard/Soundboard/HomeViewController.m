@@ -25,14 +25,17 @@
 
 @implementation HomeViewController
 
+@synthesize tableView;
+
 -(NSArray*) themes
 {
-    if (nil == self->themes)
+    /*if (nil == self->themes)
     {
         //@TODO: Handle errors during themeloading
         self->themes = [ThemeManager GetLocalThemes:nil];
     }
-    return self->themes;
+    return self->themes;*/
+    return  [ThemeManager GetLocalThemes:nil];
 }
 
 
@@ -175,6 +178,7 @@
 	if (buttonIndex != [alertView cancelButtonIndex])
 	{
 		NSString *entered = [(NewBoardPrompt *)alertView enteredText];
+        //@TODO: verify that the boardname does not contain special characters, like -,@,#, etc. since these are used in the formatting of directory names
 		if (nil != entered && [entered length] != 0)
         {
                 BoardViewController* boardViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"BoardViewController"];
@@ -265,6 +269,11 @@
 }
 */
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.tableView reloadData];
+}
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
