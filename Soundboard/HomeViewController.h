@@ -13,11 +13,13 @@
 @interface HomeViewController : UIViewController
 {
     DBRestClient* restClient;
-    NSArray* themes;
+    //NSArray* themes;
+    IBOutlet UITableView* tableView;
     UIActionSheet* addActionSheet;
 }
 
 @property (retain) NSArray* themes;
+@property (retain) UITableView* tableView;
 -(IBAction)buttonPressed:(UIButton* )sender;
 
 @end
