@@ -10,10 +10,12 @@
 #import "DropBoxModule.h"
 #import "LocStrings.h"
 #import "BoardViewController.h"
+#import "NewBoardPrompt.h"
 
 @interface HomeViewController () <UITableViewDelegate, UITableViewDataSource> 
 
 -(void) updateButtons;
+-(void)displayNewBoardPrompt;
 -(NSArray*) GetThemeDisplayTextFromThemeDirName:(NSString*)themeDirName;
 
 @property (nonatomic, readonly) DBRestClient* restClient;
@@ -153,6 +155,41 @@
     [addActionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
     [addActionSheet showInView:self.navigationController.view];
     
+}
+
+-(void)actionSheet:(UIActionSheet *)as clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == as.cancelButtonIndex)
+    {
+        return;
+    }
+    else if (buttonIndex == 0) //Create new board...
+    {
+        [self displayNewBoardPrompt];
+    }
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+	if (buttonIndex != [alertView cancelButtonIndex])
+	{
+		NSString *entered = [(NewBoardPrompt *)alertView enteredText];
+		if (nil != entered && [entered length] != 0)
+        {
+                BoardViewController* boardViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"BoardViewController"];
+            [self.navigationController pushViewController:boardViewController animated:YES];
+            [boardViewController loadTheme:entered];
+        }
+	}
+}
+
+
+-(void)displayNewBoardPrompt
+{
+    NewBoardPrompt *prompt = [NewBoardPrompt alloc];
+    prompt = [prompt initWithTitle:@"Enter Board Name" message:@"Please Enter Board Name" delegate:self cancelButtonTitle:@"Cancel" okButtonTitle:@"OK"];
+    [prompt show];
 }
 
 - (IBAction)buttonPressed:(UIButton *)sender
