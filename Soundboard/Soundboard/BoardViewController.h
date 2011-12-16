@@ -15,6 +15,7 @@
 #import "ThemeManager.h"
 #import "DropBoxModule.h"
 #import "GADBannerView.h"
+#import "FacebookModule.h"
 
 // BOARD MODES
 #define MODE_EMPTY              0
@@ -23,7 +24,7 @@
 
 @class BoardViewController;
 
-@interface BoardViewController : UIViewController <ADBannerViewDelegate>
+@interface BoardViewController : UIViewController <ADBannerViewDelegate, DBRestClientDelegate, DBSessionDelegate>
 {
      // Collection of buttons in IB - These are all sound buttons.
     IBOutlet UIButton *button1;
@@ -49,6 +50,8 @@
     AVAudioSession *session;
     ThemeManager* themeManager;
     GADBannerView *adBannerView;
+    DropBoxModule* dbm;
+    FacebookModule* fbm;
     
     // Board variables
     bool        userIsBoardOwner;

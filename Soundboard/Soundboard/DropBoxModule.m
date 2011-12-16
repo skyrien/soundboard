@@ -12,28 +12,27 @@
 NSString* DBRoot = @"/Public/Soundboard/";
 
 
-@interface DropBoxModule() <DBLoginControllerDelegate, DBRestClientDelegate, DBSessionDelegate>
+@interface DropBoxModule() <DBRestClientDelegate, DBSessionDelegate>
 {
     NSString* themeName;
     UIViewController* controller;
 }
 
 -(void) uploadFiles;
--(void) updateButtons;
--(void) initializeDropBoxModule;
+//-(void) initializeDropBoxModule;
 -(void) downloadFiles;
 
 @property (nonatomic, readonly) DBRestClient* restClient;
-@property (atomic, assign) NSMutableArray* filesToDownload;
-@property (atomic, assign) NSMutableArray* filesToUpload;
+@property (atomic, retain) NSMutableArray* filesToDownload;
+@property (atomic, retain) NSMutableArray* filesToUpload;
 
 @end
 
 @implementation DropBoxModule
 
-@synthesize filesToDownload, filesToUpload;
+@synthesize filesToDownload, filesToUpload, errorsDuringUpload, errorsDuringDownload, networkOpState;
 
--(id)initWithThemeName:(NSString *)themeName controller:(UIViewController*)controller
+-(id)initWithThemeName:(NSString *)name
 {
     self =[super init];
     if (self)
@@ -41,13 +40,19 @@ NSString* DBRoot = @"/Public/Soundboard/";
         //set the shared session, if it already has not been done
         if (nil == [DBSession sharedSession])
         {
-            DBSession* session = 
+            DBSession* dbSession =
+            [[DBSession alloc]
+              initWithAppKey:@"ych32k07fi427wq"
+              appSecret:@"8yq4k5icqoqguic"
+              root:@"dropbox"]; // either kDBRootAppFolder or kDBRootDropbox
+            [DBSession setSharedSession:dbSession];
+            
+            /*DBSession* session = 
             [[DBSession alloc] initWithConsumerKey:@"ych32k07fi427wq" consumerSecret:@"8yq4k5icqoqguic"];
             session.delegate = self; // DBSessionDelegate methods allow you to handle re-authenticating
-            [DBSession setSharedSession:session];
+            [DBSession setSharedSession:session];*/
         }
-        self->themeName = themeName;
-        self->controller = controller;
+        self->themeName = name;
         self->tm = [[ThemeManager alloc] initWithDirectoryName:themeName];
     }
     return self;
@@ -61,46 +66,57 @@ NSString* DBRoot = @"/Public/Soundboard/";
 -(void)initializeDropBoxModule
 {
     //Check if dropbox account is linked
-    if (![[DBSession sharedSession] isLinked]) {
-        DBLoginController* controller =[DBLoginController new];
-        controller.delegate = self;
-        [controller presentFromController:controller];
-    } else {
+    if (!self->isInitialized)
+    {
+        if (![[DBSession sharedSession] isLinked]) {
+            [[DBSession sharedSession] link];
+        }
+        else
+        {
+            self->isInitialized = YES; 
+        }
+    }
+    /*else {
         [[DBSession sharedSession] unlink];
         [[[UIAlertView alloc] 
           initWithTitle:@"Account Unlinked!" message:@"Your dropbox account has been unlinked" 
           delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil]
          show];
-        [self updateButtons];
-    }
-    self->isInitialized = YES;
+    }*/
 }
 
--(BOOL)uploadTheme
+-(BOOL)GetThemeShareURL
 {
-    if (!isInitialized)
-    {
-        [self initializeDropBoxModule];
-    }
-    
-    self.errorsDuringUpload = NO;
-    self.networkOpState = uploadNotStarted;
-    [self.restClient createFolder:DBRoot];
-    return  YES;
+    [self.restClient loadSharableLinkForFile:[DBRoot stringByAppendingPathComponent:self->themeName]];
 }
 
--(BOOL)downloadTheme
+-(BOOL)UploadTheme
 {
-    if (!isInitialized)
+    
+    [self initializeDropBoxModule];
+    
+    if (isInitialized)
     {
-        [self initializeDropBoxModule];
+        self.errorsDuringUpload = NO;
+        self.networkOpState = uploadNotStarted;
+        [self.restClient createFolder:[DBRoot stringByAppendingPathComponent:self->themeName]];
+        return  YES;
     }
-    
-    self.errorsDuringDownload = NO;
-    self.networkOpState = downloadNotStarted;
-    [self.restClient loadMetadata:[DBRoot stringByAppendingPathComponent:themeName]];
-    
-    return YES;
+    return NO;
+}
+
+-(BOOL)DownloadTheme
+{
+    [self initializeDropBoxModule];
+        
+    if (isInitialized)
+    {
+        self.errorsDuringDownload = NO;
+        self.networkOpState = downloadNotStarted;
+        [self.restClient loadMetadata:[DBRoot stringByAppendingPathComponent:themeName]];
+        return YES;
+    }
+    return NO;
 }
 
 #pragma mark DBRestClientDelegate methods
@@ -155,7 +171,17 @@ NSString* DBRoot = @"/Public/Soundboard/";
 
 - (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError*)error
 {
-    NSLog(@"uploadFile failed with the following error:\n Error Domain: %@\n Error Code: %d\n, Error description: %@\n Failure Reason: %@", [error domain], [error code], [error localizedDescription], [error localizedFailureReason] );
+    NSLog(@"uploadFile failed with the following error: %@\n Error Domain: %@\n Error Code: %d\n, Error description: %@\n Failure Reason: %@", error, [error domain], [error code], [error localizedDescription], [error localizedFailureReason] );
+    
+    NSDictionary* dict = [error userInfo];
+    
+    if (nil != dict) 
+    {
+        for (NSString* key in dict) {
+            NSLog(@"Key: %@ Value: %@", key, [dict objectForKey:key]);
+        }
+    }
+    
     self.errorsDuringUpload = YES;
     //best effort behavior. try and upload the next file
     [self uploadFiles];
@@ -163,23 +189,45 @@ NSString* DBRoot = @"/Public/Soundboard/";
 
 - (void)restClient:(DBRestClient*)client createdFolder:(DBMetadata*)folder
 {
-    if ([[folder.path lowercaseString] isEqualToString:[DBRoot lowercaseString]])
-    {
-        //create soundboard theme folder
-        [self.restClient createFolder:[DBRoot stringByAppendingPathComponent:self->themeName]];
-    }
-    else
-    {
-        [self uploadFiles];
-    }
+    NSLog(@"Created folder %@ on dropbox", folder.path);
+    
+    [self uploadFiles];
+    
 }
 
 - (void)restClient:(DBRestClient*)client createFolderFailedWithError:(NSError*)error
 {
     NSLog(@"createFolder failed with the following error:\n Error Domain: %@\n Error Code: %d\n, Error description: %@\n Failure Reason: %@", [error domain], [error code], [error localizedDescription], [error localizedFailureReason] );
-    //@TODO: Handle error where soundboard and/or theme dir already exists
+    //Handle error where soundboard and/or theme dir already exists
+    if ([[error domain] isEqualToString:@"dropbox.com"] && [error code] == 403)
+    {
+        NSLog(@"Directory already exists. Continuing with the upload...");
+        [self uploadFiles];
+    }
 
 }
+
+- (void)restClient:(DBRestClient*)restClient loadedSharableLink:(NSString*)link forFile:(NSString*) path
+{
+        NSLog(@"Got shareable link: %@", link);
+}
+
+         
+- (void)restClient:(DBRestClient*)restClient loadSharableLinkFailedWithError:(NSError*)error
+{
+         NSLog(@"loadSharableLink failed with the following error: %@\n Error Domain: %@\n Error Code: %d\n, Error description: %@\n Failure Reason: %@", error, [error domain], [error code], [error localizedDescription], [error localizedFailureReason] );
+         
+         NSDictionary* dict = [error userInfo];
+         
+         if (nil != dict) 
+         {
+             for (NSString* key in dict) {
+                 NSLog(@"Key: %@ Value: %@", key, [dict objectForKey:key]);
+             }
+         }
+}
+                                                                                         
+
 
 
 #pragma  mark private methods
@@ -189,21 +237,23 @@ NSString* DBRoot = @"/Public/Soundboard/";
     if (self.networkOpState == uploadNotStarted)
     {
         //start the upload process
+        NSLog(@"Starting the upload process...");
         NSMutableArray* arr = [NSMutableArray new];
-        NSString* copyFromDir = [[self->tm GetThemeDirURL] path];
         NSFileManager* fm = [[NSFileManager alloc] init];
-        NSDirectoryEnumerator* dir = [fm enumeratorAtPath:copyFromDir];
+        NSDirectoryEnumerator* dir = [fm enumeratorAtPath:tm.themeDirPath];
         //upload all files in local directory one by one
         for (NSString* file in dir) {
             [arr addObject:file];
         }
+        self.filesToUpload = arr;
     }
     if ([self.filesToUpload count] != 0)
     {
         NSString* fileToUpload = [self.filesToUpload objectAtIndex:0];
+        NSLog(@"Uploading file %@...", fileToUpload);
         [self.filesToUpload removeObjectAtIndex:0];
         self.networkOpState = uploadInProgress;
-        [self.restClient uploadFile:fileToUpload toPath:[DBRoot stringByAppendingPathComponent:self->themeName] fromPath:[[self->tm GetThemeDirURL] path]];
+        [self.restClient uploadFile:fileToUpload toPath:[DBRoot stringByAppendingPathComponent:self->themeName] withParentRev:nil fromPath:[tm.themeDirPath stringByAppendingPathComponent:fileToUpload]];
     }
     else
     {
@@ -218,7 +268,7 @@ NSString* DBRoot = @"/Public/Soundboard/";
         NSString* fileToDownload = [self.filesToDownload objectAtIndex:0];
         [self.filesToDownload removeObjectAtIndex:0];
         NSString* filename = [fileToDownload lastPathComponent];
-        NSString* themeDir = [[self->tm GetThemeDirURL] path];
+        NSString* themeDir = tm.themeDirPath;
         self.networkOpState = downloadInProgess;
         [self.restClient loadFile:fileToDownload intoPath:[themeDir stringByAppendingPathComponent:filename]];
     }
@@ -237,9 +287,26 @@ NSString* DBRoot = @"/Public/Soundboard/";
 }
 
 - (void)sessionDidReceiveAuthorizationFailure:(DBSession*)session {
-	DBLoginController* loginController = [DBLoginController new];
+	//DBLoginController* loginController = [DBLoginController new];
 	//[loginController presentFromController:navigationController];
 }
+
+/*- (void)loginControllerDidLogin:(DBLoginController*)controller
+{
+    if (self.networkOpState == uploadNotStarted)
+    {
+        [self uploadTheme];
+    }
+    else if (self.networkOpState == downloadNotStarted)
+    {
+        [self downloadTheme];
+    }
+}
+
+- (void)loginControllerDidCancel:(DBLoginController*)controller
+{
+    
+}*/
 
 
 @end

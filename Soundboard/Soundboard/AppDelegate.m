@@ -9,15 +9,87 @@
 #import "AppDelegate.h"
 
 
+
 @implementation AppDelegate
 
-@synthesize window = _window;
+@synthesize window = _window, fbm;
+
+-(FacebookModule*) fbm
+{
+    if (!self->fbm)
+    {
+        fbm = [[FacebookModule alloc] init];
+    }
+    return  self->fbm;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // OVERRIDE POINT FOR LOADING APPLICATION
+    [self.fbm InitializeFacebookComponent:self];
+    
+    NSString* localPath = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
+    NSLog(@"Bundle path: %@", localPath);
     
     return YES;
+}
+
+// Pre 4.2 support
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    
+    NSLog(@"Open url scheme: %@", [url scheme]);
+    if ([[url scheme] isEqualToString:@"db-ych32k07fi427wq"])
+    {
+        NSLog(@"OpenURL being handled by dropbox");
+        if ([[DBSession sharedSession] handleOpenURL:url]) {
+            if ([[DBSession sharedSession] isLinked]) {
+                NSLog(@"App linked successfully!");
+                // At this point you can start making API calls
+            }
+            return YES;
+        }
+        return NO;
+    }
+    else
+    {
+        return [self.fbm.facebook handleOpenURL:url]; 
+    }
+}
+
+// For 4.2+ support
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    
+    NSLog(@"Open url scheme: %@", [url scheme]);
+    
+    if ([[url scheme] isEqualToString:@"db-ych32k07fi427wq"])
+    {
+        NSLog(@"OpenURL being handled by dropbox");
+        if ([[DBSession sharedSession] handleOpenURL:url]) {
+            if ([[DBSession sharedSession] isLinked]) {
+                NSLog(@"App linked successfully!");
+                // At this point you can start making API calls
+            }
+            return YES;
+        }
+        return NO;
+    }
+    else
+    {
+        NSLog(@"OpenURL being handled by facebook");
+        return [self.fbm.facebook handleOpenURL:url]; 
+    } 
+}
+
+- (void)fbDidLogin {
+    
+    NSLog(@"User successfully logged in!");
+    [self.fbm UserDidLogin];
+}
+
+- (void)fbDidNotLogin:(BOOL)cancelled;
+{
+    NSLog(@"User did not log in!");
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -59,13 +131,13 @@
      */
 }
 
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+/*- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
     
     // THIS SHOULD POP TO THE ROOT VIEW CONTROLLER, THEN ADD A HOME VIEW
     // AND A BOARDVIEWCONTROLLER CORRESPONDING TO THE NEW BOARD AT THE URL
     
+    return NO;
     
-    
-}
+}*/
 
 @end

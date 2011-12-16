@@ -59,7 +59,8 @@
 			<string>com.skyrien.soundboard</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>xsoundboard</string>
+				<string>fb130911066966920</string>
+                <string>db-ych32k07fi427wq</string>
 			</array>
 		</dict>
 	</array>

@@ -87,6 +87,12 @@
     return  fm;
 }
 
+-(NSString*)themeDirPath
+{
+    NSString* appurl =  [[self GetApplicationSupportDirectory:nil] path];
+    return  [appurl stringByAppendingPathComponent:self->themeDirName];
+}
+
 -(NSURL*)GetApplicationSupportDirectory:(NSError *__autoreleasing *)err
 {
     if (suppurl == nil)

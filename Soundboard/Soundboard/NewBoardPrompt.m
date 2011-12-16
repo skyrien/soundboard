@@ -20,9 +20,10 @@
 	{
 		UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(12.0, 45.0, 260.0, 31.0)]; 
 		[textField setBackgroundColor:[UIColor whiteColor]]; 
+        //@TODO: alert view message gets hidden. This needs to be fixed!!
 		[self addSubview:textField];
 		self.boardNameText = textField;
-		CGAffineTransform translate = CGAffineTransformMakeTranslation(0.0, 70.0); 
+		CGAffineTransform translate = CGAffineTransformMakeTranslation(0.0, 60.0); 
 		[self setTransform:translate];
 	}
 	return self;
