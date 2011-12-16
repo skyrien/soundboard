@@ -204,7 +204,7 @@
             [self.dbm GetThemeShareURL];
             
             AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-            [appDelegate.fbm PublishSoundBoardShare];
+            [appDelegate.fbm PublishSoundBoardShare:self.dbm.shareUrl];
             
         }
         

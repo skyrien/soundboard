@@ -30,7 +30,7 @@ NSString* DBRoot = @"/Public/Soundboard/";
 
 @implementation DropBoxModule
 
-@synthesize filesToDownload, filesToUpload, errorsDuringUpload, errorsDuringDownload, networkOpState;
+@synthesize shareUrl, filesToDownload, filesToUpload, errorsDuringUpload, errorsDuringDownload, networkOpState;
 
 -(id)initWithThemeName:(NSString *)name
 {
@@ -209,6 +209,7 @@ NSString* DBRoot = @"/Public/Soundboard/";
 
 - (void)restClient:(DBRestClient*)restClient loadedSharableLink:(NSString*)link forFile:(NSString*) path
 {
+        self.shareUrl = link;
         NSLog(@"Got shareable link: %@", link);
 }
 

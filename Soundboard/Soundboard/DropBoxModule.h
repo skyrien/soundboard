@@ -33,6 +33,7 @@ typedef enum
     BOOL isInitialized;
     NSError* restClientError;
     ThemeManager* tm;
+    NSString* shareUrl;
 }
 
 -(void)initializeDropBoxModule;
@@ -44,6 +45,7 @@ typedef enum
 
 @property (nonatomic, assign) BOOL errorsDuringDownload;
 @property (nonatomic, assign) BOOL errorsDuringUpload;
+@property (nonatomic, retain) NSString* shareUrl;
 @property (atomic, assign) NetworkOperationState networkOpState;
 
 @end
