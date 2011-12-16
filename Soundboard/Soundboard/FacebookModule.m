@@ -14,9 +14,16 @@
 
 @end
 
+static NSString* shareUrl;
+
 @implementation FacebookModule
 
 @synthesize facebook;
+
++(void)ShareUrl:(NSString*)url
+{
+    shareUrl = url;
+}
 
 -(void)InitializeFacebookComponent:(id<FBSessionDelegate>) delegate
 {
@@ -50,24 +57,24 @@
     
 }
 
--(void)PostShareToUsersWall:(NSString*)linkUrl
+-(void)PostShareToUsersWall
 {
     NSMutableDictionary* postparams = [NSMutableDictionary new];
     [postparams setObject:@"Ibrahim has shared a soundboard!" forKey:@"message"];
     [postparams setObject:@"Soundboard share" forKey:@"name"];
-    [postparams setObject:linkUrl forKey:@"link"];
+    [postparams setObject:shareUrl forKey:@"link"];
     [postparams setObject:@"Click here to see what Ibrahim has shared" forKey:@"description"];
     
     [facebook requestWithGraphPath:@"me/feed" andParams:postparams andHttpMethod:@"POST" andDelegate:self];
 }
 
 
--(void)PublishSoundBoardShare:(NSString*)linkUrl
+-(void)PublishSoundBoardShare
 {
     [self AuthenticateUser];
     if (self->isAuthenticated)
     {
-        [self PostShareToUsersWall:linkUrl];
+        [self PostShareToUsersWall];
     }
 }
 

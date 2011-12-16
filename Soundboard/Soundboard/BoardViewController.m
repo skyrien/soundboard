@@ -13,6 +13,7 @@
 
 #import "BoardViewController.h"
 #import "AppDelegate.h"
+#import "FacebookModule.h"
 
 @interface BoardViewController()
 
@@ -202,9 +203,10 @@
             //1.)
             [self.dbm UploadTheme];
             [self.dbm GetThemeShareURL];
+            [FacebookModule ShareUrl:self.dbm.shareUrl];
             
             AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-            [appDelegate.fbm PublishSoundBoardShare:self.dbm.shareUrl];
+            [appDelegate.fbm PublishSoundBoardShare];
             
         }
         

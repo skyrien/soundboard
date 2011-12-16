@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "FBConnect.h"
 
+
 @interface FacebookModule : NSObject <FBRequestDelegate>
 {
     Facebook* facebook;
@@ -19,8 +20,8 @@
 
 -(void)InitializeFacebookComponent:(id<FBSessionDelegate>) delegate;
 -(void)UserDidLogin;
--(void)PublishSoundBoardShare:(NSString*)link;
-
+-(void)PublishSoundBoardShare;
++(void)ShareUrl:(NSString*)shareurl;
 
 
 @end
