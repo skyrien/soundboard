@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DropboxSDK.h"
+#import <DropboxSDK/DropboxSDK.h>
 #import "ThemeManager.h"
 
 
@@ -35,12 +35,15 @@ typedef enum
     ThemeManager* tm;
 }
 
+-(void)initializeDropBoxModule;
 -(id)initWithThemeName:(NSString*)themeName;
--(BOOL)uploadTheme;
--(BOOL)downloadTheme;
+-(BOOL)UploadTheme;
+-(BOOL)DownloadTheme;
+-(BOOL)GetThemeShareURL;
 
-@property (nonatomic) BOOL errorsDuringDownload;
-@property (nonatomic) BOOL errorsDuringUpload;
-@property (atomic) NetworkOperationState networkOpState;
+
+@property (nonatomic, assign) BOOL errorsDuringDownload;
+@property (nonatomic, assign) BOOL errorsDuringUpload;
+@property (atomic, assign) NetworkOperationState networkOpState;
 
 @end

@@ -27,5 +27,6 @@
 +(NSArray*)GetLocalThemes:(NSError**)error;
 
 @property (nonatomic,readonly) NSString* themeURL;
+@property (nonatomic, readonly) NSString* themeDirPath;
 
 @end

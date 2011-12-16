@@ -11,6 +11,7 @@
 #import "LocStrings.h"
 #import "BoardViewController.h"
 #import "NewBoardPrompt.h"
+#import "FacebookModule.h"
 
 @interface HomeViewController () <UITableViewDelegate, UITableViewDataSource> 
 
@@ -43,7 +44,6 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
     NSLog(@"Returned 1 as the number of sections");
     return 1;
@@ -51,17 +51,16 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
     NSLog(@"Found the following number of rows: %d", [self.themes count]);
     return [self.themes count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tblView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"ThemeCell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    UITableViewCell *cell = [tblView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
@@ -142,7 +141,7 @@
  **/
 -(NSArray*) GetThemeDisplayTextFromThemeDirName:(NSString *)themeDirName
 {
-    
+    return nil;
 }
 
 -(IBAction) addButtonPressed:(UIButton *)sender
@@ -170,6 +169,9 @@
     {
         [self displayNewBoardPrompt];
     }
+    else if (buttonIndex == 1)
+    {
+    }
     
 }
 
@@ -192,7 +194,7 @@
 -(void)displayNewBoardPrompt
 {
     NewBoardPrompt *prompt = [NewBoardPrompt alloc];
-    prompt = [prompt initWithTitle:@"Enter Board Name" message:@"Please Enter Board Name" delegate:self cancelButtonTitle:@"Cancel" okButtonTitle:@"OK"];
+    prompt = [prompt initWithTitle:@"Enter Board Name" message:@"Please Enter Board Name\n" delegate:self cancelButtonTitle:@"Cancel" okButtonTitle:@"OK"];
     [prompt show];
 }
 
@@ -202,7 +204,7 @@
     [dbmod uploadTheme];*/
 }
 
-- (void)loginControllerDidLogin:(DBLoginController*)controller {
+/*- (void)loginControllerDidLogin:(DBLoginController*)controller {
     [self updateButtons];
     
     //download the board
@@ -235,7 +237,7 @@
     NSString* tmploc = [[suppurl path] stringByAppendingPathComponent:@"debug_8.png"];
     [self.restClient loadFile:@"/Public/Test/debug_8.png" intoPath:tmploc];
     
-}
+}*/
 
 - (void)updateButtons
 {

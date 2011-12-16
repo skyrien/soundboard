@@ -12,9 +12,35 @@
 //
 
 #import "BoardViewController.h"
+#import "AppDelegate.h"
+
+@interface BoardViewController()
+
+@property (nonatomic, readonly) DropBoxModule* dbm;
+@property (nonatomic, readonly) FacebookModule* fbm; 
+
+@end
 
 @implementation BoardViewController
 @synthesize actionButton, EditSoundVC;
+
+-(FacebookModule*)fbm
+{
+    if (nil == self->fbm)
+    {
+        self->fbm = [[FacebookModule alloc] init];
+    }
+    return self->fbm;
+}
+
+-(DropBoxModule*)dbm
+{
+    if (nil == self->dbm)
+    {
+        dbm = [[DropBoxModule alloc] initWithThemeName:theBoard.currentTheme];
+    }
+    return self->dbm;
+}
 
 - (void)viewDidLoad
 {
@@ -172,6 +198,14 @@
             // 3. IF UPLOADED, GET PUBLIC-BOARD URL
             // 4. IS USER CONNECTED TO FACEBOOK? IF NOT, BEGIN FB FLOW
             // 5. AFTER CONSENT IS RECEIVED, POST TO FACEBOOK WITH PUBLIC LINK
+            
+            //1.)
+            [self.dbm UploadTheme];
+            [self.dbm GetThemeShareURL];
+            
+            AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+            [appDelegate.fbm PublishSoundBoardShare];
+            
         }
         
         else if (buttonIndex == buttonIndexDelete) {
@@ -413,5 +447,6 @@
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
+
 
 @end
