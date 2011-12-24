@@ -255,6 +255,9 @@
     {
         if (buttonIndex == 0) {
             NSLog(@"User pressed \"Yes, delete this board\".");
+            NSError* err = nil;
+            [themeManager DeleteFile:@"" error:&err];
+            [self.navigationController popViewControllerAnimated:YES];
 
         }
         else if (buttonIndex == 1)
