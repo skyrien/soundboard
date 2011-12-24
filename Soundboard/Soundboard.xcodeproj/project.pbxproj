@@ -15,7 +15,7 @@
 		66D6A9BC147350CC009BFC3D /* FBDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 66D6A9A7147350CC009BFC3D /* FBDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		66D6A9BD147350CC009BFC3D /* FBLoginDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 66D6A9A9147350CC009BFC3D /* FBLoginDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		66D6A9BE147350CC009BFC3D /* FBRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 66D6A9AB147350CC009BFC3D /* FBRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		66D6A9C9147352E6009BFC3D /* FacebookModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66D6A9C8147352E6009BFC3D /* FacebookModule.m */; };
+		66D6A9C9147352E6009BFC3D /* FacebookModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66D6A9C8147352E6009BFC3D /* FacebookModule.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		66EF8184147CD35B00C4E8C7 /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66EF8183147CD35B00C4E8C7 /* DropboxSDK.framework */; };
 		7005E481144D496100E5D6DC /* appIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7005E480144D496100E5D6DC /* appIcon.png */; };
 		7005E483144D497600E5D6DC /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 7005E482144D497600E5D6DC /* Default.png */; };

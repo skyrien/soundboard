@@ -59,7 +59,7 @@
     session = [AVAudioSession sharedInstance];
     [session setActive:YES error:nil];
     [session setCategory:AVAudioSessionCategorySoloAmbient error:nil];
-    EditSoundVC = [[EditSoundViewController alloc] initWithNibName:@"EditView" bundle:nil];
+
     theBoard = [[Soundboard alloc] init];
     themeManager = [[ThemeManager alloc] init];
     // Create an array of the buttons for the for loop
@@ -89,7 +89,7 @@
         mode = MODE_EMPTY; // 0
     buttonIndexFacebook = buttonIndexEmail = buttonIndexEdit = buttonIndexDelete = -1;
     navController = self.navigationController;
-    navController.navigationBar.tintColor = [UIColor blueColor];
+    navController.navigationBar.tintColor = [UIColor darkGrayColor];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -338,6 +338,8 @@
     // ENTER EDIT VIEW CONTROLLER
     else if (mode == MODE_EDIT)
     {
+        if (!EditSoundVC)
+            EditSoundVC = [[EditSoundViewController alloc] initWithNibName:@"EditView" bundle:nil];
         [self.navigationController pushViewController:EditSoundVC animated:YES];
         [EditSoundVC loadSound:[sender.titleLabel text] FromTheme:theBoard.currentTheme];
     }
