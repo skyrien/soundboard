@@ -31,6 +31,7 @@
 -(void)playSound:(NSString *)buttonName {
     int i = [buttonName integerValue];
     AudioServicesPlaySystemSound(soundIds[i-1]);
+    NSLog(@"Playing sound %i.", i);
     
 }
 

@@ -59,6 +59,8 @@
                 buttonIndexEmail,
                 buttonIndexEdit,
                 buttonIndexDelete;
+    bool        hasSound[9];
+    bool        hasImage[9];
 }
 
 // MODE TRANSITIONS GO HERE
