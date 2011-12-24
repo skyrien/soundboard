@@ -48,6 +48,7 @@
     UINavigationController* navController;
     NSInteger mode;
     AVAudioSession *session;
+    NSArray *soundButtons;
     ThemeManager* themeManager;
     GADBannerView *adBannerView;
     DropBoxModule* dbm;
