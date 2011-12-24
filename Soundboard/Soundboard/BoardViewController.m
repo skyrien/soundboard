@@ -62,6 +62,18 @@
     EditSoundVC = [[EditSoundViewController alloc] initWithNibName:@"EditView" bundle:nil];
     theBoard = [[Soundboard alloc] init];
     themeManager = [[ThemeManager alloc] init];
+    // Create an array of the buttons for the for loop
+    soundButtons = [[NSArray alloc] initWithObjects:
+                    button1,
+                    button2,
+                    button3, 
+                    button4,
+                    button5,
+                    button6,
+                    button7,
+                    button8,
+                    button9, nil];
+
     
     // This segment initializes the backup ad from AdMob
     adBannerView = [[GADBannerView alloc] initWithFrame:CGRectMake(0.0,
@@ -275,6 +287,14 @@
     [self.navigationItem setRightBarButtonItem:doneButton animated:YES];
     [infoButton setHidden:NO];
     
+    // Make hidden sounds visible
+    for (int i = 0; i < 9; i++)
+    {
+        if (!hasSound[i] && !hasImage[i])
+            [[soundButtons objectAtIndex:i] setAlpha:0.5];
+    }
+        
+    
     // Finally, set the mode
     mode = MODE_EDIT;
     NSLog(@"Entered edit mode. New mode: %i", mode);
@@ -287,6 +307,13 @@
     [self.navigationItem setHidesBackButton:NO animated:YES];
     [self.navigationItem setRightBarButtonItem:actionButton animated:YES];
     [infoButton setHidden:YES];
+    
+    // re-hide icons with no sound or picture
+    for (int i = 0; i < 9; i++)
+    {
+        if (!hasSound[i] && !hasImage[i])
+            [[soundButtons objectAtIndex:i] setAlpha:0.0];
+    }
     
     mode = MODE_READY;
     NSLog(@"Exited edit mode. New mode: %i", mode);
@@ -356,17 +383,6 @@
     // VALIDATE THAT THE CURRENT USER IS THE BOARD'S OWNER    
     // IS THIS NECESSARY? WE DON'T REALLY HAVE A CONCEPT OF "CURRENT OWNER"
 
-    // Create an array of the buttons for the for loop
-    NSArray *soundButtons = [[NSArray alloc] initWithObjects:
-                             button1,
-                             button2,
-                             button3, 
-                             button4,
-                             button5,
-                             button6,
-                             button7,
-                             button8,
-                             button9, nil];
     
     // NOW, LOAD THE MEDIA FILES
     for (int i = 0; i < 9; i++)
@@ -391,6 +407,7 @@
             [theBoard setSoundNumber:j withCFURL:(__bridge CFURLRef)newSound];
             NSLog(@"Theme Manager got file %@ successfully.", soundFileName);
             hasSound[i] = YES;
+            [[soundButtons objectAtIndex:i] setAlpha:1.0];
         }
         err = nil;
         NSURL *newImage = [themeManager GetFile:imageFileName error:&err];
@@ -400,8 +417,14 @@
                   [[err userInfo] description]);            
             NSLog(@"Theme Manager failed to get file %@.", imageFileName);
             hasImage[i] = NO;
-            if (!hasSound[i]) // if it doesnt have a sound and has no image
-                [[soundButtons objectAtIndex:i] setAlpha:0.1];
+            if (!hasSound[i]) { // if it doesnt have a sound and has no image
+             
+                if (mode == MODE_EDIT)
+                    [[soundButtons objectAtIndex:i] setAlpha:0.5];
+                else
+                    [[soundButtons objectAtIndex:i] setAlpha:0.0];
+                
+            }
             // Should we set a default image instead?
         }
         else
