@@ -43,6 +43,13 @@
     return self->dbm;
 }
 
+// CONTAINS A BUNCH OF INITIALIZATION LOGIC, AS NEEDED BY THE SOUNDBOARD PLAY VIEW.
+// SESSION IS FOR AUDIO SESSION
+
+// TO-DO #1 -P2- THE EDITSOUNDVC IS PRELOADED. WE COULD PROBABLY IMPROVE PERF BY LOADING
+// OPPOTUNISTICALLY.
+// TO-DO #2 BETTER COMMENTS.
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -66,16 +73,18 @@
     adBannerView.rootViewController = self;
     
     // Final configurations
-    mode = MODE_EMPTY; // 0
+    if (!mode)
+        mode = MODE_EMPTY; // 0
     buttonIndexFacebook = buttonIndexEmail = buttonIndexEdit = buttonIndexDelete = -1;
     navController = self.navigationController;
+    navController.navigationBar.tintColor = [UIColor blueColor];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     NSLog(@"BOARDVIEW CONTROLLER ABOUT TO APPEAR...");
     
     // Reload the theme in case there were changes
-    if (!theBoard.currentTheme) {
+    if (theBoard.currentTheme != nil) {
         [self loadTheme:theBoard.currentTheme];
         NSLog(@"Reloaded current theme.");        
     }
@@ -332,6 +341,7 @@
     //Initializes basic theme elements, including name, background, audio, etc...
     theBoard.currentTheme = themeName;
     self.title = themeName;
+    NSLog(@"Trying to load theme %@.", themeName);
     
     // SET THE THEME DIR USING THEME MANAGER
     // WARNING, IF THE DIRECTORY DOESN'T EXIST, THIS WILL SILENTLY CREATE IT
@@ -362,7 +372,6 @@
     for (int i = 0; i < 9; i++)
     {
         int j = i + 1;
-        mode = MODE_EMPTY;
         [theBoard clearSoundNumber:j];
         [[soundButtons objectAtIndex:i] setImage:nil forState:UIControlStateNormal];
         NSString* soundFileName = [NSString stringWithFormat:@"sound_%i.caf", j];
@@ -375,11 +384,14 @@
             NSLog(@"Theme Manager: %@ %d %@", [err domain], [err code],
                   [[err userInfo] description]);            
             NSLog(@"Theme Manager failed to get file %@.", soundFileName);
+            hasSound[i] = NO;
         }
         else
+        {
             [theBoard setSoundNumber:j withCFURL:(__bridge CFURLRef)newSound];
             NSLog(@"Theme Manager got file %@ successfully.", soundFileName);
-        
+            hasSound[i] = YES;
+        }
         err = nil;
         NSURL *newImage = [themeManager GetFile:imageFileName error:&err];
         if (err)
@@ -387,21 +399,30 @@
             NSLog(@"Theme Manager: %@ %d %@", [err domain], [err code],
                   [[err userInfo] description]);            
             NSLog(@"Theme Manager failed to get file %@.", imageFileName);
-            // Set a default image instead
+            hasImage[i] = NO;
+            if (!hasSound[i]) // if it doesnt have a sound and has no image
+                [[soundButtons objectAtIndex:i] setAlpha:0.1];
+            // Should we set a default image instead?
         }
         else
         {
             NSLog(@"Theme Manager got file %@ successfully.", imageFileName);
             NSString* imagePath = [newImage path];
             [[soundButtons objectAtIndex:i] setImage:[UIImage imageWithContentsOfFile:imagePath] forState:UIControlStateNormal];
+            [[soundButtons objectAtIndex:i] setAlpha:1.0];
+            hasImage[i] = YES;
         }
-        NSLog(@"Initialized soundId %i.", j);
+        NSLog(@"Initialized tile %i.", j);
     }
-    if (mode == MODE_EMPTY)
+    
+    // THIS ONLY SETS THIS IF THE BOARD IS EMPTY (not previously put in edit mode)
+    if (mode == MODE_EMPTY) {
         
         // THIS IS NEEDED UNTIL WE HAVE ACTUAL METADATA ON BOARDS
         userIsBoardOwner = YES;
         mode = MODE_READY;
+        
+    }
     NSLog(@"Finished loading \"%@\" theme", themeName);
 }
 

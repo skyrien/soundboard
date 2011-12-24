@@ -13,12 +13,10 @@
 @interface Soundboard : NSObject {
     
     // Current Game Mode is represnted by this integer
-//    NSInteger boardMode;
     
-    // This is a string representing the theme name
+    // Board properties
     NSString* currentTheme;
     NSString* themeDescription;
-    
     UIImage* currentThemePhoto;
     
     // This string represents the owner of the board

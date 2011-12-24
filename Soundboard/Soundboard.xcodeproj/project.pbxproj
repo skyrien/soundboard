@@ -90,7 +90,6 @@
 		66D6A9AB147350CC009BFC3D /* FBRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBRequest.m; path = Soundboard/FBRequest.m; sourceTree = "<group>"; };
 		66D6A9C7147352E6009BFC3D /* FacebookModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookModule.h; sourceTree = "<group>"; };
 		66D6A9C8147352E6009BFC3D /* FacebookModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookModule.m; sourceTree = "<group>"; };
-		66D6A9CB1473988C009BFC3D /* Facebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Facebook.h; sourceTree = "<group>"; };
 		66EF8183147CD35B00C4E8C7 /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DropboxSDK.framework; sourceTree = "<group>"; };
 		7005E480144D496100E5D6DC /* appIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon.png; sourceTree = "<group>"; };
 		7005E482144D497600E5D6DC /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
@@ -117,8 +116,12 @@
 		70520DE31442B73F00B0426E /* BoardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoardViewController.m; sourceTree = "<group>"; };
 		70520DEF1442DEAD00B0426E /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		70520DF81442E6DB00B0426E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		7068B63A1476D66300E273AD /* NewBoardPrompt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewBoardPrompt.h; path = ../../../Soundboard/Soundboard/NewBoardPrompt.h; sourceTree = "<group>"; };
+		7068B63B1476D66300E273AD /* NewBoardPrompt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewBoardPrompt.m; path = ../../../Soundboard/Soundboard/NewBoardPrompt.m; sourceTree = "<group>"; };
 		706EBAFA144E966100E0DF91 /* EditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditViewController.h; sourceTree = "<group>"; };
 		706EBAFB144E966100E0DF91 /* EditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditViewController.m; sourceTree = "<group>"; };
+		707490FF149B2920005D4D88 /* FacebookModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookModule.h; sourceTree = "<group>"; };
+		70749100149B2921005D4D88 /* FacebookModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookModule.m; sourceTree = "<group>"; };
 		70834A0B1442B374005EA445 /* Soundboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Soundboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		70834A0F1442B374005EA445 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		70834A111442B374005EA445 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -182,7 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				66D6A9A3147350CB009BFC3D /* Facebook.m */,
-				66D6A9CB1473988C009BFC3D /* Facebook.h */,
+				66D6A9A2147350CB009BFC3D /* Facebook.h */,
 				66D6A9A4147350CB009BFC3D /* FBConnect.h */,
 				66D6A9A5147350CB009BFC3D /* FBDialog.bundle */,
 				66D6A9A6147350CC009BFC3D /* FBDialog.h */,
@@ -191,7 +194,6 @@
 				66D6A9A9147350CC009BFC3D /* FBLoginDialog.m */,
 				66D6A9AA147350CC009BFC3D /* FBRequest.h */,
 				66D6A9AB147350CC009BFC3D /* FBRequest.m */,
-				66D6A9A2147350CB009BFC3D /* Facebook.h */,
 			);
 			name = FacebookSDK;
 			sourceTree = "<group>";
@@ -273,6 +275,10 @@
 				66D6A9C7147352E6009BFC3D /* FacebookModule.h */,
 				66D6A9C8147352E6009BFC3D /* FacebookModule.m */,
 				66A15425144D40D800A9031B /* Soundboard.m */,
+				707490FF149B2920005D4D88 /* FacebookModule.h */,
+				70749100149B2921005D4D88 /* FacebookModule.m */,
+				7068B63A1476D66300E273AD /* NewBoardPrompt.h */,
+				7068B63B1476D66300E273AD /* NewBoardPrompt.m */,
 				70834A1E1442B374005EA445 /* AppDelegate.h */,
 				70834A1F1442B374005EA445 /* AppDelegate.m */,
 				660F1B5B14723979006EF366 /* NewBoardPrompt.h */,

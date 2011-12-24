@@ -42,7 +42,7 @@
     //    IBOutlet BoardViewController* theBoardView;
     // Variables and stuff
     NSFileManager* fileManager;
-    NSInteger mode;
+    NSInteger modeWhileEditing;
     ThemeManager* themeManager;
     NSTimer* playTimer;
     NSString* currentSoundNumber;

@@ -79,7 +79,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    mode = MODE_EMPTY;
+    modeWhileEditing = MODE_EMPTY;
     soundId = 0;
     
     // INITIALIZING SHARED PROPERTIES
@@ -222,7 +222,7 @@
         [soundTileButton setImage:[UIImage imageWithContentsOfFile:imagePath]
                          forState:UIControlStateNormal];
     }
-    mode = MODE_READY;
+    modeWhileEditing = MODE_READY;
 }
 
 - (int)updatePlayTimer {
@@ -245,7 +245,7 @@
 }
 
 -(IBAction)doneEditing:(UIBarButtonItem *) sender {
-    NSLog(@"User pressed done.");
+    NSLog(@"User pressed save.");
     
     // BS for generating new path
     NSArray *dirPaths;
@@ -255,9 +255,9 @@
     docsDir = [dirPaths objectAtIndex:0];
 
     
-    if ((mode == MODE_READYWITHNEWSOUND) ||
-        (mode == MODE_RECORDING) ||
-        (mode == MODE_RECORDINGPAUSED))
+    if ((modeWhileEditing == MODE_READYWITHNEWSOUND) ||
+        (modeWhileEditing == MODE_RECORDING) ||
+        (modeWhileEditing == MODE_RECORDINGPAUSED))
     {
         // Stop recording if it's going on
         if (theRecorder.isRecording)
@@ -336,7 +336,7 @@
     NSLog(@"User pressed cancel.");
 
     // IF THERE WAS A TEMP FILE, DELETE IT
-    if (mode == MODE_READYWITHNEWSOUND)
+    if (modeWhileEditing == MODE_READYWITHNEWSOUND)
     {
         NSError *err = nil;
         [fileManager removeItemAtURL:tempSound error:&err];
@@ -357,13 +357,13 @@
 - (IBAction)pressedPlayButton:(UIButton *) sender {
 //    NSLog(@"User pressed Play.");
     
-    if (mode == MODE_READY) {
+    if (modeWhileEditing == MODE_READY) {
         NSLog(@"Playing existing sound.");
         AudioServicesPlaySystemSound(soundId); 
     }
 
     // This plays the new sound if there is one
-    else if (mode == MODE_READYWITHNEWSOUND) {
+    else if (modeWhileEditing == MODE_READYWITHNEWSOUND) {
         NSLog(@"Playing new sound.");
         tickNumber = 0;
         currentTime.text = 0;
@@ -390,7 +390,7 @@
         AudioServicesCreateSystemSoundID(tempSoundUrl, &soundId);
         
         [playButton titleLabel].text = @"Play";
-        mode = MODE_READYWITHNEWSOUND;
+        modeWhileEditing = MODE_READYWITHNEWSOUND;
     }
 }
 
@@ -402,7 +402,7 @@
         
         // Pauses the recording
         [theRecorder pause];
-        mode = MODE_RECORDINGPAUSED;
+        modeWhileEditing = MODE_RECORDINGPAUSED;
         [session setCategory:AVAudioSessionCategorySoloAmbient error:nil];
         [[recordButton titleLabel] setText:@"Resume"];
         NSLog(@"Pausing recording...");
@@ -414,7 +414,7 @@
         // Prepares the scene for recording
         tickNumber = 0;
         currentTime.text = 0;
-        mode = MODE_RECORDING;
+        modeWhileEditing = MODE_RECORDING;
         [session setCategory:AVAudioSessionCategoryRecord error:nil];
         
         // Starts recording
